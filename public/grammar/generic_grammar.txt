@@ -14,11 +14,14 @@
 #    Prep = preposition
 #    Adj = adjective
 #### Sentence Structures
-4 S you will be VP
-1 S you may be VP
-3 S it's possible that your mother will be VP
+4 S you will be PassiveVP
+1 S you may be PassiveVP
+3 S you will ActiveVP
+4 S your mother will ActiveVP
+3 S it's possible that your mother will be PassiveVP
 #### Phrase Structures
-1 VP Verb by NP
+1 PassiveVP PassiveVerb by NP
+1 ActiveVP ActiveVerb NP
 5 NP Art Noun
 5 NP Number PluralNoun
 1 NP NP PP
@@ -26,16 +29,19 @@
 1 Noun Adj Noun
 #### Vocabulary
 ####
-1 Verb trampled
-1 Verb eaten
-1 Verb subjugated
-1 Verb culturally appropriated
+1 PassiveVerb trampled
+1 PassiveVerb eaten
+1 PassiveVerb subjugated
+1 PassiveVerb culturally appropriated
+####
+1 ActiveVerb eat
+1 ActiveVerb die while fighting off
+1 ActiveVerb trip over
 ####
 1 Number seven
 1 Number two thousand
 1 Number at least six
 ####
-1 Art the
 1 Art a
 1 Art literally every
 ####
