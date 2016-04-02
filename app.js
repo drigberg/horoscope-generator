@@ -11,6 +11,10 @@ app.get("/", function (req, res){
     res.render("index");
 });
 
+app.get("*", function (req, res){
+    res.redirect("/");
+});
+
 app.listen(5000, function(err){
     console.log("Horoscope Generator server is running on port " + port);
 });
