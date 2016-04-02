@@ -1,43 +1,18 @@
-var paragraph = document.querySelector("p");
-var populateButton = document.querySelector("#populate");
 var sentenceDisplay = document.getElementById("sentence");
 var generateButton = document.getElementById("generate");
 
 var tree = {};
 var sentence = ["ROOT"];
-var sentenceComplete = "TRUE";
-var output = "";
-var add = "";
 var rawData = "";
-var lines = []
 var linesList = [];
 var reader = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
 
 loadFile()
 
-function populateTree(){
-    if(rawData){
-        linesList = [];
-        tree = {};
-        lines = rawData.split('\n');
-        lines.forEach(prune);
-        // linesList = linesList.map(function(string){
-        //     if (String(string).charCodeAt(string.length-1) === 13){
-        //         return string.substring(0, string.length - 1);                
-        //     } else {
-        //         return string;
-        //     }
-        // });
-        linesList.forEach(addToTree);
-        console.log("****** LINESLIST ******");
-        console.log(linesList);
-        console.log("****** TREE ******");
-        console.log(tree);
-
-    } else {
-        console.log("no data to parse");
-    }
-}
+generateButton.addEventListener("click", function(){
+    generateSentence();
+    sentenceDisplay.innerHTML = cleanSentence();
+})
 
 function loadFile() {
     reader.open('get', "grammar/generic_grammar.txt", true); 
@@ -48,8 +23,19 @@ function loadFile() {
 function displayContents() {
     if(reader.readyState==4) {
         rawData = reader.responseText;
-        console.log(rawData);
         populateTree();
+    }
+}
+
+function populateTree(){
+    if(rawData){
+        linesList = [];
+        tree = {};
+        var lines = rawData.split('\n');
+        lines.forEach(prune);
+        linesList.forEach(addToTree);
+    } else {
+        console.log("no data to parse");
     }
 }
 
@@ -77,7 +63,7 @@ function addToTree(array){
 function generateSentence(){
     //initialize sentence
     sentence = ["ROOT"];
-    sentenceComplete = "FALSE";
+    var sentenceComplete = "FALSE";
     var debug = 0;
     //convert nonterminals until only terminals are left
     while (sentenceComplete == "FALSE"){
@@ -120,7 +106,6 @@ function generateSentence(){
             }
         }
     }  
-    console.log("done!!! sentence is: " + sentence);
 }
 
 function cleanSentence(){
@@ -128,39 +113,13 @@ function cleanSentence(){
     for (i = 0; i < sentence.length; i++){
         if (i == 0){
             cleanedSentence = sentence[i];
-        } else if (i == sentence.length - 1){
-            cleanedSentence += sentence[i];
         } else {
+            if (sentence[i] == "a" && sentence[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0}){
+                sentence[i] = "an";
+            }
             cleanedSentence += (" " + sentence[i]);
         }
     };
-    cleanedSentence = cleanedSentence.charAt(0).toUpperCase() + cleanedSentence.slice(1);
+    cleanedSentence = cleanedSentence.charAt(0).toUpperCase() + cleanedSentence.slice(1) + "!";
     return cleanedSentence;
 };
-
-generateButton.addEventListener("click", function(){
-    generateSentence();
-    sentenceDisplay.innerHTML = cleanSentence();
-})
-
-
-
-
-
-// function loadFileAsText()
-// {
-//     var fileToLoad = document.getElementById("fileToLoad").files[0];
-//     var fileReader = new FileReader();
-//     fileReader.onload = function(fileLoadedEvent){
-//         var textFromFileLoaded = fileLoadedEvent.target.result;
-//         rawData = textFromFileLoaded;
-
-//     };
-//     fileReader.readAsText(fileToLoad, "UTF-8");
-// }
-
-
-
-
-
-
