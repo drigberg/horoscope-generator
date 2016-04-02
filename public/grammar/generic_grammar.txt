@@ -1,0 +1,54 @@
+# This grammar uses a convention that
+#    - terminals are lowercase          (president)
+#    - preterminals are capitalized     (Noun)
+#    - other nonterminals are all-caps  (NP)
+# 
+#### Rules for creating full sentences.
+1 ROOT S .
+1 ROOT S !
+#### mixing terminals and nonterminals is ok.
+1 ROOT is it true that S ?
+#### The basic grammar rules.  Here's what the abbreviations stand for:
+#    S  = sentence
+#    NP = noun phrase
+#    VP = verb phrase
+#    PP = prepositional phrase
+#    Det = determiner (sometimes called "article")
+#    Prep = preposition
+#    Adj = adjective
+#### Sentence Structures
+4 S NP VP
+1 S can you believe that NP VP ?
+#### Phrase Structures
+1 VP Verb NP
+5 NP Det Noun
+1 NP NP PP
+1 PP Prep NP
+1 Noun Adj Noun
+#### Vocabulary
+####
+1 Verb doomed
+1 Verb predicted
+1 Verb foretold
+1 Verb will lead to the doom of
+1 Verb will personally destroy
+####
+1 Det the
+1 Det a
+1 Det every
+####
+1 Noun planetary alignment
+1 Noun Aries
+1 Noun Taurus
+1 Noun alien
+1 Noun star
+####
+1 Adj ugly
+1 Adj sexy
+1 Adj intelligent
+1 Adj unfortunate
+####
+1 Prep with
+1 Prep on
+1 Prep under
+1 Prep in

@@ -1,0 +1,59 @@
+body {
+	background-image: url("sky_faded.jpg");
+	/*opacity: 0.4;*/
+	/*background: rgba(60, 200, 240, 1);*/
+	transition: 4s;
+}
+
+#generate {
+	display: block;
+	margin: 50px auto 50px auto;
+}
+
+#main {
+	padding-top: 50px;
+	margin-bottom: 50px;
+}
+
+.heading {
+	text-align: center;
+	color: white;
+	letter-spacing: 1.5;
+}
+
+h1 {
+	font-size: 60px;
+    text-shadow: 0 0 4px white;
+}
+
+h3 {
+	font-size: 36px;
+    text-shadow: 0 0 2px white;
+}
+
+button {
+	/*border-width: 0px;*/
+}
+
+.jumbotron {
+	margin-top: 20px;
+}
+
+#loadform {
+	margin: 50px  auto 0 auto;
+	width: 300px;
+	padding: 10px 20px 20px 50px;
+	background: #d1d1d1;
+	transition: 4s;
+    /*box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);*/
+    box-shadow: 0 0 8px white;
+
+}
+
+.textBox {
+	padding: 10px;
+	height: 200px;
+	width: 80%;
+	background: #d1d1d1;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    }
