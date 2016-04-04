@@ -1,5 +1,6 @@
 body {
 	background-image: url("sky_faded.jpg");
+	background-size: cover;
 	/*opacity: 0.4;*/
 	/*background: rgba(60, 200, 240, 1);*/
 	transition: 4s;
