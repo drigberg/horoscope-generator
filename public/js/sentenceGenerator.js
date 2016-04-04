@@ -114,7 +114,7 @@ function cleanSentence(){
         if (i == 0){
             cleanedSentence = sentence[i];
         } else {
-            if (sentence[i] == "a" && sentence[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0}){
+            if (sentence[i] == "a" && sentence[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0, "A":0, "E":0, "I":0, "O":0, "U":0}){
                 sentence[i] = "an";
             }
             cleanedSentence += (" " + sentence[i]);
