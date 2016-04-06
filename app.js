@@ -11,8 +11,8 @@ app.get("/", function (req, res){
     res.render("index");
 });
 
-app.get("*", function (req, res){
-    res.redirect("/");
+app.get("/staging", function (req, res){
+    res.render("index_staging");
 });
 
 app.listen(port, function(err){
