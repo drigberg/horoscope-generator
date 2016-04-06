@@ -12,7 +12,6 @@
   "dependencies": {
     "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "method-override": "^2.3.5",
     "mongoose": "^4.4.10"
   }
 }
