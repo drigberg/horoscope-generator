@@ -1,45 +1,59 @@
-var grammars = [
-	past_tense_grammar = {
+var grammars = {
+	general_grammar : {
 		"@ROOT" : {
-			"@Subject @PassivePredictor" : {"weight" : 4} , 
-			"@Subject @ActivePredictor"  : {"weight": 4} ,
-			"@Subject @ActiveStatement" : {"weight": 4} ,
-			"@Subject @PassiveHistory" : {"weight": 4} ,
+			"@Subject @VerbPhrase"  : {"weight": 4},
+			"@PrepositionalPhrase , @Subject @VerbPhrase" : {"weight": 4}
 		} ,
-		"@PassivePredictor" : {
-			"will be @PassiveVerb @PrepositionalPhrase" : {"weight": 4}
+		"@VerbPhrase" : {
+			"@Verb @Object" : {"weight": 4}
 		} ,
-		"@ActivePredictor" : {
-			"will @ActiveVerb @Object" : {"weight": 4}
-		} ,
-		"@ActiveStatement" : {
-			"@ActiveVerb @Object" : {"weight": 4}
-		} , 
-		"@PassiveHistory" : {
-			"have been @PassiveVerb @PrepositionalPhrase" : {"weight": 4}
-		} , 
-		"@PassiveVerb" : {
+		"@Verb" : {
 			"eaten" : {
 				"weight": 4,
-				"tag": "bad thing"
-			},
+				"passive": true,
+				"tag": "bad"
+			} ,
 			"destroyed" : {
 				"weight": 4,
-				"tag": "bad thing"
-			},
+				"passive": true,
+				"tag": "bad"
+			} ,
+			"destroy" : {
+				"weight": 4,
+				"active": true,
+				"tag": "bad"
+			} ,
 			"subjugated" : {
 				"weight": 4,
-				"tag": "bad thing"
-			},
+				"active": true,
+				"tag": "bad"
+			} ,
 			"philosophically challenged" : {
 				"weight": 4,
-				"tag": "bad thing"
+				"passive": true,
+				"tag": "bad"
+			} ,
+			"granted diplomatic immunity" : {
+				"weight": 4,
+				"passive": true,
+				"tag": "good"
+			} ,
+			"sacrificed" : {
+				"weight": 4,
+				"passive": true,
+				"tag": "bad"
+			} ,
+	 		"metaphorically conquer" : {
+				"weight": 4,
+				"active": true,
+				"tag": "bad"
+			} ,
+	 		"assert your dominance over" : {
+				"weight": 4,
+				"active": true,
+				"tag": "bad"
 			}
 		} , 
-		"@ActiveVerb" : {
-	 		"metaphorically conquer" : {"weight": 4},
-	 		"assert your dominance over" : {"weight" : 4}
-		} ,
 		"@PrepositionalPhrase" : {
 			"@Preposition @Object" : {"weight" : 4}
 		} ,
@@ -83,12 +97,12 @@ var grammars = [
 			"a" : {"weight": 4}
 		}
 	} ,
-	future_tense_grammar = {
+	old_grammar : {
 		"@ROOT" : {
-			"@Subject @PassivePredictor" : {"weight" : 4} , 
-			"@Subject @ActivePredictor"  : {"weight": 4} ,
-			"@Subject @ActiveStatement" : {"weight": 4} ,
-			"@Subject @PassiveHistory" : {"weight": 4} ,
+			"OLD @Subject @PassivePredictor" : {"weight" : 4} , 
+			"OLD @Subject @ActivePredictor"  : {"weight": 4} ,
+			"OLD @Subject @ActiveStatement" : {"weight": 4} ,
+			"OLD @Subject @PassiveHistory" : {"weight": 4} ,
 		} ,
 		"@PassivePredictor" : {
 			"will be @PassiveVerb @PrepositionalPhrase" : {"weight": 4}
@@ -141,6 +155,6 @@ var grammars = [
 			"a" : {"weight": 4}
 		}
 	}
-]
+}
 
 
