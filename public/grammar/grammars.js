@@ -1,7 +1,18 @@
+var sentence_types = {
+	"sign_declaration" : {
+		"sign" : true,
+		"active" : true
+	} ,
+	"bad_statement" : {
+		"bad" : true,
+		"future" : true
+	}
+}
+
 var grammars = {
 	general_grammar : {
 		"@ROOT" : {
-			"@Subject @VerbPhrase"  : {"weight": 4},
+			"@Subject @VerbPhrase"  : {"weight": 4, "bad" : true},
 			"@PrepositionalPhrase , @Subject @VerbPhrase" : {"weight": 4}
 		} ,
 		"@VerbPhrase" : {
@@ -11,47 +22,47 @@ var grammars = {
 			"eaten" : {
 				"weight": 4,
 				"passive": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 			"destroyed" : {
 				"weight": 4,
 				"passive": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 			"destroy" : {
 				"weight": 4,
 				"active": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 			"subjugated" : {
 				"weight": 4,
 				"active": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 			"philosophically challenged" : {
 				"weight": 4,
 				"passive": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 			"granted diplomatic immunity" : {
 				"weight": 4,
 				"passive": true,
-				"tag": "good"
+				"bad": true
 			} ,
 			"sacrificed" : {
 				"weight": 4,
 				"passive": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 	 		"metaphorically conquer" : {
 				"weight": 4,
 				"active": true,
-				"tag": "bad"
+				"bad": true
 			} ,
 	 		"assert your dominance over" : {
 				"weight": 4,
 				"active": true,
-				"tag": "bad"
+				"bad": true
 			}
 		} , 
 		"@PrepositionalPhrase" : {
@@ -84,7 +95,11 @@ var grammars = {
 		"@Noun" : {
 			"star" : {"weight": 4},
 			"galaxy" : {"weight": 4},
-			"moose" : {"weight": 4}
+			"moose" : {"weight": 4},
+			"Aries" : {
+				"weight" : 4,
+				"sign" : true
+			}
 		} ,
 		"@ProperNoun" : {
 			"Master Commander" : {"weight": 4},
