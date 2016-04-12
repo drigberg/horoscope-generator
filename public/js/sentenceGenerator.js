@@ -19,7 +19,6 @@ generateButton.addEventListener("click", function(){
     console.log(sentence.tags);
     generateSentence();
     sentenceDisplay.innerHTML = cleanSentence();
-
 })
 
 function generateSentence(){
@@ -42,13 +41,14 @@ function generateSentence(){
                     for (tag in sentence.tags) {
                         if (tag in active_grammar[sentence.content[index]][following]) {
                             if (active_grammar[sentence.content[index]][following][tag] !== sentence.tags[tag]) {
-                                testForAgreement = false
+                                testForAgreement = false;
                             }
                         }
                     }
                     for (var freq = 0; freq < active_grammar[sentence.content[index]][following]["weight"]; freq++){
                         followingList.push(following);
-                    }                      }
+                    }                      
+                }
                 var newText = followingList[Math.floor(Math.random()*followingList.length)];
                 if(newText){
                     newText = newText.split(" ");
@@ -68,7 +68,7 @@ function generateSentence(){
 }
 
 function cleanSentence(){
-    sentence.cleanedContent = ""
+    sentence.cleanedContent = "";
     if (sentence.content) {
         for (i = 0; i < sentence.content.length; i++){
             if (i == 0){
@@ -77,7 +77,11 @@ function cleanSentence(){
                 if (sentence.content[i] == "a" && sentence.content[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0, "A":0, "E":0, "I":0, "O":0, "U":0}){
                     sentence.content[i] = "an";
                 }
-                sentence.cleanedContent += (" " + sentence.content[i]);
+                if (sentence.content[i] !== "," && sentence.content[i-1] !=- ";"){
+                    sentence.cleanedContent += (" " + sentence.content[i]);
+                } else {
+                     sentence.cleanedContent += sentence.content[i];                   
+                }
             }
         };
         sentence.cleanedContent = sentence.cleanedContent.charAt(0).toUpperCase() + sentence.cleanedContent.slice(1) + "!";

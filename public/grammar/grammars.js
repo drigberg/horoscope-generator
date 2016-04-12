@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-var grammars = [
-	basic_grammar = {
-=======
 var sentence_types = {
 	"sign_declaration" : {
 		"sign" : true,
@@ -15,7 +11,6 @@ var sentence_types = {
 
 var grammars = {
 	general_grammar : {
->>>>>>> 8b724b64bb1be8ad467ef9baf39d91cb03f85a8f
 		"@ROOT" : {
 			"@Subject @VerbPhrase"  : {"weight": 4, "bad" : true},
 			"@PrepositionalPhrase , @Subject @VerbPhrase" : {"weight": 4}
