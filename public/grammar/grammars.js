@@ -1,45 +1,75 @@
+<<<<<<< HEAD
 var grammars = [
 	basic_grammar = {
+=======
+var sentence_types = {
+	"sign_declaration" : {
+		"sign" : true,
+		"active" : true
+	} ,
+	"bad_statement" : {
+		"bad" : true,
+		"future" : true
+	}
+}
+
+var grammars = {
+	general_grammar : {
+>>>>>>> 8b724b64bb1be8ad467ef9baf39d91cb03f85a8f
 		"@ROOT" : {
-			"@Subject @PassivePredictor" : {"weight" : 4} , 
-			"@Subject @ActivePredictor"  : {"weight": 4} ,
-			"@Subject @ActiveStatement" : {"weight": 4} ,
-			"@Subject @PassiveHistory" : {"weight": 4} ,
+			"@Subject @VerbPhrase"  : {"weight": 4, "bad" : true},
+			"@PrepositionalPhrase , @Subject @VerbPhrase" : {"weight": 4}
 		} ,
-		"@PassivePredictor" : {
-			"will be @PassiveVerb @PrepositionalPhrase" : {"weight": 4}
+		"@VerbPhrase" : {
+			"@Verb @Object" : {"weight": 4}
 		} ,
-		"@ActivePredictor" : {
-			"will @ActiveVerb @Object" : {"weight": 4}
-		} ,
-		"@ActiveStatement" : {
-			"@ActiveVerb @Object" : {"weight": 4}
-		} , 
-		"@PassiveHistory" : {
-			"have been @PassiveVerb @PrepositionalPhrase" : {"weight": 4}
-		} , 
-		"@PassiveVerb" : {
+		"@Verb" : {
 			"eaten" : {
 				"weight": 4,
-				"tag": "bad thing"
-			},
+				"passive": true,
+				"bad": true
+			} ,
 			"destroyed" : {
 				"weight": 4,
-				"tag": "bad thing"
-			},
+				"passive": true,
+				"bad": true
+			} ,
+			"destroy" : {
+				"weight": 4,
+				"active": true,
+				"bad": true
+			} ,
 			"subjugated" : {
 				"weight": 4,
-				"tag": "bad thing"
-			},
+				"active": true,
+				"bad": true
+			} ,
 			"philosophically challenged" : {
 				"weight": 4,
-				"tag": "bad thing"
+				"passive": true,
+				"bad": true
+			} ,
+			"granted diplomatic immunity" : {
+				"weight": 4,
+				"passive": true,
+				"bad": true
+			} ,
+			"sacrificed" : {
+				"weight": 4,
+				"passive": true,
+				"bad": true
+			} ,
+	 		"metaphorically conquer" : {
+				"weight": 4,
+				"active": true,
+				"bad": true
+			} ,
+	 		"assert your dominance over" : {
+				"weight": 4,
+				"active": true,
+				"bad": true
 			}
 		} , 
-		"@ActiveVerb" : {
-	 		"metaphorically conquer" : {"weight": 4},
-	 		"assert your dominance over" : {"weight" : 4}
-		} ,
 		"@PrepositionalPhrase" : {
 			"@Preposition @Object" : {"weight" : 4}
 		} ,
@@ -70,7 +100,11 @@ var grammars = [
 		"@Noun" : {
 			"star" : {"weight": 4},
 			"galaxy" : {"weight": 4},
-			"moose" : {"weight": 4}
+			"moose" : {"weight": 4},
+			"Aries" : {
+				"weight" : 4,
+				"sign" : true
+			}
 		} ,
 		"@ProperNoun" : {
 			"Master Commander" : {"weight": 4},
@@ -83,12 +117,12 @@ var grammars = [
 			"a" : {"weight": 4}
 		}
 	} ,
-	future_tense_grammar = {
+	old_grammar : {
 		"@ROOT" : {
-			"@Subject @PassivePredictor" : {"weight" : 4} , 
-			"@Subject @ActivePredictor"  : {"weight": 4} ,
-			"@Subject @ActiveStatement" : {"weight": 4} ,
-			"@Subject @PassiveHistory" : {"weight": 4} ,
+			"OLD @Subject @PassivePredictor" : {"weight" : 4} , 
+			"OLD @Subject @ActivePredictor"  : {"weight": 4} ,
+			"OLD @Subject @ActiveStatement" : {"weight": 4} ,
+			"OLD @Subject @PassiveHistory" : {"weight": 4} ,
 		} ,
 		"@PassivePredictor" : {
 			"will be @PassiveVerb @PrepositionalPhrase" : {"weight": 4}
@@ -141,6 +175,6 @@ var grammars = [
 			"a" : {"weight": 4}
 		}
 	}
-]
+}
 
 
