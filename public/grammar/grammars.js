@@ -1,5 +1,5 @@
 var grammars = [
-	past_tense_grammar = {
+	basic_grammar = {
 		"@ROOT" : {
 			"@Subject @PassivePredictor" : {"weight" : 4} , 
 			"@Subject @ActivePredictor"  : {"weight": 4} ,
