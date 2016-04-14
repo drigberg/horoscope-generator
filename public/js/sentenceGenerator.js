@@ -8,6 +8,7 @@ var paragraph = [];
 generateButton.addEventListener("click", function(){
     //generate list of sentences
     //for each sentence type, generate sentence and append to paragraph
+<<<<<<< HEAD
     var finalDisplay = "";
     for (var j = 0; j < 2; j++){
         sentence = {
@@ -19,6 +20,18 @@ generateButton.addEventListener("click", function(){
         finalDisplay += (" " + cleanSentence());
     }
     sentenceDisplay.innerHTML = finalDisplay;
+=======
+    sentence = {
+        "content" : ["@ROOT"],
+        "complete" : false,
+        "tags" : {}
+    };  
+    sentence.tags = sentence_types[Object.keys(sentence_types)[Math.floor(Math.random()*Object.keys(sentence_types).length)]];
+    //display paragraph, with spaces between elements
+    console.log(sentence.tags);
+    generateSentence();
+    sentenceDisplay.innerHTML = cleanSentence();
+>>>>>>> v3.0
 })
 
 function generateSentence(){
@@ -37,9 +50,25 @@ function generateSentence(){
                 var convertedTextList = [];
                 sentence.complete = false;
                 for (following in grammar[sentence.content[index]]){
+<<<<<<< HEAD
                     for (var freq = 0; freq < grammar[sentence.content[index]][following]["weight"]; freq++){
                         followingList.push(following);
                     }                             
+=======
+                    var testForAgreement = true;
+                    for (tag in sentence.tags) {
+                        if (tag in grammar[sentence.content[index]][following]) {
+                            if (grammar[sentence.content[index]][following][tag] !== sentence.tags[tag]) {
+                                testForAgreement = false;
+                            }
+                        }
+                    }
+                    if (testForAgreement == true) {
+                        for (var freq = 0; freq < grammar[sentence.content[index]][following]["weight"]; freq++){
+                            followingList.push(following);
+                        } 
+                    }                     
+>>>>>>> v3.0
                 }
                 var newText = followingList[Math.floor(Math.random()*followingList.length)];
                 if(newText){
