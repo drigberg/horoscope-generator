@@ -3,27 +3,39 @@ var sentence_types = {
 		"object" : "sign",
 		"voice" : "active",
 		"tense" : "present",
-		"person" : "second"
+		"person" : "second" ,
+		"verbtype" : "linking"
 	} ,
 	"signDeclaration_thirdPerson_" : {
 		"object" : "sign" ,
 		"voice" : "active" ,
 		"tense" : "past" ,
-		"person" : "third"
+		"person" : "third" ,
+		"verbtype" : "linking"
 	} ,
-	"badStatement_secondPerson" : {
+	"badStatement_secondPerson_present" : {
 		"good/bad" : "bad" ,
 		"tense" : "present" ,
 		"person" : "second",
 		"object" : "role" ,
-		"modified_object" : true
+		"modified_object" : true ,
+		"verbtype" : "linking"
+	} ,
+	"badStatement_secondPerson_future" : {
+		"good/bad" : "bad" ,
+		"tense" : "future" ,
+		"person" : "second",
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking"
 	} ,
 	"badStatement_thirdPerson" : {
 		"good/bad" : "bad" ,
 		"tense" : "present" ,
 		"person" : "third" ,
 		"object" : "role" ,
-		"modified_object" : true
+		"modified_object" : true ,
+		"verbtype" : "linking"
 	} 
 }
 
@@ -33,12 +45,23 @@ var grammar = {
 			"weight": 4
 		}
 	} , 
-	"@PrepositionalPhrase" : {
-		"@Preposition @Object" : {"weight" : 4}
-	} ,
 	"@VerbPhrase" : {
 		"@Verb @Object" : {
 			"weight": 4
+		}
+	} ,
+	"@Subject" : {
+		"you" : {
+			"weight": 4,
+			"person": "second"
+		} ,
+		"your mother" : {
+			"weight": 4,
+			"person": "third"
+		} ,
+		"your father" : {
+			"weight": 4,
+			"person": "third"
 		}
 	} ,
 	"@Object" : {
@@ -61,48 +84,39 @@ var grammar = {
 			"weight": 4,
 			"tense" : "present",
 			"voice" : "active",
-			"person" : "second"
+			"person" : "second",
+			"verbtype" : "linking"
+
 		} ,
 		"were" : {
 			"weight": 4,
 			"tense" : "past",
 			"voice" : "active",
-			"person" : "second"			
+			"person" : "second",
+			"verbtype" : "linking"			
 		} ,
 		"was" : {
 			"weight": 4,
 			"tense" : "past",
 			"voice" : "active",
-			"person" : "third"			
+			"person" : "third",
+			"verbtype" : "linking"			
 		} ,
 		"is" : {
 			"weight": 4,
 			"tense" : "present",
 			"voice" : "active",
-			"person" : "third"			
+			"person" : "third",
+			"verbtype" : "linking"			
+		} ,
+		"will be" : {
+			"weight": 4,
+			"tense" : "future",
+			"voice" : "active",
+			"person" : "second",
+			"verbtype" : "linking"			
 		}
 	} , 
-	"@PrepositionalPhrase" : {
-		"@Preposition @Object" : {"weight" : 4}
-	} ,
-	"@Subject" : {
-		"you" : {
-			"weight": 4,
-			"person": "second"
-		} ,
-		"your mother" : {
-			"weight": 4,
-			"person": "third"
-		} ,
-		"your father" : {
-			"weight": 4,
-			"person": "third"
-		}
-	} ,
-	"@Preposition" : {
-		"in" : {"weight": 4},
-		"with" : {"weight": 4},
-	} ,
 	"@Noun" : {
 		"star" : {
 			"weight": 4,
@@ -157,6 +171,15 @@ var grammar = {
 			"weight" : 4,
 			"good/bad" : "bad"
 		} 				
+	} ,
+	"@PrepositionalPhrase" : {
+		"@Preposition @Object" : {
+			"weight" : 4
+		}
+	} ,
+	"@Preposition" : {
+		"in" : {"weight": 4},
+		"with" : {"weight": 4},
 	}
 }
 
