@@ -58,10 +58,6 @@ var grammar = {
 		"your mother" : {
 			"weight": 4,
 			"person": "third"
-		} ,
-		"your father" : {
-			"weight": 4,
-			"person": "third"
 		}
 	} ,
 	"@Object" : {
@@ -118,25 +114,13 @@ var grammar = {
 		}
 	} , 
 	"@Noun" : {
-		"star" : {
-			"weight": 4,
-			"object" : "thing"
-		},
 		"moose" : {
 			"weight": 4,
 			"object" : "thing"
 		} ,
-		"Aries" : {
-			"weight" : 4,
-			"object" : "sign"
-		} ,
 		"Gemini" : {
 			"weight" : 4,
 			"object" : "sign"
-		} ,
-		"athlete" : {
-			"weight" : 4,
-			"object" : "role"
 		} ,
 		"scientist" : {
 			"weight" : 4,
@@ -144,10 +128,7 @@ var grammar = {
 		} 
 	} ,
 	"@ProperNoun" : {
-		"Master Commander" : {"weight": 4},
-		"Lord Ruler" : {"weight": 4},
-		"God" : {"weight": 4},
-		"Joe" : {"weight": 4}
+		"God" : {"weight": 4}
 	} ,
 	"@Conjunction" : {
 		"a" : {
@@ -159,18 +140,10 @@ var grammar = {
 			"weight" : 4,
 			"good/bad" : "good"
 		} ,
-		"amazing" : {
-			"weight" : 4,
-			"good/bad" : "good"
-		} ,
 		"terrible" : {
 			"weight" : 4,
 			"good/bad" : "bad"
-		} ,
-		"horrible" : {
-			"weight" : 4,
-			"good/bad" : "bad"
-		} 				
+		}		
 	} ,
 	"@PrepositionalPhrase" : {
 		"@Preposition @Object" : {
