@@ -8,19 +8,6 @@ var paragraph = [];
 generateButton.addEventListener("click", function(){
     //generate list of sentences
     //for each sentence type, generate sentence and append to paragraph
-<<<<<<< HEAD
-    var finalDisplay = "";
-    for (var j = 0; j < 2; j++){
-        sentence = {
-            "content" : ["@ROOT"],
-            "complete" : false
-        };  
-        //display paragraph, with spaces between elements
-        generateSentence();
-        finalDisplay += (" " + cleanSentence());
-    }
-    sentenceDisplay.innerHTML = finalDisplay;
-=======
     sentence = {
         "content" : ["@ROOT"],
         "complete" : false,
@@ -31,7 +18,6 @@ generateButton.addEventListener("click", function(){
     console.log(sentence.tags);
     generateSentence();
     sentenceDisplay.innerHTML = cleanSentence();
->>>>>>> v3.0
 })
 
 function generateSentence(){
@@ -50,11 +36,6 @@ function generateSentence(){
                 var convertedTextList = [];
                 sentence.complete = false;
                 for (following in grammar[sentence.content[index]]){
-<<<<<<< HEAD
-                    for (var freq = 0; freq < grammar[sentence.content[index]][following]["weight"]; freq++){
-                        followingList.push(following);
-                    }                             
-=======
                     var testForAgreement = true;
                     for (tag in sentence.tags) {
                         if (tag in grammar[sentence.content[index]][following]) {
@@ -68,7 +49,6 @@ function generateSentence(){
                             followingList.push(following);
                         } 
                     }                     
->>>>>>> v3.0
                 }
                 var newText = followingList[Math.floor(Math.random()*followingList.length)];
                 if(newText){
