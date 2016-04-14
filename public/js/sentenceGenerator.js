@@ -1,5 +1,6 @@
 var sentenceDisplay = document.getElementById("sentence");
 var generateButton = document.getElementById("generate");
+var nameInput = document.getElementById("name");
 
 var sentence = {};    
 var paragraph = [];
@@ -8,6 +9,22 @@ var paragraph = [];
 generateButton.addEventListener("click", function(){
     //generate list of sentences
     //for each sentence type, generate sentence and append to paragraph
+    // if (nameInput.value !== ""){
+    //     grammar["@Subject"][nameInput.value] = {
+    //         "weight" : 4 ,
+    //         "person" : "third" ,
+    //         "name" : true
+    //         }
+    //     }
+    // } else {
+    //     grammar["@Subject"]["@Name"] = {
+    //         "you" : {
+    //             "weight": 4,
+    //             "person" : "second",
+    //             "name" : "true"
+    //         } 
+    //     }
+    // }
     sentence = {
         "content" : ["@ROOT"],
         "complete" : false,
