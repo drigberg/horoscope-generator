@@ -1,30 +1,35 @@
 var sentenceDisplay = document.getElementById("sentence");
 var generateButton = document.getElementById("generate");
-var nameInput = document.getElementById("name");
+var nameInput = document.getElementById("userName");
 
 var sentence = {};    
 var paragraph = [];
+var userName = "";
 
 
 generateButton.addEventListener("click", function(){
     //generate list of sentences
-    //for each sentence type, generate sentence and append to paragraph
-    // if (nameInput.value !== ""){
-    //     grammar["@Subject"][nameInput.value] = {
-    //         "weight" : 4 ,
-    //         "person" : "third" ,
-    //         "name" : true
-    //         }
-    //     }
-    // } else {
-    //     grammar["@Subject"]["@Name"] = {
-    //         "you" : {
-    //             "weight": 4,
-    //             "person" : "second",
-    //             "name" : "true"
-    //         } 
-    //     }
-    // }
+    // for each sentence type, generate sentence and append to paragraph
+    userName = nameInput.value
+    if (userName !== ""){
+        sentence_types["name_signDeclaration"] = {
+            "object" : "sign",
+            "voice" : "active",
+            "name" : true,
+            "tense" : "present",
+            "person" : "third" ,
+            "verbtype" : "linking"
+        };
+        grammar["@Subject"]["@Name"] = {
+            "weight" : 50 ,
+            "person" : "third" ,
+            "name" : true           
+        };
+        grammar["@Name"] = {};
+        grammar["@Name"][userName] = {
+            "weight" : 4
+        };
+    }
     sentence = {
         "content" : ["@ROOT"],
         "complete" : false,

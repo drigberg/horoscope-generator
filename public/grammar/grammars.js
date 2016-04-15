@@ -53,11 +53,13 @@ var grammar = {
 	"@Subject" : {
 		"you" : {
 			"weight": 4,
-			"person": "second"
+			"person": "second" ,
+			"name" : false
 		} ,
 		"your mother" : {
 			"weight": 4,
-			"person": "third"
+			"person": "third" ,
+			"name" : false
 		}
 	} ,
 	"@Object" : {

@@ -1,25 +1,42 @@
 <html>
 <head>
-    <title>Sentence Generation</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <title>ShittyHoroscopeGenerator.com</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
-<body>
+<body id="body" style="overflow:hidden;">
     <div class="container" id="main">
         <div id="awesome">
             <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
             <h3 class="heading"><strong>For the Avid Stars-Knowing Believer</strong></h3>
         </div>
-        <form>
+        <form id="debugForm">
           <div class="form-group">
-            <input type="text" class="form-control" id="name" placeholder="Name please!">
+            <input type="text" class="form-control" id="userName" placeholder="Name please!">
           </div>
         </form>        
         <button class="btn btn-lg btn-danger" id="generate">Generate Sentence!</button>
+        <button id="popupButton" class="btn btn-lg btn-danger" onclick="div_show()">Enter Your Personal Info</button>
         <h3 class="heading" id="sentence"><strong></strong></h3>
     </div>
+
+    <div id="popupWithBlur">
+        <div id="popupContact">
+            <form action="#" id="userInfo" method="post" name="form">
+                <span id="close" class="glyphicon glyphicon-remove" onclick ="div_hide()"></span>
+                <h2>Personal Info</h2>
+                <hr>
+                <input id="name" name="name" placeholder="Name" type="text">
+                <a href="javascript:%20check_empty()" class="btn btn-lg btn-danger" id="submit">Discover Your Density!</a>
+            </form>
+        </div>
+    </div>
+
+
+
     <script src="/grammar/grammars.js" type="text/javascript"></script>
     <script src="/js/sentenceGenerator.js" type="text/javascript"></script>
+    <script src="/js/popupForm.js" type="text/javascript"></script>
     <!-- <script src="/js/style-animations.js" type="text/javascript"></script> -->
 </body>
 </html>
