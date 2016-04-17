@@ -1,15 +1,15 @@
 var sentence_types = {
-	"secondPerson_signDeclaration" : {
+	"signDeclaration_secondPerson" : {
 		"object" : "sign",
 		"voice" : "active",
 		"tense" : "present",
 		"person" : "second" ,
 		"verbtype" : "linking"
 	} ,
-	"signDeclaration_thirdPerson_" : {
+	"signDeclaration_thirdPerson" : {
 		"object" : "sign" ,
 		"voice" : "active" ,
-		"tense" : "past" ,
+		"tense" : "present" ,
 		"person" : "third" ,
 		"verbtype" : "linking"
 	} ,
@@ -29,14 +29,23 @@ var sentence_types = {
 		"modified_object" : true ,
 		"verbtype" : "linking"
 	} ,
-	"badStatement_thirdPerson" : {
+	"badStatement_thirdPerson_present" : {
 		"good/bad" : "bad" ,
 		"tense" : "present" ,
 		"person" : "third" ,
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking"
-	} 
+	}  ,
+	"badStatement_thirdPerson_past" : {
+		"good/bad" : "bad" ,
+		"tense" : "past" ,
+		"person" : "third" ,
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking" ,
+		"name" : false
+	}  	
 }
 
 var grammar = {
