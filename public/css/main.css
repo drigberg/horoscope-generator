@@ -4,6 +4,39 @@ body {
 	transition: 4s;
 }
 
+#header {
+	background-color: rgba(0,0,0,0.2);
+	padding: 20px 10px 40px 10px;
+	box-shadow: 0 0 1em rgba(0,0,0,0.2);
+	height: 300px;
+	width: 90%;
+	margin: 0 auto;
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+
+#header:hover {
+	width: 92%;
+	height: 306px;
+}
+
+#input {
+	background-color: rgba(0,0,0,0.2);
+	padding: 10px 10px 10px 10px;
+	box-shadow: 0 0 1em rgba(0,0,0,0.2);
+	height: 200px;
+	width: 90%;
+	margin: 20px auto 20px auto;
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+#input:hover {
+	width: 92%;
+	height: 206px;
+}
+
 #debugForm {
 	margin: 50px auto 10px auto;
 	width: 40%;
@@ -14,10 +47,47 @@ body {
 	margin-bottom: 50px;
 }
 
+ul {
+	list-style: none;
+}
+/*#leaderboard {
+	margin: 0 auto;
+	width: 70%;
+	background-color: white;
+	padding: 40px 10px 40px 10px;
+	box-shadow: 0 0 1em white;
+}*/
+
+#leaderboard {
+	background-color: rgba(0,0,0,0.2);
+	padding: 40px 10px 40px 10px;
+	box-shadow: 0 0 1em rgba(0,0,0,0.2);
+	height: 500px;
+	width: 70%;
+	color: white;
+	margin: 0 auto;
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+#leaderboard:hover {
+	width: 72%;
+	height: 506px;
+}
+
 .heading {
 	text-align: center;
 	color: white;
 	letter-spacing: 1.5;
+}
+
+.list-icon {
+	width: 36px;
+	height: 36px;
+}
+
+.list-text {
+	display: inline-block;
 }
 
 h1 {

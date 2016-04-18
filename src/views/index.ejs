@@ -3,33 +3,36 @@
     <title>ShittyHoroscopeGenerator.com</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="SHORTCUT ICON" href="css/horoscope-logo.ico">
 </head>
 <body>
     <div class="container" id="main">
-        <div id="awesome">
+        <div id="header">
             <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
             <h3 class="heading"><strong>For the Avid Stars-Knowing Believer</strong></h3>
         </div>
-        <form id="debugForm">
-          <div class="form-group">
-            <input type="text" class="form-control" id="userName" placeholder="Name please!">
-          </div>
-        </form>        
+        <div class="container" id="input">
+            <form id="debugForm">
+              <div class="form-group">
+                <input type="text" class="form-control" id="userName" placeholder="Name please!">
+              </div>
+            </form>
         <button class="btn btn-lg btn-danger" id="generate">Generate Sentence!</button>
+        </div>        
+
 <!--         <button id="popupButton" class="btn btn-lg btn-danger" onclick="div_show()">Enter Your Personal Info</button>
- -->        <h3 class="heading" id="sentence"><strong></strong></h3>
-    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-        <% allHoroscopes.forEach(function(horoscope){ %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                   <img src="<%= horoscope.image %>">
-                   <div class="caption">
-                       <h4><%= horoscope.author %> got "<%= horoscope.text %> "</h4>
-                   </div>
-                </div>
-            </div>
-        <% }); %>
-    </div>
+ -->        
+    <h3 class="heading" id="sentence"><strong></strong></h3>
+        <div class="container" id="leaderboard">
+            <ul>
+                <% allHoroscopes.forEach(function(horoscope){ %>
+                    <li>
+                        <img class="list-icon" src="<%= horoscope.image %>">
+                        <h4 class="list-text"><%= horoscope.author %> from <%= horoscope.hometown %> got "<%= horoscope.text %>"</h4>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
     </div>
 
 <!--     <div id="popupWithBlur">
