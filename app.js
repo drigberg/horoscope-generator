@@ -14,7 +14,7 @@ mongoose.connect(url);
 app.use(express.static("public"));
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
-seedDB();
+// seedDB();
 
 //ROOT ROUTE
 app.get("/", function (req, res){

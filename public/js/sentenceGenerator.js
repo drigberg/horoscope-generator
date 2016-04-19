@@ -1,13 +1,19 @@
-var sentenceDisplay = document.getElementById("sentence");
-var generateButton = document.getElementById("generate");
+var sentenceDisplay = $("#content");
+var generateButton = $("#generate");
 var nameInput = document.getElementById("userName");
 
 var sentence = {};    
 var paragraph = [];
 var userName = "";
 
+$( document ).ready(function() {
+    sentenceDisplay.css("opacity", 0.0);
+});
 
-generateButton.addEventListener("click", function(){
+$("#showButton").click(function(){
+    $(".showToggle").fadeToggle(500);
+})
+generateButton.click( function() {
     //generate list of sentences
     // for each sentence type, generate sentence and append to paragraph
     userName = nameInput.value
@@ -39,8 +45,23 @@ generateButton.addEventListener("click", function(){
     //display paragraph, with spaces between elements
     console.log(sentence.tags);
     generateSentence();
-    sentenceDisplay.innerHTML = cleanSentence();
-})
+    animateNewHoroscope();
+});
+
+function animateNewHoroscope(){
+    if (sentenceDisplay.css("opacity") == 0.0) {
+        sentenceDisplay.html(cleanSentence());
+    } else {
+        sentenceDisplay.animate({
+            opacity: 0.0
+        } , 500 , function(){
+            sentenceDisplay.html(cleanSentence());
+        });
+    }
+    sentenceDisplay.animate({
+        opacity: 1.0
+    });
+}
 
 function generateSentence(){
     //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
