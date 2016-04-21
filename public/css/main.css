@@ -9,7 +9,6 @@ body {
 	background-color: rgba(0,0,0,0.2);
 	padding: 20px 10px 40px 10px;
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
-	height: 300px;
 	width: 90%;
 	margin: 0 auto;
 	transition: all 0.1s;
@@ -55,14 +54,17 @@ ul {
 
 #content-box {
 	width: 100%;
-	height: 70px;
+	margin: 0;
+}
+
+#content {
+	margin: 10px 0px;
 }
 
 #leaderboard {
 	background-color: rgba(0,0,0,0.2);
 	padding: 40px 10px 40px 10px;
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
-	height: 500px;
 	width: 70%;
 	color: white;
 	margin: 0 auto;
@@ -83,6 +85,9 @@ ul {
 }
 
 .list-text {
+	display: inline-block;
+}
+.list-icon {
 	display: inline-block;
 }
 
@@ -213,4 +218,48 @@ textarea {
 #popupButton {
 	display: block;
 	margin: 0px auto 50px auto;
+}
+
+@media screen and (max-width: 900px) {
+
+	#input {
+		width: 100%;
+		margin-bottom: 0;
+	}
+
+	#leaderboard {
+		width: 100%;
+	}
+	#main {
+		width: 100%;
+		padding: 0%;
+	}
+
+	#header {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 486px) {
+	#input {
+		width: 100%;
+		margin-bottom: 0;
+	}
+
+	#leaderboard {
+		width: 100%;
+	}
+	#main {
+		width: 100%;
+		padding: 0%;
+	}
+	#container {
+		width: 100%;
+	}
+
+	#header {
+		width: 100%;
+	}
+	.list-text {
+		font-size: 10px;
+	}
 }
