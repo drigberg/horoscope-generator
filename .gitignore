@@ -8,3 +8,4 @@ Thumbs.db
 .idea/
 *.swo
 *.swp
+node_modules
