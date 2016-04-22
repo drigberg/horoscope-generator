@@ -4,7 +4,7 @@
   "description": "for the avid stars-knowing believer",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/mocha/bin/mocha",
     "start": "node app.js"
   },
   "author": "Daniel Rigberg",
@@ -12,7 +12,12 @@
   "dependencies": {
     "ejs": "^2.4.1",
     "express": "^4.13.4",
+    "moment": "^2.13.0",
     "mongodb": "^2.1.16",
     "mongoose": "^4.4.12"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
   }
 }
