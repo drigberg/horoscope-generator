@@ -1,7 +1,12 @@
+var horoscope = new Object();
+
 $.ajax({
-  url: "/js/grammars.json",
-  dataType: "json",
-  success: function(data) {var horoscope = data}
+    url: "/grammar/grammars.json",
+    dataType: "json",
+    success: function(data) {
+        horoscope = data;
+        console.log(horoscope);
+    }
 });
 
 $(document).ready(function() {
