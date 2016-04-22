@@ -1,24 +1,19 @@
-var sentenceDisplay = $("#content");
-var generateButton = $("#generate");
-var nameInput = document.getElementById("userName");
-
-var sentence = {};    
-var paragraph = [];
-var userName = "";
-
-$( document ).ready(function() {
-    sentenceDisplay.css("opacity", 0.0);
+$.ajax({
+  url: "/js/grammars.json",
+  dataType: "json",
+  success: function(data) {var horoscope = data}
 });
 
-$("#showButton").click(function(){
-    $(".showToggle").fadeToggle(500);
-})
-generateButton.click( function() {
+$(document).ready(function() {
+    $("#content").css("opacity", 0.0);
+});
+
+$("#generate").click( function() {
     //generate list of sentences
     // for each sentence type, generate sentence and append to paragraph
-    userName = nameInput.value
-    if (userName !== ""){
-        sentence_types["name_signDeclaration"] = {
+    horoscope.userName = $("#userName").val();
+    if (horoscope.userName !== ""){
+        horoscope.sentence_types["name_signDeclaration"] = {
             "object" : "sign",
             "voice" : "active",
             "name" : true,
@@ -26,81 +21,66 @@ generateButton.click( function() {
             "person" : "third" ,
             "verbtype" : "linking"
         };
-        grammar["@Subject"]["@Name"] = {
+        horoscope.grammar["@Subject"]["@Name"] = {
             "weight" : 50 ,
             "person" : "third" ,
             "name" : true           
         };
-        grammar["@Name"] = {};
-        grammar["@Name"][userName] = {
+        horoscope.grammar["@Name"] = {};
+        horoscope.grammar["@Name"][horoscope.userName] = {
             "weight" : 4
         };
     }
-    sentence = {
+    horoscope.sentence = {
         "content" : ["@ROOT"],
         "complete" : false,
         "tags" : {}
     };  
-    sentence.tags = sentence_types[Object.keys(sentence_types)[Math.floor(Math.random()*Object.keys(sentence_types).length)]];
+    horoscope.sentence.tags = horoscope.sentence_types[Object.keys(horoscope.sentence_types)[Math.floor(Math.random()*Object.keys(horoscope.sentence_types).length)]];
     //display paragraph, with spaces between elements
-    console.log(sentence.tags);
+    console.log(horoscope.sentence.tags);
     generateSentence();
     animateNewHoroscope();
 });
 
-function animateNewHoroscope(){
-    if (sentenceDisplay.css("opacity") == 0.0) {
-        sentenceDisplay.html(cleanSentence());
-    } else {
-        sentenceDisplay.animate({
-            opacity: 0.0
-        } , 500 , function(){
-            sentenceDisplay.html(cleanSentence());
-        });
-    }
-    sentenceDisplay.animate({
-        opacity: 1.0
-    });
-}
-
 function generateSentence(){
     //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
-    sentence.complete = false;
-    var tripwire = 0;
+    horoscope.sentence.complete = false;
+    horoscope.tripwire = 0;
     //convert nonterminals until only terminals are left
-    while (sentence.complete == false){
+    while (horoscope.sentence.complete == false){
     //while (tripwire < 12){
         //tripwire += 1;
-        sentence.complete = true;
+        horoscope.sentence.complete = true;
         //console.log("Current sentence is: " + sentence.content);
-        for (var index = 0; index < sentence.content.length; index++){
-            if (sentence.content[index] in grammar){
-                var followingList = [];
-                var convertedTextList = [];
-                sentence.complete = false;
-                for (following in grammar[sentence.content[index]]){
-                    var testForAgreement = true;
-                    for (tag in sentence.tags) {
-                        if (tag in grammar[sentence.content[index]][following]) {
-                            if (grammar[sentence.content[index]][following][tag] !== sentence.tags[tag]) {
-                                testForAgreement = false;
+        for (var index = 0; index < horoscope.sentence.content.length; index++){
+            if (horoscope.sentence.content[index] in horoscope.grammar){
+                horoscope.followingList = [];
+                horoscope.convertedTextList = [];
+                horoscope.sentence.complete = false;
+                for (following in horoscope.grammar[horoscope.sentence.content[index]]){
+                    horoscope.testForAgreement = true;
+                    for (tag in horoscope.sentence.tags) {
+                        if (tag in horoscope.grammar[horoscope.sentence.content[index]][following]) {
+                            if (horoscope.grammar[horoscope.sentence.content[index]][following][tag] !== horoscope.sentence.tags[tag]) {
+                                horoscope.testForAgreement = false;
                             }
                         }
                     }
-                    if (testForAgreement == true) {
-                        for (var freq = 0; freq < grammar[sentence.content[index]][following]["weight"]; freq++){
-                            followingList.push(following);
+                    if (horoscope.testForAgreement == true) {
+                        for (var freq = 0; freq < horoscope.grammar[horoscope.sentence.content[index]][following]["weight"]; freq++){
+                            horoscope.followingList.push(following);
                         } 
                     }                     
                 }
-                var newText = followingList[Math.floor(Math.random()*followingList.length)];
-                if(newText){
-                    newText = newText.split(" ");
-                    for (var i = 0; i < newText.length; i++){
+                horoscope.newText = horoscope.followingList[Math.floor(Math.random()*horoscope.followingList.length)];
+                if(horoscope.newText){
+                    horoscope.newText = horoscope.newText.split(" ");
+                    for (var i = 0; i < horoscope.newText.length; i++){
                         if (i == 0){
-                            sentence.content[index] = newText[i];
+                            horoscope.sentence.content[index] = horoscope.newText[i];
                         } else {
-                            sentence.content.splice((index + i), 0, newText[i]);
+                            horoscope.sentence.content.splice((index + i), 0, horoscope.newText[i]);
                         }
                     }
                 } else {
@@ -112,23 +92,42 @@ function generateSentence(){
 }
 
 function cleanSentence(){
-    sentence.cleanedContent = "";
-    if (sentence.content) {
-        for (i = 0; i < sentence.content.length; i++){
+    horoscope.sentence.cleanedContent = "";
+    if (horoscope.sentence.content) {
+        for (i = 0; i < horoscope.sentence.content.length; i++){
             if (i == 0){
-                sentence.cleanedContent = sentence.content[i];
+                horoscope.sentence.cleanedContent = horoscope.sentence.content[i];
             } else {
-                if (sentence.content[i] == "a" && sentence.content[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0, "A":0, "E":0, "I":0, "O":0, "U":0}){
-                    sentence.content[i] = "an";
+                if (horoscope.sentence.content[i] == "a" && horoscope.sentence.content[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0, "A":0, "E":0, "I":0, "O":0, "U":0}){
+                    horoscope.sentence.content[i] = "an";
                 }
-                if (sentence.content[i] !== "," && sentence.content[i-1] !=- ";"){
-                    sentence.cleanedContent += (" " + sentence.content[i]);
+                if (horoscope.sentence.content[i] !== "," && horoscope.sentence.content[i-1] !=- ";"){
+                    horoscope.sentence.cleanedContent += (" " + horoscope.sentence.content[i]);
                 } else {
-                     sentence.cleanedContent += sentence.content[i];                   
+                     horoscope.sentence.cleanedContent += horoscope.sentence.content[i];                   
                 }
             }
         };
-        sentence.cleanedContent = sentence.cleanedContent.charAt(0).toUpperCase() + sentence.cleanedContent.slice(1) + "!";
-        return sentence.cleanedContent;
+        horoscope.sentence.cleanedContent = horoscope.sentence.cleanedContent.charAt(0).toUpperCase() + horoscope.sentence.cleanedContent.slice(1) + "!";
+        return horoscope.sentence.cleanedContent;
     };
 };
+
+$("#showButton").click(function(){
+    $(".showToggle").fadeToggle(500);
+})
+
+function animateNewHoroscope(){
+    if ($("#content").css("opacity") == 0.0) {
+        $("#content").html(cleanSentence());
+    } else {
+        $("#content").animate({
+            opacity: 0.0
+        } , 500 , function(){
+            $("#content").html(cleanSentence());
+        });
+    }
+    $("#content").animate({
+        opacity: 1.0
+    });
+}
