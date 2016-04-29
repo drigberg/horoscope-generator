@@ -60,32 +60,31 @@ function generateSentence(){
         //console.log("Current sentence is: " + sentence.content);
         for (var index = 0; index < horoscope.sentence.content.length; index++){
             if (horoscope.sentence.content[index] in horoscope.grammar){
-                horoscope.followingList = [];
-                horoscope.convertedTextList = [];
+                horoscope.sentence.possibleConversions = [];
                 horoscope.sentence.complete = false;
                 for (following in horoscope.grammar[horoscope.sentence.content[index]]){
-                    horoscope.testForAgreement = true;
+                    horoscope.sentence.testForAgreement = true;
                     for (tag in horoscope.sentence.tags) {
                         if (tag in horoscope.grammar[horoscope.sentence.content[index]][following]) {
                             if (horoscope.grammar[horoscope.sentence.content[index]][following][tag] !== horoscope.sentence.tags[tag]) {
-                                horoscope.testForAgreement = false;
+                                horoscope.sentence.testForAgreement = false;
                             }
                         }
                     }
-                    if (horoscope.testForAgreement == true) {
+                    if (horoscope.sentence.testForAgreement == true) {
                         for (var freq = 0; freq < horoscope.grammar[horoscope.sentence.content[index]][following]["weight"]; freq++){
-                            horoscope.followingList.push(following);
+                            horoscope.sentence.possibleConversions.push(following);
                         } 
                     }                     
                 }
-                horoscope.newText = horoscope.followingList[Math.floor(Math.random()*horoscope.followingList.length)];
-                if(horoscope.newText){
-                    horoscope.newText = horoscope.newText.split(" ");
-                    for (var i = 0; i < horoscope.newText.length; i++){
+                horoscope.sentence.newText = horoscope.sentence.possibleConversions[Math.floor(Math.random()*horoscope.sentence.possibleConversions.length)];
+                if(horoscope.sentence.newText){
+                    horoscope.sentence.newText = horoscope.sentence.newText.split(" ");
+                    for (var i = 0; i < horoscope.sentence.newText.length; i++){
                         if (i == 0){
-                            horoscope.sentence.content[index] = horoscope.newText[i];
+                            horoscope.sentence.content[index] = horoscope.sentence.newText[i];
                         } else {
-                            horoscope.sentence.content.splice((index + i), 0, horoscope.newText[i]);
+                            horoscope.sentence.content.splice((index + i), 0, horoscope.sentence.newText[i]);
                         }
                     }
                 } else {
