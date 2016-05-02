@@ -22,7 +22,7 @@ body {
 
 #input {
 	background-color: rgba(0,0,0,0.2);
-	padding: 10px 10px 10px 10px;
+	padding: 20px 10px 20px 10px;
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 	width: 90%;
 	margin: 20px auto 20px auto;
@@ -32,7 +32,7 @@ body {
 
 
 #debugForm {
-	margin: 50px auto 10px auto;
+	margin: 10px auto;
 	width: 40%;
 	min-width: 200px;
 }
@@ -82,13 +82,32 @@ ul {
 .list-icon {
 	width: 36px;
 	height: 36px;
+	vertical-align: middle;
+	display: inline-block;
+
+}
+
+ul hr {
+    width: 70%;
+    margin: 10px auto;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+}
+
+ul hr:last-of-type {
+	display: none;
 }
 
 .list-text {
 	display: inline-block;
+	font-weight: 200;
+	width: 85%;
+	vertical-align: middle;
 }
-.list-icon {
-	display: inline-block;
+
+li {
+	margin: 10px 0;
 }
 
 h1 {
@@ -220,7 +239,7 @@ textarea {
 	margin: 0px auto 50px auto;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 657px) {
 
 	#input {
 		width: 100%;

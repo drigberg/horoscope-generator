@@ -1,3 +1,5 @@
+// var horoscope = require("./models/horoscope.js")
+
 var horoscope = {
     sentence_types : {},
     grammar : {},
@@ -13,8 +15,6 @@ var horoscope = {
     } ,
     tripwire : false
 }
-
-// var horoscope = require("./models/horoscope.js")
 
 $.ajax({
     url: "/grammar/grammars.json",
@@ -35,7 +35,7 @@ $("#generate").click( function() {
     // for each sentence type, generate sentence and append to paragraph
     initializeHoroscope();
     generateSentence();
-    animateNewHoroscope();
+    animateNewHoroscope(cleanSentence);
 });
 
 function initializeHoroscope(){
@@ -112,7 +112,8 @@ function generateSentence(){
                 }
             } 
         }
-    }  
+    }
+    return horoscope.sentence.content  
 }
 
 function cleanSentence(){
@@ -141,14 +142,14 @@ $("#showButton").click(function(){
     $(".showToggle").fadeToggle(500);
 })
 
-function animateNewHoroscope(){
+function animateNewHoroscope(callback){
     if ($("#content").css("opacity") == 0.0) {
         $("#content").html(cleanSentence());
     } else {
         $("#content").animate({
             opacity: 0.0
         } , 500 , function(){
-            $("#content").html(cleanSentence());
+            $("#content").html(callback);
         });
     }
     $("#content").animate({

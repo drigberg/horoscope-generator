@@ -16,11 +16,9 @@
             <button class="btn btn-lg btn-danger" id="showButton">Show/Hide Form</button>
             <form id="debugForm">
               <div class="form-group">
-                <input type="text" class="form-control showToggle" id="userName" placeholder="Name please!">
-                <input type="text" class="form-control showToggle" id="hometown" placeholder="Name please!">
-                <input type="text" class="form-control showToggle" id="birthday" placeholder="Name please!">
-                <input type="text" class="form-control showToggle" id="birthmonth" placeholder="Name please!">
-                <input type="text" class="form-control showToggle" id="birthyear" placeholder="Name please!">
+                <input type="text" class="form-control showToggle" id="userName" placeholder="Name?">
+                <input type="text" class="form-control showToggle" id="hometown" placeholder="Hometown?">
+                <input type="text" class="form-control showToggle" id="birthday" placeholder="Birthday?">
               </div>
             </form>
         <button class="btn btn-lg btn-danger" id="generate">Generate Sentence!</button>
@@ -36,6 +34,7 @@
                         <img class="list-icon" src="<%= horoscope.image %>">
                         <h4 class="list-text"><%= horoscope.author %> from <%= horoscope.hometown %> got "<%= horoscope.text %>"</h4>
                     </li>
+                    <hr>
                 <% }); %>
             </ul>
         </div>
