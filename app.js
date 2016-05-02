@@ -18,11 +18,11 @@ app.set("view engine", "ejs");
 
 //ROOT ROUTE
 app.get("/", function (req, res){
-    horoscopeModel.find({}, function(err, allHoroscopes){
+    horoscopeModel.find({}, function(err, allHoroscopes, Horoscope){
         if(err){
             console.log(err);
         } else {
-                res.render("index", {allHoroscopes:allHoroscopes});
+                res.render("index", {allHoroscopes:allHoroscopes, Horoscope:Horoscope});
         };
     });
 });

@@ -1,10 +1,27 @@
-var horoscope = new Object();
+var horoscope = {
+    sentence_types : {},
+    grammar : {},
+    username : "",
+    sentence: {
+        complete: false,
+        content: [],
+        tags: {},
+        possibleConversions : [],
+        testForAgreement : true,
+        newText : "",
+        cleanedContent : ""
+    } ,
+    tripwire : false
+}
+
+// var horoscope = require("./models/horoscope.js")
 
 $.ajax({
     url: "/grammar/grammars.json",
     dataType: "json",
     success: function(data) {
-        horoscope = data;
+        horoscope.grammar = data.grammar;
+        horoscope.sentence_types = data.sentence_types;
         console.log(horoscope);
     }
 });
@@ -16,6 +33,12 @@ $(document).ready(function() {
 $("#generate").click( function() {
     //generate list of sentences
     // for each sentence type, generate sentence and append to paragraph
+    initializeHoroscope();
+    generateSentence();
+    animateNewHoroscope();
+});
+
+function initializeHoroscope(){
     horoscope.userName = $("#userName").val();
     if (horoscope.userName !== ""){
         horoscope.sentence_types["name_signDeclaration"] = {
@@ -43,10 +66,7 @@ $("#generate").click( function() {
     };  
     horoscope.sentence.tags = horoscope.sentence_types[Object.keys(horoscope.sentence_types)[Math.floor(Math.random()*Object.keys(horoscope.sentence_types).length)]];
     //display paragraph, with spaces between elements
-    console.log(horoscope.sentence.tags);
-    generateSentence();
-    animateNewHoroscope();
-});
+}
 
 function generateSentence(){
     //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
