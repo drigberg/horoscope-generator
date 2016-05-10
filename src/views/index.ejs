@@ -14,14 +14,15 @@
         </div>
         <div class="container" id="input">
             <button class="btn btn-lg btn-danger" id="showButton">Show/Hide Form</button>
-            <form id="debugForm">
+            <form id="HoroscopeForm" onsubmit="processHoroscopeForm()">
               <div class="form-group">
-                <input type="text" class="form-control showToggle" id="userName" placeholder="Name?">
-                <input type="text" class="form-control showToggle" id="hometown" placeholder="Hometown?">
-                <input type="text" class="form-control showToggle" id="birthday" placeholder="Birthday?">
+                <input type="text" class="form-control showToggle" id="userName" name="name" placeholder="Name?">
+                <input type="text" class="form-control showToggle" id="hometown" name="hometown" placeholder="Hometown?">
+                <input type="date" class="form-control showToggle" id="birthday" name="birthday" placeholder="Birthday?">
               </div>
+              <input type="submit" value="SUBMIT">
             </form>
-        <button class="btn btn-lg btn-danger" id="generate">Generate Sentence!</button>
+            <button class="btn btn-lg btn-danger" id="generate">Generate Sentence!</button>
         </div>        
 <!--         <button id="popupButton" class="btn btn-lg btn-danger" onclick="div_show()">Enter Your Personal Info</button>
  -->    <div id="content-box">  
@@ -51,7 +52,7 @@
             </form>
         </div>
     </div> -->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/async/1.5.2/async.min.js" type="text/javascript"></script>
     <script src="/js/jquery-1.12.3.min.js" type="text/javascript"></script>
     <script src="/js/sentenceGenerator.js" type="text/javascript"></script>
 

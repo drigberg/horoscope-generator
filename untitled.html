@@ -1,0 +1,44 @@
+<html>
+  <form id="myForm" onsubmit="processForm()">
+   <input type="text" name="first_name"/>
+   <input type="text" name="last_name"/>
+   <input type="submit" value="Submit">
+  </form>
+
+  <!--Using jQuery and Ajax-->
+  <script type="text/javascript">
+    /**
+     * Function is responsible for gathering the form input data, 
+     * adding additional values to the list, and POSTing it to the
+     * server via Ajax.
+     */
+    function processForm() {
+      //Retreive the data from the form:
+      var data = $('#myForm').serializeArray();
+
+      //Add in additional data to the original form data:
+      data.push(
+        {name: 'age',      value: 25},
+        {name: 'sex',      value: 'M'},
+        {name: 'weight',   value: 200}
+      );
+
+      //Submit the form via Ajax POST request:
+      $.ajax({
+        type: 'POST',
+        url:  'myFormProcessor.php',
+        data:  data,
+        dataType: 'json'
+      }).done(function(data) {
+        //The code below is executed asynchronously, 
+        //meaning that it does not execute until the
+        //Ajax request has finished, and the response has been loaded.
+        //This code may, and probably will, load *after* any code that
+        //that is defined outside of it.
+        alert("Thanks for the submission!");
+        console.log("Response Data" +data); //Log the server response to console
+      });
+      alert("Does this alert appear first or second?");
+    }
+  </script>
+</html>

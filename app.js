@@ -1,9 +1,10 @@
 var express    	= require("express"), 
     app        	= express(), 
     mongoose   	= require("mongoose"),
-    horoscopeModel = require("./models/horoscopes"),
+    Horoscope = require("./models/horoscopes"),
     seeds = require("./seeds.js"),
-    seedDB      = require("./seeds")
+    bodyParser = require("body-parser"), 
+    seedDB      = require("./seeds"),
     port       	= process.env.PORT || 5000;
     
 
@@ -12,25 +13,45 @@ var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope
 mongoose.connect(databaseUrl);
 
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended: true}));
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 // seedDB();
 
 //ROOT ROUTE
 app.get("/", function (req, res){
-    horoscopeModel.find({}, function(err, allHoroscopes, Horoscope){
+    Horoscope.find({}, function(err, allHoroscopes){
         if(err){
             console.log(err);
         } else {
-                res.render("index", {allHoroscopes:allHoroscopes, Horoscope:Horoscope});
+                res.render("index", {allHoroscopes:allHoroscopes});
         };
     });
 });
 
+
+//CREATE -- Generate new horoscope
+app.post("/", function(req, res){
+    //get data from form
+    var text = req.body.text;
+    var hometown = req.body.hometown;
+    var name = req.body.name;
+    var image = "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg"
+    var newHoroscope = {text : text, image: image, author: name, hometown: hometown};
+    //create new campground, save to DB, and redirect
+    Horoscope.create(newHoroscope, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else{
+            res.redirect("/");
+        };
+    });
+});
+
+//safety net redirect
 app.get("*", function (req, res){
     res.redirect("/");
 });
-
 
 app.listen(port, function(err){
     console.log("Horoscope Generator server is running on port " + port);
