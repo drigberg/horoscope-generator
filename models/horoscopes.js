@@ -3,7 +3,8 @@ var horoscopeSchema = new mongoose.Schema({
     text: String,
     image: String,
     author: String,
-    hometown: String
+    hometown: String,
+    date: String
 });
 
 module.exports = mongoose.model("horoscope", horoscopeSchema);

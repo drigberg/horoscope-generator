@@ -8,8 +8,8 @@ var express    	= require("express"),
     port       	= process.env.PORT || 5000;
     
 
-var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
-// var url = "mongodb://localhost:27017/horoscope-generator";
+// var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
+var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
 mongoose.connect(databaseUrl);
 
 app.use(express.static("public"));
@@ -36,8 +36,10 @@ app.post("/", function(req, res){
     var text = req.body.text;
     var hometown = req.body.hometown;
     var name = req.body.name;
+    var date = req.body.date;
+    console.log("!!!!!" + date + "!!!!!!");
     var image = "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg"
-    var newHoroscope = {text : text, image: image, author: name, hometown: hometown};
+    var newHoroscope = {text : text, image: image, author: name, hometown: hometown, date: date};
     //create new campground, save to DB, and redirect
     Horoscope.create(newHoroscope, function(err, newlyCreated){
         if(err){

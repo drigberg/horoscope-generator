@@ -84,10 +84,25 @@ ul {
 	height: 36px;
 	vertical-align: middle;
 	display: inline-block;
-
 }
 
-ul hr {
+ul li:nth-child(n+11) {
+    display:none;
+}
+
+.list-item-date {
+	margin: 0;
+	text-align: right;
+	font-style: italic;
+}
+
+hr {
+	margin:10px -50px;
+	border:0;
+	border-top:1px solid #ccc
+}
+
+li hr {
     width: 70%;
     margin: 10px auto;
     border: 0;
@@ -95,7 +110,7 @@ ul hr {
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
 }
 
-ul hr:last-of-type {
+hr:last-of-type {
 	display: none;
 }
 
@@ -123,6 +138,11 @@ h3 {
 #generate {
 	display: block;
 	margin: 0px auto 10px auto;
+}
+
+#showMore {
+	display: block;
+	margin: 10px auto;
 }
 
 #popupWithBlur {
@@ -182,12 +202,6 @@ h2 {
 	margin:0px -50px -10px -50px;
 	text-align:center;
     text-shadow: 0 0 4px white;
-}
-
-hr {
-	margin:10px -50px;
-	border:0;
-	border-top:1px solid #ccc
 }
 
 input[type=text] {
