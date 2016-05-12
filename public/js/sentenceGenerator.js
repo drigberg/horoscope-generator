@@ -152,7 +152,6 @@ var horoscope = {
                 opacity: 0.0
             } , 200 , function(){
                 $("#content").html(horoscope.sentence.cleanedContent);
-
             });
         }
         $("#content").animate({

@@ -1,32 +1,10 @@
-<html>
-<head>
-    <title>ShittyHoroscopeGenerator.com</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="SHORTCUT ICON" href="css/horoscope-logo.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+<% include ./partials/header %> 
     <div class="container" id="main">
         <div id="header">
             <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
             <h3 class="heading"><strong>For the Avid Stars-Knowing Believer</strong></h3>
         </div>
-        <div class="container" id="input">
-            <form id="HoroscopeForm" onsubmit="horoscope.processHoroscopeForm()">
-              <div class="form-group">
-                <input type="text" class="form-control showToggle" id="userName" name="name" placeholder="Name?">
-                <input type="text" class="form-control showToggle" id="hometown" name="hometown" placeholder="Hometown?">
-                <input type="date" class="form-control showToggle" id="birthday" name="birthday" placeholder="Birthday?">
-              </div>
-              <input type="submit" value="SUBMIT" onsubmit="horoscope.processHoroscopeForm()">
-            </form>
-            <button class="btn btn-lg btn-danger" id="generate">Generate Sentence!</button>
-        </div>        
-
-        <div id="content-box">  
-            <h3 class="heading" id="content"><strong></strong></h3>
-        </div>
+        <a class="btn btn-warning btn-lg" href="/new">Find your density!!</a>
         <div class="container" id="leaderboard">
             <ul>
                 <% allHoroscopes.forEach(function(horoscope){ %>
@@ -41,9 +19,4 @@
             <button class="btn btn-lg btn-danger" id="showMore">Show More!</button>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/async/1.5.2/async.js" type="text/javascript"></script>
-    <script src="/js/jquery-1.12.3.min.js" type="text/javascript"></script>
-    <script src="/js/moment.min.js" type="text/javascript"></script>
-    <script src="/js/sentenceGenerator.js" type="text/javascript"></script>
-</body>
-</html>
+<% include ./partials/footer %>

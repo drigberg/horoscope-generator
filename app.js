@@ -29,7 +29,6 @@ app.get("/", function (req, res){
     });
 });
 
-
 //CREATE -- Generate new horoscope
 app.post("/", function(req, res){
     //get data from form
@@ -49,6 +48,11 @@ app.post("/", function(req, res){
         };
     });
 });
+
+//NEW
+app.get("/new", function(req, res){
+    res.render("new")
+})
 
 //safety net redirect
 app.get("*", function (req, res){

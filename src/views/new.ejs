@@ -1,0 +1,23 @@
+<% include ./partials/header %> 
+<div class="container" id="main">
+    <div id="header">
+        <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
+        <h3 class="heading"><strong>For the Avid Stars-Knowing Believer</strong></h3>
+    </div>  
+    <div class="container" id="input">
+        <form id="HoroscopeForm" onsubmit="horoscope.processHoroscopeForm()">
+          <div class="form-group">
+            <input type="text" class="form-control showToggle" id="userName" name="name" placeholder="Name?">
+            <input type="text" class="form-control showToggle" id="hometown" name="hometown" placeholder="Hometown?">
+            <input type="date" class="form-control showToggle" id="birthday" name="birthday" placeholder="Birthday?">
+          </div>
+          <input type="submit" value="SUBMIT" onsubmit="horoscope.processHoroscopeForm()">
+        </form>
+        <button class="btn btn-lg btn-warning" id="generate">Generate Sentence!</button>
+    </div> 
+    <div id="content-box">  
+        <h3 class="heading" id="content"><strong></strong></h3>
+    </div>
+    <a class="btn btn-warning btn-lg" href="/">Cold feet? See the leaderboard again and regain your courage!</a>
+</div>
+<% include ./partials/footer %>

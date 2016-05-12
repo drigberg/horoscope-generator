@@ -5,6 +5,11 @@ body {
 	transition: 4s;
 }
 
+a {
+	display: block;
+	margin: 10px auto 10px auto;
+}
+
 #header {
 	background-color: rgba(0,0,0,0.2);
 	padding: 20px 10px 40px 10px;
