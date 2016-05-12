@@ -53,11 +53,11 @@ app.post("/horoscopes", function(req, res){
 
 //NEW
 app.get("/horoscopes/new", function(req, res){
-    res.render("horoscopes/new");
+    res.render("horoscopes/new");xw
 });
 
 //SHOW -- campground details
-app.get("/:id", function(req, res){
+app.get("/horoscopes/:id", function(req, res){
     Horoscope.findById(req.params.id).exec(function(err, foundHoroscope){
         if(err){
             console.log(err);

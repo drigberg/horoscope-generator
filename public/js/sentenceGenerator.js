@@ -63,7 +63,7 @@ var horoscope = {
             this.grammar["@Subject"]["@Name"] = {
                 "weight" : 50 ,
                 "person" : "third" ,
-                "name" : true           
+                "name" : true
             };
             this.grammar["@Name"] = {};
             this.grammar["@Name"][horoscope.userData["name"]] = {
@@ -101,8 +101,8 @@ var horoscope = {
                         if (this.sentence.testForAgreement == true) {
                             for (var freq = 0; freq < this.grammar[this.sentence.content[index]][following]["weight"]; freq++){
                                 this.sentence.possibleConversions.push(following);
-                            } 
-                        }                     
+                            }
+                        }
                     }
                     this.sentence.newText = this.sentence.possibleConversions[Math.floor(Math.random()*this.sentence.possibleConversions.length)];
                     if(this.sentence.newText){
@@ -117,10 +117,10 @@ var horoscope = {
                     } else {
                         console.log("I accidentally evaluated a terminal!!!");
                     }
-                } 
+                }
             }
         }
-        return this  
+        return this
     } ,
     cleanSentence : function(){
         this.sentence.cleanedContent = "";
@@ -135,7 +135,7 @@ var horoscope = {
                     if (this.sentence.content[i] !== "," && this.sentence.content[i-1] !=- ";"){
                         this.sentence.cleanedContent += (" " + this.sentence.content[i]);
                     } else {
-                         this.sentence.cleanedContent += this.sentence.content[i];                   
+                         this.sentence.cleanedContent += this.sentence.content[i];
                     }
                 }
             };
@@ -187,7 +187,7 @@ var horoscope = {
                 },
                 dataType: 'json'
             })
-        ]);       
+        ]);
     }
 }
 
