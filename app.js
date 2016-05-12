@@ -53,7 +53,7 @@ app.post("/horoscopes", function(req, res){
 
 //NEW
 app.get("/horoscopes/new", function(req, res){
-    res.render("horoscopes/new");xw
+    res.render("horoscopes/new");
 });
 
 //SHOW -- campground details
