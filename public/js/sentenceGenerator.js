@@ -1,4 +1,30 @@
 // var horoscope = require("./models/horoscope.js")
+$(document).ready(function() {
+    $("#content").css("opacity", 0.0);
+    horoscope.loadGrammar();
+});
+
+$("#generate").click(function() {
+    async.series([
+        horoscope.initializeHoroscope(),
+        horoscope.generateSentence(),
+        horoscope.cleanSentence(),
+        horoscope.animateNewHoroscope()
+    ]);
+});
+
+$("#showMore").click(function () {
+    $('li:hidden').slice(0, 10).show();
+    if ($('li').length == $('li:visible').length) {
+        $("#showMore").fadeOut(2000);
+    }
+});
+
+// $("#HoroscopeForm").on("submit", function(event){
+//    event.preventDefault();
+//    processHoroscopeForm();
+// });
+
 var horoscope = {
     sentence_types : {},
     grammar : {},
@@ -25,7 +51,6 @@ var horoscope = {
             "birthday" : $("#birthday").val()
         }
         horoscope.date = moment().format("MMMM Do YYYY, h:mm a");
-        console.log(horoscope.date);
         if (horoscope.userData["name"] !== ""){
             this.sentence_types["name_signDeclaration"] = {
                 "object" : "sign",
@@ -60,7 +85,6 @@ var horoscope = {
         //while (tripwire < 12){
             //tripwire += 1;
             this.sentence.complete = true;
-            //console.log("Current sentence is: " + sentence.content);
             for (var index = 0; index < this.sentence.content.length; index++){
                 if (this.sentence.content[index] in this.grammar){
                     this.sentence.possibleConversions = [];
@@ -99,8 +123,6 @@ var horoscope = {
         return this  
     } ,
     cleanSentence : function(){
-        console.log(this);
-        console.log(this.sentence);
         this.sentence.cleanedContent = "";
         if (this.sentence.content) {
             for (i = 0; i < this.sentence.content.length; i++){
@@ -123,7 +145,6 @@ var horoscope = {
     } ,
     animateNewHoroscope: function(){
         $("#generate").prop('disabled', true);
-        console.log($("#generate").prop('disabled'));
         if ($("#content").css("opacity") == 0.0) {
             $("#content").html(horoscope.sentence.cleanedContent);
         } else {
@@ -139,72 +160,38 @@ var horoscope = {
         }, 200, function(){
                 $("#generate").prop('disabled', false);
         });
-    }
-}
-
-$.ajax({
-    url: "/grammar/grammars.json",
-    dataType: "json",
-    success: function(data) {
-        horoscope.grammar = data.grammar;
-        horoscope.sentence_types = data.sentence_types;
-        console.log(horoscope);
-    }
-});
-
-function processHoroscopeForm() {
-    async.series([
-        horoscope.initializeHoroscope(horoscope.userData),
-        horoscope.generateSentence(),
-        horoscope.cleanSentence(),
+    } ,
+    loadGrammar: function(){
         $.ajax({
-            type: 'POST',
-            url:  "/",
-            data:  {
-                text : horoscope.sentence.cleanedContent,
-                name : horoscope.userData["name"],
-                hometown : horoscope.userData["hometown"],
-                birthday : horoscope.userData["birthday"],
-                date : horoscope.date
-            },
-            dataType: 'json'
-        })
-    ]);
-}
-
-$(document).ready(function() {
-    $("#content").css("opacity", 0.0);
-});
-
-// $("#HoroscopeForm").on("submit", function(event){
-//    event.preventDefault();
-//    processHoroscopeForm();
-// });
-
-$("#generate").click( function() {
-
-    //generate list of sentences
-    // for each sentence type, generate sentence and append to paragraph
-    async.series([
-        horoscope.initializeHoroscope(),
-        horoscope.generateSentence(),
-        horoscope.cleanSentence(),
-        horoscope.animateNewHoroscope()
-    ]);
-});
-
-$("#showButton").click(function(){
-    $(".showToggle").fadeToggle(500);
-})
-
-$("#showMore").click(function () {
-    $('li:hidden').slice(0, 10).show();
-    if ($('li').length == $('li:visible').length) {
-        $("#showMore").fadeOut(2000);
+            url: "/grammar/grammars.json",
+            dataType: "json",
+            success: function(data) {
+                horoscope.grammar = data.grammar;
+                horoscope.sentence_types = data.sentence_types;
+            }
+        });
+    } ,
+    processHoroscopeForm: function(){
+        async.series([
+            horoscope.initializeHoroscope(horoscope.userData),
+            horoscope.generateSentence(),
+            horoscope.cleanSentence(),
+            $.ajax({
+                type: 'POST',
+                url:  "/",
+                data:  {
+                    text : horoscope.sentence.cleanedContent,
+                    name : horoscope.userData["name"],
+                    hometown : horoscope.userData["hometown"],
+                    birthday : horoscope.userData["birthday"],
+                    date : horoscope.date
+                },
+                dataType: 'json'
+            })
+        ]);       
     }
-});
+}
 
 // module.exports = {
 //     horoscope : horoscope,
-
 // }
