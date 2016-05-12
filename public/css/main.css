@@ -5,17 +5,18 @@ body {
 	transition: 4s;
 }
 
-a {
+#link-to-new {
+	margin: 20px auto 0 auto;
 	display: block;
-	margin: 10px auto 10px auto;
+	width: 200px;
 }
 
 #header {
 	background-color: rgba(0,0,0,0.2);
-	padding: 20px 10px 40px 10px;
+	padding: 20px 10px 20px 10px;
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 	width: 90%;
-	margin: 0 auto;
+	margin: 0 auto 30px auto;
 	transition: all 0.1s;
 	-webkit-transition: all 0.1s;
 }
@@ -201,7 +202,7 @@ p {
 h2 {
 	background-image: url("sky_faded.jpg");
     border-radius:8px 8px 0 0;
-	background-size: cover;	
+	background-size: cover;
 	padding:20px 35px;
 	color: white;
 	margin:0px -50px -10px -50px;
