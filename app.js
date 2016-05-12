@@ -1,12 +1,12 @@
-var express    	= require("express"), 
-    app        	= express(), 
+var express    	= require("express"),
+    app        	= express(),
     mongoose   	= require("mongoose"),
     Horoscope = require("./models/horoscopes"),
     seeds = require("./seeds.js"),
-    bodyParser = require("body-parser"), 
+    bodyParser = require("body-parser"),
     seedDB      = require("./seeds"),
     port       	= process.env.PORT || 5000;
-    
+
 
 var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
 // var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
@@ -32,13 +32,13 @@ app.get("/", function (req, res){
 //CREATE -- Generate new horoscope
 app.post("/", function(req, res){
     //get data from form
-    var text = req.body.text;
-    var hometown = req.body.hometown;
-    var name = req.body.name;
-    var date = req.body.date;
-    console.log("!!!!!" + date + "!!!!!!");
-    var image = "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg"
-    var newHoroscope = {text : text, image: image, author: name, hometown: hometown, date: date};
+    var newHoroscope = {
+      text : req.body.text,
+      image: "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg",
+      author: req.body.name,
+      hometown: req.body.hometown,
+      date: req.body.date
+    };
     //create new campground, save to DB, and redirect
     Horoscope.create(newHoroscope, function(err, newlyCreated){
         if(err){
