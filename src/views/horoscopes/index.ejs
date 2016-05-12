@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+<div class="container" id="main">
+    <div id="header">
+        <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
+        <h3 class="heading"><strong>For the Avid Stars-Knowing Believer</strong></h3>
+        <a class="btn btn-warning btn-lg" id="link-to-new" href="horoscopes/new">Find your density!!</a>
+    </div>
+    <div class="container" id="leaderboard">
+        <ul>
+            <% allHoroscopes.forEach(function(horoscope){ %>
+                <li>
+                    <h5 class="list-item-date"><%= horoscope.date %></h5>
+                    <img class="list-icon" src="<%= horoscope.image %>">
+                    <h4 class="list-text"><%= horoscope.author %> from <%= horoscope.hometown %> got "<%= horoscope.text %>" </h4>
+                    <hr>
+                </li>
+            <% }); %>
+        </ul>
+        <button class="btn btn-lg btn-danger" id="showMore">Show More!</button>
+    </div>
+</div>
+<% include ../partials/footer %>

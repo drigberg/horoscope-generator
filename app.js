@@ -1,9 +1,9 @@
 var express    	= require("express"),
     app        	= express(),
     mongoose   	= require("mongoose"),
-    Horoscope = require("./models/horoscopes"),
-    seeds = require("./seeds.js"),
-    bodyParser = require("body-parser"),
+    Horoscope   = require("./models/horoscopes"),
+    seeds       = require("./seeds.js"),
+    bodyParser  = require("body-parser"),
     seedDB      = require("./seeds"),
     port       	= process.env.PORT || 5000;
 
@@ -20,18 +20,21 @@ app.set("view engine", "ejs");
 
 //ROOT ROUTE
 app.get("/", function (req, res){
+    res.render("index");
+});
+
+app.get("/horoscopes", function (req, res){
     Horoscope.find({}, function(err, allHoroscopes){
         if(err){
             console.log(err);
         } else {
-                res.render("index", {allHoroscopes:allHoroscopes});
+            res.render("horoscopes/index", {allHoroscopes:allHoroscopes});
         };
     });
 });
 
 //CREATE -- Generate new horoscope
-app.post("/", function(req, res){
-    //get data from form
+app.post("/horoscopes", function(req, res){
     var newHoroscope = {
       text : req.body.text,
       image: "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg",
@@ -39,20 +42,30 @@ app.post("/", function(req, res){
       hometown: req.body.hometown,
       date: req.body.date
     };
-    //create new campground, save to DB, and redirect
     Horoscope.create(newHoroscope, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else{
-            res.redirect("/");
+            res.redirect("horoscopes/index");
         };
     });
 });
 
 //NEW
-app.get("/new", function(req, res){
-    res.render("new")
-})
+app.get("/horoscopes/new", function(req, res){
+    res.render("horoscopes/new");
+});
+
+//SHOW -- campground details
+app.get("/:id", function(req, res){
+    Horoscope.findById(req.params.id).exec(function(err, foundHoroscope){
+        if(err){
+            console.log(err);
+        } else {
+          res.render("horoscopes/show", {horoscope: foundHoroscope});
+        };
+    });
+});
 
 //safety net redirect
 app.get("*", function (req, res){
