@@ -5,12 +5,23 @@ body {
 	transition: 4s;
 }
 
-#link-to-new {
+#link {
 	margin: 20px auto 0 auto;
 	display: block;
 	width: 200px;
 }
+#newPage-link {
+	margin: 0 10%;
+	display: inline-block;
+	width: 200px;
+	width: 30%;
+}
 
+#generate {
+	display: inline-block;
+	width: 30%;
+	margin: 0px 10%;
+}
 #header {
 	background-color: rgba(0,0,0,0.2);
 	padding: 20px 10px 20px 10px;
@@ -21,13 +32,9 @@ body {
 	-webkit-transition: all 0.1s;
 }
 
-#showButton {
-	margin: 0 auto;
-	display: block;
-}
-
 #input {
 	background-color: rgba(0,0,0,0.2);
+	display: block;
 	padding: 20px 10px 20px 10px;
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 	width: 90%;
@@ -36,12 +43,16 @@ body {
 	-webkit-transition: all 0.1s;
 }
 
-
-#debugForm {
-	margin: 10px auto;
-	width: 40%;
-	min-width: 200px;
+.form-control {
+	display: block;
+	padding:10px;
+	margin:10px auto;
+	border:1px solid #ccc;
+	padding-left:40px;
+	font-size:16px;
+	width: 50%;
 }
+
 #main {
 	padding-top: 50px;
 	margin-bottom: 50px;
@@ -133,17 +144,12 @@ li {
 
 h1 {
 	font-size: 60px;
-    text-shadow: 0 0 4px white;
+  text-shadow: 0 0 4px white;
 }
 
 h3 {
 	font-size: 36px;
-    text-shadow: 0 0 2px white;
-}
-
-#generate {
-	display: block;
-	margin: 0px auto 10px auto;
+  text-shadow: 0 0 2px white;
 }
 
 #showMore {
@@ -208,15 +214,6 @@ h2 {
 	margin:0px -50px -10px -50px;
 	text-align:center;
     text-shadow: 0 0 4px white;
-}
-
-input[type=text] {
-	/*width:82%;*/
-	padding:10px;
-	margin:10px 0px;
-	border:1px solid #ccc;
-	padding-left:40px;
-	font-size:16px;
 }
 
 #name {

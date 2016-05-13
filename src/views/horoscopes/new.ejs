@@ -7,16 +7,16 @@
     <div class="container" id="input">
         <form id="HoroscopeForm" onsubmit="horoscope.processHoroscopeForm()">
           <div class="form-group">
-            <input type="text" class="form-control showToggle" id="userName" name="name" placeholder="Name?">
-            <input type="text" class="form-control showToggle" id="hometown" name="hometown" placeholder="Hometown?">
-            <input type="date" class="form-control showToggle" id="birthday" name="birthday" placeholder="Birthday?">
+            <input type="text" class="form-control" id="userName" name="name" placeholder="Name?">
+            <input type="text" class="form-control" id="hometown" name="hometown" placeholder="Hometown?">
+            <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Birthday?">
           </div>
         </form>
         <button class="btn btn-lg btn-warning" id="generate">Generate Sentence!</button>
+        <a id="newPage-link" class="btn btn-warning btn-lg" href="/horoscopes">Back to home!</a>
     </div>
     <div id="content-box">
         <h3 class="heading" id="content"><strong></strong></h3>
     </div>
-    <a class="btn btn-warning btn-lg" href="/horoscopes">Cold feet? See the leaderboard again and regain your courage!</a>
 </div>
 <% include ../partials/footer %>
