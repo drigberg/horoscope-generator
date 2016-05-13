@@ -63,7 +63,6 @@ app.post("/horoscopes", function(req, res, next){
 
 //NEW
 app.get("/horoscopes/new", function(req, res){
-    userCount++;
     res.render("horoscopes/new");
 });
 
