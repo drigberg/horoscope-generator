@@ -5,6 +5,7 @@ var express    	= require("express"),
     seeds       = require("./seeds.js"),
     bodyParser  = require("body-parser"),
     seedDB      = require("./seeds"),
+    userCount   = 0,
     port       	= process.env.PORT || 5000;
 
 
@@ -20,7 +21,14 @@ app.set("view engine", "ejs");
 
 //ROOT ROUTE
 app.get("/", function (req, res){
-    res.render("index");
+  Horoscope.find({}, function(err, allHoroscopes){
+      if(err){
+          console.log(err);
+      } else {
+          var horoscopeCount = allHoroscopes.length;
+          res.render("index", {horoscopeCount:horoscopeCount});
+      };
+  });
 });
 
 app.get("/horoscopes", function (req, res){
@@ -56,6 +64,7 @@ app.post("/horoscopes", function(req, res, next){
 
 //NEW
 app.get("/horoscopes/new", function(req, res){
+    userCount++;
     res.render("horoscopes/new");
 });
 
