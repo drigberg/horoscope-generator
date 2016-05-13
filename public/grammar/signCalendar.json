@@ -1,0 +1,62 @@
+{
+    "Jan" : {
+        "divide" : 21,
+        "first" : "Capricorn",
+        "second" : "Aquarius"
+    } ,
+    "Feb" : {
+        "divide" : 21,
+        "first" : "Aquarius",
+        "second" : "Pisces"
+    } ,
+    "Mar" : {
+        "divide" : 21,
+        "first" : "Pisces",
+        "second" : "Aries"
+    } ,
+    "Apr" : {
+        "divide" : 21,
+        "first" : "Aries",
+        "second" : "Taurus"
+    } ,
+    "May" : {
+        "divide" : 21,
+        "first" : "Taurus",
+        "second" : "Gemini"
+    } ,
+    "Jun" : {
+        "divide" : 21,
+        "first" : "Gemini",
+        "second" : "Cancer"
+    } ,
+    "Jul" : {
+        "divide" : 21,
+        "first" : "Cancer",
+        "second" : "Leo"
+    } ,
+    "Aug" : {
+        "divide" : 21,
+        "first" : "Leo",
+        "second" : "Virgo"
+    } ,
+    "Sep" : {
+        "divide" : 21,
+        "first" : "Virgo",
+        "second" : "Libra"
+    } ,
+    "Oct" : {
+        "divide" : 21,
+        "first" : "Libra",
+        "second" : "Scorpius"
+    } ,
+    "Nov" : {
+        "divide" : 21,
+        "first" : "Scorpius",
+        "second" : "Sagittarius"
+    } ,
+    "Dec" : {
+        "divide" : 21,
+        "first" : "Sagittarius",
+        "second" : "Capricorn"
+    }
+}
