@@ -5,7 +5,6 @@ var express    	= require("express"),
     seeds       = require("./seeds.js"),
     bodyParser  = require("body-parser"),
     seedDB      = require("./seeds"),
-    userCount   = 0,
     port       	= process.env.PORT || 5000;
 
 
