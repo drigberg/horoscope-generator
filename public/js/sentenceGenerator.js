@@ -42,7 +42,7 @@ var horoscope = {
         cleanedContent : ""
     } ,
     tripwire : false,
-    initializeHoroscope : function(data){
+    initializeHoroscope : function(){
         horoscope.userData = {
             "name" : $("#userName").val(),
             "hometown" : $("#hometown").val(),
@@ -141,23 +141,6 @@ var horoscope = {
         };
         return this
     } ,
-    animateNewHoroscope: function(){
-        $("#generate").prop('disabled', true);
-        if ($("#content").css("opacity") == 0.0) {
-            $("#content").html(horoscope.sentence.cleanedContent);
-        } else {
-            $("#content").animate({
-                opacity: 0.0
-            } , 200 , function(){
-                $("#content").html(horoscope.sentence.cleanedContent);
-            });
-        }
-        $("#content").animate({
-            opacity: 1.0
-        }, 200, function(){
-                $("#generate").prop('disabled', false);
-        });
-    } ,
     loadGrammar: function(){
         $.ajax({
             url: "/grammar/grammars.json",
@@ -170,7 +153,7 @@ var horoscope = {
     } ,
     processHoroscopeForm: function(){
         async.series([
-            horoscope.initializeHoroscope(horoscope.userData),
+            horoscope.initializeHoroscope(),
             horoscope.generateSentence(),
             horoscope.cleanSentence(),
             $.ajax({
