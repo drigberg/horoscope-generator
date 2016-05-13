@@ -5,12 +5,7 @@ $(document).ready(function() {
 });
 
 $("#generate").click(function() {
-    async.series([
-        horoscope.initializeHoroscope(),
-        horoscope.generateSentence(),
-        horoscope.cleanSentence(),
-        horoscope.animateNewHoroscope()
-    ]);
+    horoscope.processHoroscopeForm();
 });
 
 $("#showMore").click(function () {
@@ -177,7 +172,7 @@ var horoscope = {
             horoscope.cleanSentence(),
             $.ajax({
                 type: 'POST',
-                url:  "/",
+                url:  "/horoscopes",
                 data:  {
                     text : horoscope.sentence.cleanedContent,
                     name : horoscope.userData["name"],
@@ -185,7 +180,12 @@ var horoscope = {
                     birthday : horoscope.userData["birthday"],
                     date : horoscope.date
                 },
-                dataType: 'json'
+                dataType: 'json',
+                success: function(data){
+                    if (data.redirect){
+                        window.location.href = data.redirect;
+                    };
+                }
             })
         ]);
     }

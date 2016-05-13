@@ -34,7 +34,8 @@ app.get("/horoscopes", function (req, res){
 });
 
 //CREATE -- Generate new horoscope
-app.post("/horoscopes", function(req, res){
+var newShowPage = "";
+app.post("/horoscopes", function(req, res, next){
     var newHoroscope = {
       text : req.body.text,
       image: "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg",
@@ -46,7 +47,11 @@ app.post("/horoscopes", function(req, res){
         if(err){
             console.log(err);
         } else{
-            res.redirect("horoscopes/index");
+            console.log(newlyCreated);
+            console.log(newlyCreated._id);
+            newShowPage = "/horoscopes/" + newlyCreated._id;
+            console.log("new show page: " + newShowPage);
+            res.send({redirect: newShowPage});
         };
     });
 });
