@@ -2,6 +2,9 @@
 $(document).ready(function() {
     $("#content").css("opacity", 0.0);
     horoscope.loadGrammar();
+    if ($('li').length > $('li:visible').length) {
+        $("#showMore").show();
+    }
 });
 
 $("#generate").click(function() {

@@ -153,7 +153,7 @@ h3 {
 }
 
 #showMore {
-	display: block;
+	display: none;
 	margin: 10px auto;
 }
 
