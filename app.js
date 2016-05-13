@@ -28,6 +28,7 @@ app.get("/horoscopes", function (req, res){
         if(err){
             console.log(err);
         } else {
+            allHoroscopes.reverse();
             res.render("horoscopes/index", {allHoroscopes:allHoroscopes});
         };
     });
