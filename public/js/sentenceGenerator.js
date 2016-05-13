@@ -1,6 +1,5 @@
 // var horoscope = require("./models/horoscope.js")
 $(document).ready(function() {
-    $("#content").css("opacity", 0.0);
     horoscope.loadGrammar();
     if ($('li').length > $('li:visible').length) {
         $("#showMore").show();
@@ -17,11 +16,6 @@ $("#showMore").click(function () {
         $("#showMore").fadeOut(2000);
     }
 });
-
-// $("#HoroscopeForm").on("submit", function(event){
-//    event.preventDefault();
-//    processHoroscopeForm();
-// });
 
 var horoscope = {
     sentence_types : {},
