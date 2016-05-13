@@ -63,7 +63,7 @@ var horoscope = {
                 "weight" : 4
             };
         }
-        // this.userData.sign = checkForSign(horoscope.userData.birthday);
+        this.userData.sign = this.evaluateSign(horoscope.userData.birthday);
         this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
@@ -137,6 +137,14 @@ var horoscope = {
         };
         return this
     } ,
+    evaluateSign : function(date){
+        if (moment(date).format() !== "Invalid date"){
+            if (moment(date).format("MMM") in horoscope.calendar) {
+                var sign = (parseInt(moment(date).format("DD")) <= horoscope.calendar[moment(date).format("MMM")]["divide"]) ? horoscope.calendar[moment(date).format("MMM")]["first"] : horoscope.calendar[moment(date).format("MMM")]["second"]
+            }
+        }
+        return sign;
+    },
     loadGrammar: function(){
         $.ajax({
             url: "/json/grammars.json",
@@ -181,35 +189,6 @@ var horoscope = {
         ]);
     }
 }
-
-// function checkForSign(date){
-//     if (moment(date).format("MM") === "01"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 21) ? "Capricorn" : "Aquarius";
-//     } elseif (moment(date).format("MM") === "02"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 20) ? "Aquarius" : "Pisces";
-//     } elseif (moment(date).format("MM") === "03"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 20) ? "Pisces" : "Aries";
-//     } elseif (moment(date).format("MM") === "04"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 20) ? "Aries" : "Taurus";
-//     } elseif (moment(date).format("MM") === "05"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 21) ? "Taurus" : "Gemini";
-//     } elseif (moment(date).format("MM") === "06"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 21) ? "Gemini" : "Cancer";
-//     } elseif (moment(date).format("MM") === "07"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 22) ? "Cancer" : "Leo";
-//     } elseif (moment(date).format("MM") === "08"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 22) ? "Leo" : "Virgo";
-//     } elseif (moment(date).format("MM") === "09"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 23) ? "Virgo" : "Libra";
-//     } elseif (moment(date).format("MM") === "10"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 23) ? "Libra" : "Scorpius";
-//     } elseif (moment(date).format("MM") === "11"){
-//         var sign = (parseInt(moment(date).format("DD")) <= 22) ? "Scorpius" : "Sagittarius";
-//     } else {
-//         var sign = (parseInt(moment(date).format("DD")) <= 21) ? "Sagittarius" : "Capricorn";
-//     }
-//     return sign;
-// }
 
 // module.exports = {
 //     horoscope : horoscope,
