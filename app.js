@@ -47,10 +47,7 @@ app.post("/horoscopes", function(req, res, next){
         if(err){
             console.log(err);
         } else{
-            console.log(newlyCreated);
-            console.log(newlyCreated._id);
             newShowPage = "/horoscopes/" + newlyCreated._id;
-            console.log("new show page: " + newShowPage);
             res.send({redirect: newShowPage});
         };
     });
