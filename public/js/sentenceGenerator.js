@@ -159,14 +159,14 @@ var Horoscope = function(args){
         }
     };
     this.validateForm = function(){
-        this.userData.name = $("#userName").val();
-        this.userData.hometown = $("#hometown").val();
-        this.userData.birthday = $("#birthday").val();
         if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
             return true;
         }
     };
     this.processHoroscopeForm = function(){
+        this.userData.name = $("#userName").val();
+        this.userData.hometown = $("#hometown").val();
+        this.userData.birthday = $("#birthday").val();
         var formValidation = this.validateForm()
         if (formValidation){
             async.series([
