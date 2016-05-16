@@ -1,4 +1,5 @@
 // var horoscope = require("./models/horoscope.js")
+
 $(document).ready(function() {
     horoscope.loadGrammar();
     horoscope.loadCalendar();
@@ -18,28 +19,10 @@ $("#showMore").click(function () {
     }
 });
 
-var horoscope = {
-    sentence_types : {},
-    grammar : {},
-    calendar : {},
-    userData : {
-        "name" : "",
-        "hometown" : "",
-        "birthday" : "",
-        "sign" : ""
-    },
-    date: "",
-    sentence: {
-        complete: false,
-        content: [],
-        tags: {},
-        possibleConversions : [],
-        testForAgreement : true,
-        newText : "",
-        cleanedContent : ""
-    } ,
-    tripwire : false,
-    initializeHoroscope : function(){
+var Horoscope = function(args){
+    args || (args = {});
+    _.extend(this,args);
+    this.initializeHoroscope = function(){
         this.date = moment().format("MMMM Do YYYY, h:mm a");
         if (this.userData["name"] !== ""){
             this.sentence_types["name_signDeclaration"] = {
@@ -65,8 +48,8 @@ var horoscope = {
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
         //display paragraph, with spaces between elements
-    } ,
-    generateSentence : function(){
+    };
+    this.generateSentence = function(){
         //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
         this.sentence.complete = false;
         this.tripwire = 0;
@@ -111,8 +94,8 @@ var horoscope = {
             }
         }
         return this
-    } ,
-    cleanSentence : function(){
+    };
+    this.cleanSentence = function(){
         this.sentence.cleanedContent = "";
         if (this.sentence.content) {
             for (i = 0; i < this.sentence.content.length; i++){
@@ -132,16 +115,16 @@ var horoscope = {
             this.sentence.cleanedContent = this.sentence.cleanedContent.charAt(0).toUpperCase() + this.sentence.cleanedContent.slice(1) + "!";
         };
         return this
-    } ,
-    evaluateSign : function(date){
+    };
+    this.evaluateSign = function(date){
         if (moment(date).format() !== "Invalid date"){
             if (moment(date).format("MMM") in horoscope.calendar) {
                 var sign = (parseInt(moment(date).format("DD")) <= horoscope.calendar[moment(date).format("MMM")]["divide"]) ? horoscope.calendar[moment(date).format("MMM")]["first"] : horoscope.calendar[moment(date).format("MMM")]["second"]
             }
         }
         return sign;
-    },
-    loadGrammar: function(){
+    };
+    this.loadGrammar = function(){
         $.ajax({
             url: "/json/grammars.json",
             dataType: "json",
@@ -150,8 +133,8 @@ var horoscope = {
                 horoscope.sentence_types = data.sentence_types;
             }
         });
-    },
-    loadCalendar: function(){
+    };
+    this.loadCalendar = function(){
         $.ajax({
             url: "/json/calendar.json",
             dataType: "json",
@@ -159,31 +142,31 @@ var horoscope = {
                 horoscope.calendar = data;
             }
         });
-    },
-    validateName: function(){
+    };
+    this.nameIsValid = function(){
         if (this.userData.name !== "") {
             return true;
         }
-    },
-    validateHometown: function(){
+    };
+    this.hometownIsValid = function(){
         if (this.userData.hometown !== "") {
             return true;
         }
-    },
-    validateBirthday: function(){
+    };
+    this.birthdayIsValid = function(){
         if (this.userData.birthday !== "") {
             return true;
         }
-    },
-    validateForm: function(){
+    };
+    this.validateForm = function(){
         this.userData.name = $("#userName").val();
         this.userData.hometown = $("#hometown").val();
         this.userData.birthday = $("#birthday").val();
-        if (this.validateName() && this.validateBirthday() && this.validateHometown()){
+        if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
             return true;
         }
-    },
-    processHoroscopeForm: function(){
+    };
+    this.processHoroscopeForm = function(){
         var formValidation = this.validateForm()
         if (formValidation){
             async.series([
@@ -211,9 +194,32 @@ var horoscope = {
       } else {
           $("#error-message").html("Please fill out all fields!");
       }
-    }
-}
+    };
+};
 
-// module.exports = {
-//     horoscope : horoscope,
-// }
+var horoscope = new Horoscope({
+    sentence_types : {},
+    grammar : {},
+    calendar : {},
+    userData : {
+        "name" : "",
+        "hometown" : "",
+        "birthday" : "",
+        "sign" : ""
+    },
+    date: "",
+    sentence: {
+        complete: false,
+        content: [],
+        tags: {},
+        possibleConversions : [],
+        testForAgreement : true,
+        newText : "",
+        cleanedContent : ""
+    } ,
+    tripwire : false
+});
+
+exports = {
+    Horoscope : Horoscope,
+}
