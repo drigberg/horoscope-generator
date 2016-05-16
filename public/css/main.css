@@ -5,6 +5,15 @@ body {
 	transition: 4s;
 }
 
+#error-message {
+		display: block;
+		color: white;
+		margin: 5px 20px 20px 20px;
+		text-align: center;
+		font-size: 20px;
+		text-shadow: 0 0 2px red;
+}
+
 #link {
 	margin: 20px auto 0 auto;
 	display: block;
