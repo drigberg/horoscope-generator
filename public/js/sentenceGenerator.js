@@ -40,9 +40,6 @@ var horoscope = {
     } ,
     tripwire : false,
     initializeHoroscope : function(){
-        this.userData.name = $("#userName").val();
-        this.userData.hometown = $("#hometown").val();
-        this.userData.birthday = $("#birthday").val();
         this.date = moment().format("MMMM Do YYYY, h:mm a");
         if (this.userData["name"] !== ""){
             this.sentence_types["name_signDeclaration"] = {
@@ -68,7 +65,6 @@ var horoscope = {
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
         //display paragraph, with spaces between elements
-        return this
     } ,
     generateSentence : function(){
         //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
@@ -154,7 +150,7 @@ var horoscope = {
                 horoscope.sentence_types = data.sentence_types;
             }
         });
-    } ,
+    },
     loadCalendar: function(){
         $.ajax({
             url: "/json/calendar.json",
@@ -163,30 +159,58 @@ var horoscope = {
                 horoscope.calendar = data;
             }
         });
-    } ,
+    },
+    validateName: function(){
+        if (this.userData.name !== "") {
+            return true;
+        }
+    },
+    validateHometown: function(){
+        if (this.userData.hometown !== "") {
+            return true;
+        }
+    },
+    validateBirthday: function(){
+        if (this.userData.birthday !== "") {
+            return true;
+        }
+    },
+    validateForm: function(){
+        this.userData.name = $("#userName").val();
+        this.userData.hometown = $("#hometown").val();
+        this.userData.birthday = $("#birthday").val();
+        if (this.validateName() && this.validateBirthday() && this.validateHometown()){
+            return true;
+        }
+    },
     processHoroscopeForm: function(){
-        async.series([
-            horoscope.initializeHoroscope(),
-            horoscope.generateSentence(),
-            horoscope.cleanSentence(),
-            $.ajax({
-                type: 'POST',
-                url:  "/horoscopes",
-                data:  {
-                    text : horoscope.sentence.cleanedContent,
-                    name : horoscope.userData["name"],
-                    hometown : horoscope.userData["hometown"],
-                    birthday : horoscope.userData["birthday"],
-                    date : horoscope.date
-                },
-                dataType: 'json',
-                success: function(data){
-                    if (data.redirect){
-                        window.location.href = data.redirect;
-                    };
-                }
-            })
-        ]);
+        var formValidation = this.validateForm()
+        if (formValidation){
+            async.series([
+                horoscope.initializeHoroscope(),
+                horoscope.generateSentence(),
+                horoscope.cleanSentence(),
+                $.ajax({
+                    type: 'POST',
+                    url:  "/horoscopes",
+                    data:  {
+                        text : horoscope.sentence.cleanedContent,
+                        name : horoscope.userData["name"],
+                        hometown : horoscope.userData["hometown"],
+                        birthday : horoscope.userData["birthday"],
+                        date : horoscope.date
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        if (data.redirect){
+                            window.location.href = data.redirect;
+                        };
+                    }
+                })
+            ]);
+      } else {
+          $("#error-message").html("Please fill out all fields!");
+      }
     }
 }
 
