@@ -1,6 +1,25 @@
 var assert = require("assert");
-var sentenceGenerator = require("../public/js/sentenceGenerator.js");
 var helpers = require("./helpers");
+var jsdom = require('./jsdom.js')
+
+describe('jquery', function () {
+    var $
+    jsdom()
+    before(function () {
+      $ = require('jquery')
+    })
+
+    it('creating elements works', function () {
+      var div = $('<div>hello <b>world</b></div>')
+      expect(div.html()).to.eql('hello <b>world</b>')
+    })
+
+    it('lookup works', function () {
+      document.body.innerHTML = '<div>hola</div>'
+      expect($('div').html()).eql('hola')
+    })
+})
+var sentenceGenerator = require("../public/js/sentenceGenerator.js");
 
 describe("Horoscope form requirements", function(){
   var horoscope = sentenceGenerator.Horoscope;
