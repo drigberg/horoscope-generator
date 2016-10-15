@@ -22,9 +22,11 @@ $("#showMore").click(function () {
 });
 
 var Horoscope = function(args){
+    //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
     _.extend(this,args);
     this.initializeHoroscope = function(){
+        //imports form info to horoscope object
         this.date = moment().format("MMMM Do YYYY, h:mm a");
         if (this.userData["name"] !== ""){
             this.sentence_types["name_signDeclaration"] = {
@@ -45,17 +47,18 @@ var Horoscope = function(args){
                 "weight" : 4
             };
         }
+        //finds user's sign, initializes sentence
         this.userData.sign = this.evaluateSign(horoscope.userData.birthday);
         this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
-        //display paragraph, with spaces between elements
+        //future edits: will loop through sentences and display paragraph
     };
     this.generateSentence = function(){
         //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
         this.sentence.complete = false;
-        this.tripwire = 0;
-        //convert nonterminals until only terminals are left
+        // this.tripwire = 0;
+        //convert nonterminals until only terminals are left (nonterminals begin with @ symbol)
         while (this.sentence.complete == false){
         //while (tripwire < 12){
             //tripwire += 1;
@@ -65,6 +68,7 @@ var Horoscope = function(args){
                     this.sentence.possibleConversions = [];
                     this.sentence.complete = false;
                     for (following in this.grammar[this.sentence.content[index]]){
+                        //check tags for voice, tense, person, and type agreement based on sentence type
                         this.sentence.testForAgreement = true;
                         for (tag in this.sentence.tags) {
                             if (tag in this.grammar[this.sentence.content[index]][following]) {
@@ -73,13 +77,16 @@ var Horoscope = function(args){
                                 }
                             }
                         }
+                        //selects approved options for random assignment to conversion from nonterminal
                         if (this.sentence.testForAgreement == true) {
                             for (var freq = 0; freq < this.grammar[this.sentence.content[index]][following]["weight"]; freq++){
                                 this.sentence.possibleConversions.push(following);
                             }
                         }
                     }
+                    //randomly chooses conversion for nonterminal out of weighted options
                     this.sentence.newText = this.sentence.possibleConversions[Math.floor(Math.random()*this.sentence.possibleConversions.length)];
+                    //inserts individual words from nonterminal string into sentence list
                     if(this.sentence.newText){
                         this.sentence.newText = this.sentence.newText.split(" ");
                         for (var i = 0; i < this.sentence.newText.length; i++){
@@ -98,6 +105,7 @@ var Horoscope = function(args){
         return this
     };
     this.cleanSentence = function(){
+        //generates single string for sentence from list; handles punctuation, a vs. an, etc.
         this.sentence.cleanedContent = "";
         if (this.sentence.content) {
             for (i = 0; i < this.sentence.content.length; i++){
@@ -119,6 +127,7 @@ var Horoscope = function(args){
         return this
     };
     this.evaluateSign = function(date){
+        //finds appropriate sign according to signCalendar.json data
         if (moment(date).format() !== "Invalid date"){
             if (moment(date).format("MMM") in horoscope.calendar) {
                 var sign = (parseInt(moment(date).format("DD")) <= horoscope.calendar[moment(date).format("MMM")]["divide"]) ? horoscope.calendar[moment(date).format("MMM")]["first"] : horoscope.calendar[moment(date).format("MMM")]["second"]
@@ -145,6 +154,8 @@ var Horoscope = function(args){
             }
         });
     };
+
+    //form validation functions
     this.nameIsValid = function(){
         if (this.userData.name !== "") {
             return true;
@@ -165,6 +176,8 @@ var Horoscope = function(args){
             return true;
         }
     };
+
+    //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
         this.userData.name = $("#userName").val();
         this.userData.hometown = $("#hometown").val();
@@ -200,6 +213,7 @@ var Horoscope = function(args){
 };
 
 var horoscope = new Horoscope({
+    //inializes horoscope object
     sentence_types : {},
     grammar : {},
     calendar : {},
