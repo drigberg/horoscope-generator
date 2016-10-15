@@ -5,6 +5,8 @@ $(document).ready(function() {
     horoscope.loadCalendar();
     if ($('li').length > $('li:visible').length) {
         $("#showMore").show();
+    } else {
+        $("#showMore").hide()
     }
 });
 

@@ -162,7 +162,7 @@ h3 {
 }
 
 #showMore {
-	display: none;
+	display: block;
 	margin: 10px auto;
 }
 
