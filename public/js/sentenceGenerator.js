@@ -3,6 +3,7 @@
 $(document).ready(function() {
     horoscope.loadGrammar();
     horoscope.loadCalendar();
+    horoscope.loadSignPaths();
     if ($('li').length > $('li:visible').length) {
         $("#showMore").show();
     } else {
@@ -158,6 +159,16 @@ var Horoscope = function(args){
         });
     };
 
+    this.loadSignPaths = function(){
+        $.ajax({
+            url: "/json/signImages.json",
+            dataType: "json",
+            success: function(data) {
+                horoscope.signImages = data;
+            }
+        });
+    };
+
     //form validation functions
     this.nameIsValid = function(){
         if (this.userData.name !== "") {
@@ -199,7 +210,7 @@ var Horoscope = function(args){
                         abridged_text   : horoscope.sentence.cleanedContent,
                         name            : horoscope.userData["name"],
                         hometown        : horoscope.userData["hometown"],
-                        image           : "https://www.petdrugsonline.co.uk/images/page-headers/cats-master-header",
+                        image           : horoscope.signImages[horoscope.userData["sign"]]["path"],
                         date            : horoscope.date,
                         sign            : horoscope.userData["sign"],
                     },

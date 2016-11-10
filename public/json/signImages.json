@@ -1,0 +1,38 @@
+{
+    "Capricorn" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Aquarius" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Pisces" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Aries" : {
+        "path" : "assets/aries.png"
+    } ,
+    "Taurus" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Gemini" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Cancer" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Leo" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Virgo" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Libra" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Scorpius" : {
+        "path" : "assets/capricorn.png"
+    } ,
+    "Sagittarius" : {
+        "path" : "assets/sagittarius.jpg"
+    }
+}
