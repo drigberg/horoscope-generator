@@ -44,22 +44,22 @@ var Horoscope = function(args){
                 "name" : true
             };
             this.grammar["@Name"] = {};
-            this.grammar["@Name"][horoscope.userData["name"]] = {
+            this.grammar["@Name"][this.userData["name"]] = {
                 "weight" : 4
             };
         }
         //finds user's sign, initializes sentence
-        this.userData.sign = this.evaluateSign(horoscope.userData.birthday);
+        this.userData.sign = this.evaluateSign(this.userData.birthday);
         this.grammar["@Noun"]["@Sign"] = {
             "weight" : 50 ,
             "object" : "sign"
         };
         this.grammar["@Sign"] = {};
-        this.grammar["@Sign"][horoscope.userData["sign"]] = {
+        this.grammar["@Sign"][this.userData["sign"]] = {
             "weight" : 50 ,
             "object" : "sign"
         };
-        this.sentence.content = ["@ROOT"];
+        this.sentence.content = ["@ROOT", "@ROOT"];
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
         //future edits: will loop through sentences and display paragraph
@@ -139,41 +139,44 @@ var Horoscope = function(args){
     this.evaluateSign = function(date){
         //finds appropriate sign according to signCalendar.json data
         if (moment(date).format() !== "Invalid date"){
-            if (moment(date).format("MMM") in horoscope.calendar) {
-                let first_in_month = horoscope.calendar[moment(date).format("MMM")]["first"];
-                let second_in_month = horoscope.calendar[moment(date).format("MMM")]["second"];
-                let split = horoscope.calendar[moment(date).format("MMM")]["split"];
+            if (moment(date).format("MMM") in this.calendar) {
+                let first_in_month = this.calendar[moment(date).format("MMM")]["first"];
+                let second_in_month = this.calendar[moment(date).format("MMM")]["second"];
+                let split = this.calendar[moment(date).format("MMM")]["split"];
                 var sign = (parseInt(moment(date).format("DD")) <= split ? first_in_month : second_in_month);
             }
         }
         return sign;
     };
     this.loadGrammar = function(){
+        var that = this;
         $.ajax({
             url: "/json/grammars.json",
             dataType: "json",
             success: function(data) {
-                horoscope.grammar = data.grammar;
-                horoscope.sentence_types = data.sentence_types;
+                that.grammar = data.grammar;
+                that.sentence_types = data.sentence_types;
             }
         });
     };
     this.loadCalendar = function(){
+        var that = this;
         $.ajax({
             url: "/json/calendar.json",
             dataType: "json",
             success: function(data) {
-                horoscope.calendar = data;
+                that.calendar = data;
             }
         });
     };
 
     this.loadSignPaths = function(){
+        var that = this;
         $.ajax({
             url: "/json/signImages.json",
             dataType: "json",
             success: function(data) {
-                horoscope.signImages = data;
+                that.signImages = data;
             }
         });
     };
@@ -205,23 +208,24 @@ var Horoscope = function(args){
         this.userData.name = $("#userName").val();
         this.userData.hometown = $("#hometown").val();
         this.userData.birthday = $("#birthday").val();
+        var that = this;
         var formValidation = this.validateForm()
         if (formValidation){
             async.series([
-                horoscope.initializeHoroscope(),
-                horoscope.generateSentence(),
-                horoscope.cleanSentence(),
+                this.initializeHoroscope(),
+                this.generateSentence(),
+                this.cleanSentence(),
                 $.ajax({
                     type: 'POST',
                     url:  "/horoscopes",
                     data:  {
-                        full_text       : horoscope.sentence.cleanedContent,
-                        abridged_text   : horoscope.sentence.cleanedContent,
-                        name            : horoscope.userData["name"],
-                        hometown        : horoscope.userData["hometown"],
-                        image           : horoscope.signImages[horoscope.userData["sign"]]["path"],
-                        date            : horoscope.date,
-                        sign            : horoscope.userData["sign"],
+                        full_text       : that.sentence.cleanedContent,
+                        abridged_text   : that.sentence.cleanedContent,
+                        name            : that.userData["name"],
+                        hometown        : that.userData["hometown"],
+                        image           : that.signImages[that.userData["sign"]]["path"],
+                        date            : that.date,
+                        sign            : that.userData["sign"],
                     },
                     dataType: 'json',
                     success: function(data){
