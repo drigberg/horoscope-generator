@@ -178,10 +178,6 @@
 				"weight" : 4,
 				"good/bad" : "good"
 			},
-			"terrible" : {
-				"weight" : 4,
-				"good/bad" : "bad"
-			},
 			"abysmal" : {
 				"weight" : 4,
 				"good/bad" : "bad"
