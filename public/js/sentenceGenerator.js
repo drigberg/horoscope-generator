@@ -50,6 +50,15 @@ var Horoscope = function(args){
         }
         //finds user's sign, initializes sentence
         this.userData.sign = this.evaluateSign(horoscope.userData.birthday);
+        this.grammar["@Noun"]["@Sign"] = {
+            "weight" : 50 ,
+            "object" : "sign"
+        };
+        this.grammar["@Sign"] = {};
+        this.grammar["@Sign"][horoscope.userData["sign"]] = {
+            "weight" : 50 ,
+            "object" : "sign"
+        };
         this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];

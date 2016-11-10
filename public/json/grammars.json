@@ -69,6 +69,26 @@
 				"weight": 4,
 				"person": "third" ,
 				"name" : false
+			},
+			"your father" : {
+				"weight": 4,
+				"person": "third" ,
+				"name" : false
+			},
+			"your best friend" : {
+				"weight": 4,
+				"person": "third" ,
+				"name" : false
+			},
+			"your barber" : {
+				"weight": 4,
+				"person": "third" ,
+				"name" : false
+			},
+			"your father's brother's uncle's nephew's former roommate" : {
+				"weight": 1,
+				"person": "third" ,
+				"name" : false
 			}
 		} ,
 		"@Object" : {
@@ -150,7 +170,19 @@
 				"weight" : 4,
 				"good/bad" : "good"
 			} ,
+			"amazing" : {
+				"weight" : 4,
+				"good/bad" : "good"
+			},
+			"incredible" : {
+				"weight" : 4,
+				"good/bad" : "good"
+			},
 			"terrible" : {
+				"weight" : 4,
+				"good/bad" : "bad"
+			},
+			"abysmal" : {
 				"weight" : 4,
 				"good/bad" : "bad"
 			}
