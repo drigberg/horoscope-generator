@@ -8,15 +8,15 @@ var express    	= require("express"),
     port       	= process.env.PORT || 5000;
 
 
-var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
-// var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
+// var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
+var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
 mongoose.connect(databaseUrl);
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
-// seedDB();
+seedDB();
 
 //ROOT ROUTE
 app.get("/", function (req, res){
@@ -45,11 +45,13 @@ app.get("/horoscopes", function (req, res){
 var newShowPage = "";
 app.post("/horoscopes", function(req, res, next){
     var newHoroscope = {
-      text : req.body.text,
-      image: "https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg",
-      author: req.body.name,
-      hometown: req.body.hometown,
-      date: req.body.date
+      full_text       : req.body.full_text,
+      abridged_text   : req.body.abridged_text,
+      image           : req.body.image,
+      author          : req.body.name,
+      hometown        : req.body.hometown,
+      date            : req.body.date,
+      sign            : req.body.sign
     };
     Horoscope.create(newHoroscope, function(err, newlyCreated){
         if(err){

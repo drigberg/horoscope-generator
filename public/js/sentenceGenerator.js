@@ -192,11 +192,13 @@ var Horoscope = function(args){
                     type: 'POST',
                     url:  "/horoscopes",
                     data:  {
-                        text : horoscope.sentence.cleanedContent,
-                        name : horoscope.userData["name"],
-                        hometown : horoscope.userData["hometown"],
-                        birthday : horoscope.userData["birthday"],
-                        date : horoscope.date
+                        full_text       : horoscope.sentence.cleanedContent,
+                        abridged_text   : horoscope.sentence.cleanedContent,
+                        name            : horoscope.userData["name"],
+                        hometown        : horoscope.userData["hometown"],
+                        image           : "https://www.petdrugsonline.co.uk/images/page-headers/cats-master-header",
+                        date            : horoscope.date,
+                        sign            : "Gemini"
                     },
                     dataType: 'json',
                     success: function(data){

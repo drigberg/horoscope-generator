@@ -3,11 +3,13 @@ var horoscope = require("./models/horoscopes");
 
 var data = [
     {
-        text: "Your mother was a terrible scientist!!",
-        image: "http://www.romanceways.com/files/2012/03/How-to-date-a-leo.jpg",
-        author: "MISHA",
-        hometown: "Jupiter",
-        date: "May 12th 2016, 8:25pm"
+        full_text       : "Your mother was a terrible scientist!!",
+        abridged_text   : "Misha's mother was a terrible scientist!!",
+        image           : "http://www.romanceways.com/files/2012/03/How-to-date-a-leo.jpg",
+        author          : "MISHA",
+        hometown        : "Jupiter",
+        date            : "May 12th 2016, 8:25pm",
+        sign            : "Gemini"
     }
 ]
 
