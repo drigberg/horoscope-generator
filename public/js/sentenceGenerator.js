@@ -130,7 +130,10 @@ var Horoscope = function(args){
         //finds appropriate sign according to signCalendar.json data
         if (moment(date).format() !== "Invalid date"){
             if (moment(date).format("MMM") in horoscope.calendar) {
-                var sign = (parseInt(moment(date).format("DD")) <= horoscope.calendar[moment(date).format("MMM")]["divide"]) ? horoscope.calendar[moment(date).format("MMM")]["first"] : horoscope.calendar[moment(date).format("MMM")]["second"]
+                let first_in_month = horoscope.calendar[moment(date).format("MMM")]["first"];
+                let second_in_month = horoscope.calendar[moment(date).format("MMM")]["second"];
+                let split = horoscope.calendar[moment(date).format("MMM")]["split"];
+                var sign = (parseInt(moment(date).format("DD")) <= split ? first_in_month : second_in_month);
             }
         }
         return sign;
@@ -198,7 +201,7 @@ var Horoscope = function(args){
                         hometown        : horoscope.userData["hometown"],
                         image           : "https://www.petdrugsonline.co.uk/images/page-headers/cats-master-header",
                         date            : horoscope.date,
-                        sign            : "Gemini"
+                        sign            : horoscope.userData["sign"],
                     },
                     dataType: 'json',
                     success: function(data){
