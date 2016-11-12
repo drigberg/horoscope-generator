@@ -39,7 +39,7 @@ var Horoscope = function(args){
                 "verbtype" : "linking"
             };
             this.grammar["@Subject"]["@Name"] = {
-                "weight" : 50 ,
+                "weight" : 50,
                 "person" : "third" ,
                 "name" : true
             };
@@ -59,7 +59,7 @@ var Horoscope = function(args){
             "weight" : 50 ,
             "object" : "sign"
         };
-        this.sentence.content = ["@ROOT", "@ROOT"];
+        this.sentence.content = ["@ROOT", "!", "@ROOT"];
         this.sentence.complete = false;
         this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
         //future edits: will loop through sentences and display paragraph
@@ -142,7 +142,7 @@ var Horoscope = function(args){
             if (moment(date).format("MMM") in this.calendar) {
                 let first_in_month = this.calendar[moment(date).format("MMM")]["first"];
                 let second_in_month = this.calendar[moment(date).format("MMM")]["second"];
-                let split = this.calendar[moment(date).format("MMM")]["split"];
+                let split = this.calendar[moment(date).format("MMM")]["divide"];
                 var sign = (parseInt(moment(date).format("DD")) <= split ? first_in_month : second_in_month);
             }
         }

@@ -148,10 +148,6 @@
 				"weight": 4,
 				"object" : "thing"
 			} ,
-			"Gemini" : {
-				"weight" : 4,
-				"object" : "sign"
-			} ,
 			"scientist" : {
 				"weight" : 4,
 				"object" : "role"
