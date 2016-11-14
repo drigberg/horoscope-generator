@@ -112,7 +112,7 @@ var Horoscope = function(args){
                             }
                         }
                     } else {
-                        console.log("I accidentally evaluated a terminal!!!");
+                        return "terminalTreatedAsNonterminal";
                     }
                 }
             }
