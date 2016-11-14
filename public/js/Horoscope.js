@@ -147,60 +147,6 @@ var Horoscope = function(args){
         }
         return sign;
     };
-    this.loadGrammar = function(){
-        var that = this;
-        $.ajax({
-            url: "/json/grammar.json",
-            dataType: "json",
-            success: function(data) {
-                that.grammar = data;
-            }
-        });
-    };
-
-    this.loadSentenceTypes = function(){
-      var that = this;
-      $.ajax({
-          url: "/json/sentenceTypes.json",
-          dataType: "json",
-          success: function(data) {
-              that.sentenceTypes = data;
-          }
-      });
-    };
-
-    this.loadSentenceBigramProbabilities = function(){
-      var that = this;
-      $.ajax({
-          url: "/json/sentenceBigramProbabilities.json",
-          dataType: "json",
-          success: function(data) {
-              that.sentenceBigramProbabilities = data;
-          }
-      });
-    };
-
-    this.loadCalendar = function(){
-      var that = this;
-        $.ajax({
-            url: "/json/calendar.json",
-            dataType: "json",
-            success: function(data) {
-                that.calendar = data;
-            }
-        });
-    };
-
-    this.loadSignPaths = function(){
-      var that = this;
-        $.ajax({
-            url: "/json/signImages.json",
-            dataType: "json",
-            success: function(data) {
-                that.signPaths = data;
-            }
-        });
-    };
 
     //form validation functions
     this.nameIsValid = function(){
@@ -223,38 +169,16 @@ var Horoscope = function(args){
             return true;
         }
     };
-
     //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
         var that = this;
         var formValidation = this.validateForm()
         if (formValidation){
-            async.series([
-                this.initializeHoroscope(),
-                this.generateParagraph(),
-                $.ajax({
-                    type: 'POST',
-                    url:  "/horoscopes",
-                    data:  {
-                        full_text       : that.paragraph,
-                        abridged_text   : that.sentence.cleanedContent,
-                        name            : that.userData["name"],
-                        hometown        : that.userData["hometown"],
-                        image           : that.signPaths[that.userData["sign"]]["path"],
-                        date            : that.date,
-                        sign            : that.userData["sign"],
-                    },
-                    dataType: 'json',
-                    success: function(data){
-                        if (data.redirect){
-                            window.location.href = data.redirect;
-                        };
-                    }
-                })
-            ]);
-      } else {
-          $("#error-message").html("Please fill out all fields!");
-      }
+            this.initializeHoroscope();
+            this.generateParagraph();
+        } else {
+            return "Please fill out all fields!"
+        }
     };
 };
 
