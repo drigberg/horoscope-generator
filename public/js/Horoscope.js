@@ -1,3 +1,8 @@
+var module = module || false;
+if (module) {
+    var _ = require("underscore");
+}
+
 var Horoscope = function(args){
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
@@ -139,9 +144,9 @@ var Horoscope = function(args){
         //finds appropriate sign according to signCalendar.json data
         if (moment(date).format() !== "Invalid date"){
             if (moment(date).format("MMM") in this.calendar) {
-                let first_in_month = this.calendar[moment(date).format("MMM")]["first"];
-                let second_in_month = this.calendar[moment(date).format("MMM")]["second"];
-                let split = this.calendar[moment(date).format("MMM")]["divide"];
+                var first_in_month = this.calendar[moment(date).format("MMM")]["first"];
+                var second_in_month = this.calendar[moment(date).format("MMM")]["second"];
+                var split = this.calendar[moment(date).format("MMM")]["divide"];
                 var sign = (parseInt(moment(date).format("DD")) <= split ? first_in_month : second_in_month);
             }
         }
@@ -171,7 +176,6 @@ var Horoscope = function(args){
     };
     //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
-        var that = this;
         var formValidation = this.validateForm()
         if (formValidation){
             this.initializeHoroscope();
@@ -182,6 +186,6 @@ var Horoscope = function(args){
     };
 };
 
-exports = {
-    Horoscope : Horoscope,
+module.exports = {
+    Horoscope : Horoscope
 }

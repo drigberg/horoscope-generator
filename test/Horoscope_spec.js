@@ -1,28 +1,31 @@
 var assert = require("assert");
 var helpers = require("./helpers");
-var jsdom = require('./jsdom.js')
+// var jsdom = require('./jsdom.js');
 
-describe('jquery', function () {
-    var $
-    jsdom()
-    before(function () {
-      $ = require('jquery')
-    })
+var Horoscope = require("../public/js/Horoscope.js");
 
-    it('creating elements works', function () {
-      var div = $('<div>hello <b>world</b></div>')
-      expect(div.html()).to.eql('hello <b>world</b>')
-    })
+// describe('jquery', function () {
+//     var $
+//     jsdom()
+//     before(function () {
+//       $ = require('jquery')
+//     })
+//
+//     it('creating elements works', function () {
+//       var div = $('<div>hello <b>world</b></div>')
+//       expect(div.html()).to.eql('hello <b>world</b>')
+//     })
+//
+//     it('lookup works', function () {
+//       document.body.innerHTML = '<div>hola</div>'
+//       expect($('div').html()).eql('hola')
+//     })
+// })
 
-    it('lookup works', function () {
-      document.body.innerHTML = '<div>hola</div>'
-      expect($('div').html()).eql('hola')
-    })
-})
-var sentenceGenerator = require("../public/js/sentenceGenerator.js");
+console.log(Horoscope);
 
 describe("Horoscope form requirements", function(){
-  var horoscope = sentenceGenerator.Horoscope;
+  var horoscope = Horoscope.Horoscope;
   before(function(){
     validForm = new horoscope({userData: helpers.validForm});
   });
