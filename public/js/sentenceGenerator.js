@@ -134,13 +134,6 @@ var Horoscope = function(args){
                     }
                 }
             }
-            if (this.sentence.complete && !this.sentence.compound) {
-                if (Math.random() < 1) {
-                    this.sentence.content.push(", ", "@Conjunction", "@ROOT");
-                    this.sentence.compound = true;
-                    this.sentence.complete = false;
-                }
-            }
         }
         return this.sentence
     };
@@ -155,7 +148,7 @@ var Horoscope = function(args){
                     if (this.sentence.content[i] == "a" && this.sentence.content[i+1][0] in {"a":0,"e":0,"i":0,"o":0,"u":0, "A":0, "E":0, "I":0, "O":0, "U":0}){
                         this.sentence.content[i] = "an";
                     }
-                    if (this.sentence.content[i] !== "," && this.sentence.content[i-1] !=- ";"){
+                    if (this.sentence.content[i] !== "," && this.sentence.content[i-1] !== ";"){
                         this.sentence.cleanedContent += (" " + this.sentence.content[i]);
                     } else {
                          this.sentence.cleanedContent += this.sentence.content[i];
