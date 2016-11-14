@@ -1,13 +1,14 @@
 var module = module || false;
 if (module) {
     var _ = require("underscore");
+    var moment = require("moment");
 }
 
 var Horoscope = function(args){
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
     _.extend(this,args);
-    this.initializeHoroscope = function(){
+    this.addUserDataToGrammar = function(){
         //imports form info to horoscope object
         //finds user's sign, initializes sentence
         //adds name to grammar
@@ -155,9 +156,9 @@ var Horoscope = function(args){
 
     //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
-        var formValidation = this.validateForm()
+        var formValidation = this.testing.validateForm()
         if (formValidation){
-            this.initializeHoroscope();
+            this.addUserDataToGrammar();
             this.generateParagraph();
         } else {
             return "Please fill out all fields!"

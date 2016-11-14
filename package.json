@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "mocha": "^2.4.5",
+    "moment": "^2.16.0",
     "sinon": "^1.17.3",
     "underscore": "^1.8.3"
   }
