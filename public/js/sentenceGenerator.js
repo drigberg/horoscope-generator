@@ -111,6 +111,13 @@ var Horoscope = function(args){
                     }
                 }
             }
+            if (this.sentence.complete && !this.sentence.compound) {
+                if (Math.random() < 1) {
+                    this.sentence.content.push(", ", "@Conjunction", "@ROOT");
+                    this.sentence.compound = true;
+                    this.sentence.complete = false;
+                }
+            }
         }
         return this
     };
@@ -255,6 +262,7 @@ var horoscope = new Horoscope({
     date: "",
     sentence: {
         complete: false,
+        compound: false,
         content: [],
         tags: {},
         possibleConversions : [],

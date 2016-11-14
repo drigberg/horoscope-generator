@@ -96,11 +96,11 @@
 				"weight": 7,
 				"object" : "name"
 			} ,
-			"@Conjunction @Noun" : {
+			"@Article @Noun" : {
 				"weight": 7 ,
 				"modified_object" : false
 			} ,
-			"@Conjunction @Adjective @Noun" : {
+			"@Article @Adjective @Noun" : {
 				"weight" : 2 ,
 				"modified_object" : true
 			}
@@ -156,7 +156,7 @@
 		"@ProperNoun" : {
 			"God" : {"weight": 4}
 		} ,
-		"@Conjunction" : {
+		"@Article" : {
 			"a" : {
 				"weight": 4
 			}
@@ -187,6 +187,15 @@
 		"@Preposition" : {
 			"in" : {"weight": 4},
 			"with" : {"weight": 4}
+		},
+		"@Conjunction" : {
+		  "and" : {"weight": 4},
+		  "or" : {"weight": 4},
+		  "for" : {"weight": 4},
+		  "nor" : {"weight": 4},
+		  "but" : {"weight": 4},
+		  "yet" : {"weight": 4},
+		  "so" : {"weight": 4}
 		}
 	}
 }
