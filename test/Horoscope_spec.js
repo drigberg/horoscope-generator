@@ -25,27 +25,27 @@ var Horoscope = require("../public/js/Horoscope.js");
 console.log(Horoscope);
 
 describe("Horoscope form requirements", function(){
-  var horoscope = Horoscope.Horoscope;
-  before(function(){
-    validForm = new horoscope({userData: helpers.validForm});
-  });
-  describe("Form valid if...", function(){
-    it("all validators successful", function(){
-      assert(validForm.validateForm(), "Not valid");
+    var horoscope = Horoscope.Horoscope;
+    before(function(){
+        validForm = new horoscope({userData: helpers.validForm});
     });
-  });
-  describe("Form invalid if...", function(){
-    it("hometown is blank", function(){
-      var form = new horoscope({userData : {hometown: ""}});
-      assert(!form.hometownIsValid())
+    describe("Form valid if...", function(){
+        it("all validators successful", function(){
+            assert(validForm.testing.validateForm(), "Not valid");
+        });
     });
-    it("name is blank", function () {
-      var form = new horoscope({userData : {name : ""}});
-      assert(!form.nameIsValid());
+    describe("Form invalid if...", function(){
+        it("hometown is blank", function(){
+            var invalidForm = new horoscope({userData : {hometown: ""}});
+            assert(!invalidForm.testing.hometownIsValid())
+        });
+        it("name is blank", function () {
+            var invalidForm = new horoscope({userData : {name : ""}});
+            assert(!invalidForm.testing.nameIsValid());
+        });
+        it("birthday is incomplete", function () {
+            var invalidForm = new horoscope({userData : {birthday : ""}});
+            assert(!invalidForm.testing.birthdayIsValid());
+        });
     });
-    it("birthday is incomplete", function () {
-      var form = new horoscope({userData : {birthday : ""}});
-      assert(!form.birthdayIsValid());
-    });
-  });
 });

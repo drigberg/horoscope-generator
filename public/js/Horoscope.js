@@ -153,27 +153,6 @@ var Horoscope = function(args){
         return sign;
     };
 
-    //form validation functions
-    this.nameIsValid = function(){
-        if (this.userData.name !== "") {
-            return true;
-        }
-    };
-    this.hometownIsValid = function(){
-        if (this.userData.hometown !== "") {
-            return true;
-        }
-    };
-    this.birthdayIsValid = function(){
-        if (this.userData.birthday !== "") {
-            return true;
-        }
-    };
-    this.validateForm = function(){
-        if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
-            return true;
-        }
-    };
     //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
         var formValidation = this.validateForm()
@@ -182,6 +161,31 @@ var Horoscope = function(args){
             this.generateParagraph();
         } else {
             return "Please fill out all fields!"
+        }
+    };
+    //functions for testing
+    that = this;
+    this.testing = {
+        //form validation functions
+        nameIsValid : function(){
+            if (that.userData.name !== "") {
+                return true;
+            }
+        },
+        hometownIsValid : function(){
+            if (that.userData.hometown !== "") {
+                return true;
+            }
+        },
+        birthdayIsValid : function(){
+            if (that.userData.birthday !== "") {
+                return true;
+            }
+        },
+        validateForm : function(){
+            if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
+                return true;
+            }
         }
     };
 };
