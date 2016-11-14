@@ -63,6 +63,7 @@ var Horoscope = function(args){
     };
     this.generateParagraph = function(){
         this.structure = ["@START"];
+        //use bigrams to generate paragraph structure
         while (this.structure[this.structure.length - 1] != "@END") {
             var lastItem = this.structure[this.structure.length - 1];
             var rand = Math.random();
@@ -76,14 +77,21 @@ var Horoscope = function(args){
                 }
             }
         }
-        console.log(this.structure);
-
-        // return paragraph;
+        for (var n = 0; n < this.structure.length - 1; n ++) {
+            currentSentenceType = this.structure[n];
+            if (currentSentenceType in this.sentence_types) {
+                if (this.paragraph != "") {
+                    this.paragraph += " "
+                }
+                this.paragraph += this.cleanSentence(this.generateSentence(this.structure[n]));
+            }
+        }
+        return this.paragraph;
     };
-    this.generateSentence = function(){
+    this.generateSentence = function(sentenceType){
         this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
-        this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
+        this.sentence.tags = this.sentence_types[sentenceType];
         this.sentence.complete = false;
         //convert nonterminals until only terminals are left (nonterminals begin with @ symbol)
         while (this.sentence.complete == false){
@@ -134,7 +142,7 @@ var Horoscope = function(args){
                 }
             }
         }
-        return this
+        return this.sentence
     };
     this.cleanSentence = function(){
         //generates single string for sentence from list; handles punctuation, a vs. an, etc.
@@ -156,7 +164,7 @@ var Horoscope = function(args){
             };
             this.sentence.cleanedContent = this.sentence.cleanedContent.charAt(0).toUpperCase() + this.sentence.cleanedContent.slice(1) + "!";
         };
-        return this
+        return this.sentence.cleanedContent
     };
     this.evaluateSign = function(date){
         //finds appropriate sign according to signCalendar.json data
@@ -236,12 +244,12 @@ var Horoscope = function(args){
         if (formValidation){
             async.series([
                 this.initializeHoroscope(),
-                this.cleanSentence(this.generateSentence()),
+                this.generateParagraph(),
                 $.ajax({
                     type: 'POST',
                     url:  "/horoscopes",
                     data:  {
-                        full_text       : that.sentence.cleanedContent,
+                        full_text       : that.paragraph,
                         abridged_text   : that.sentence.cleanedContent,
                         name            : that.userData["name"],
                         hometown        : that.userData["hometown"],
