@@ -28,6 +28,8 @@ var Horoscope = function(args){
     _.extend(this,args);
     this.initializeHoroscope = function(){
         //imports form info to horoscope object
+        //finds user's sign, initializes sentence
+        //adds name to grammar
         this.date = moment().format("MMMM Do YYYY, h:mm a");
         if (this.userData["name"] !== ""){
             this.sentence_types["name_signDeclaration"] = {
@@ -48,7 +50,6 @@ var Horoscope = function(args){
                 "weight" : 4
             };
         }
-        //finds user's sign, initializes sentence
         this.userData.sign = this.evaluateSign(this.userData.birthday);
         this.grammar["@Noun"]["@Sign"] = {
             "weight" : 50 ,
@@ -59,19 +60,33 @@ var Horoscope = function(args){
             "weight" : 50 ,
             "object" : "sign"
         };
-        this.sentence.content = ["@ROOT", "!", "@ROOT"];
-        this.sentence.complete = false;
-        this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
-        //future edits: will loop through sentences and display paragraph
+    };
+    this.generateParagraph = function(){
+        this.structure = ["@START"];
+        while (this.structure[this.structure.length - 1] != "@END") {
+            var lastItem = this.structure[this.structure.length - 1];
+            var rand = Math.random();
+            var probSum = 0;
+            for (var n = 0; n < Object.keys(this.sentenceBigramProbabilities[lastItem]).length; n++) {
+                var key = Object.keys(this.sentenceBigramProbabilities[lastItem])[n]
+                probSum += this.sentenceBigramProbabilities[lastItem][key]
+                if (rand < probSum){
+                    this.structure.push(key);
+                    break
+                }
+            }
+        }
+        console.log(this.structure);
+
+        // return paragraph;
     };
     this.generateSentence = function(){
-        //var active_grammar = grammars[Object.keys(grammars)[Math.floor(Math.random()*Object.keys(grammars).length)]]
+        this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
-        // this.tripwire = 0;
+        this.sentence.tags = this.sentence_types[Object.keys(this.sentence_types)[Math.floor(Math.random()*Object.keys(this.sentence_types).length)]];
+        this.sentence.complete = false;
         //convert nonterminals until only terminals are left (nonterminals begin with @ symbol)
         while (this.sentence.complete == false){
-        //while (tripwire < 12){
-            //tripwire += 1;
             this.sentence.complete = true;
             for (var index = 0; index < this.sentence.content.length; index++){
                 if (this.sentence.content[index] in this.grammar){
@@ -163,6 +178,7 @@ var Horoscope = function(args){
             success: function(data) {
                 that.grammar = data.grammar;
                 that.sentence_types = data.sentence_types;
+                that.sentenceBigramProbabilities = data.sentenceBigramProbabilities;
             }
         });
     };
@@ -220,8 +236,7 @@ var Horoscope = function(args){
         if (formValidation){
             async.series([
                 this.initializeHoroscope(),
-                this.generateSentence(),
-                this.cleanSentence(),
+                this.cleanSentence(this.generateSentence()),
                 $.ajax({
                     type: 'POST',
                     url:  "/horoscopes",
@@ -260,7 +275,7 @@ var horoscope = new Horoscope({
         "sign" : ""
     },
     date: "",
-    sentence: {
+    sentence : {
         complete: false,
         compound: false,
         content: [],
@@ -270,7 +285,8 @@ var horoscope = new Horoscope({
         newText : "",
         cleanedContent : ""
     } ,
-    tripwire : false
+    structure : [],
+    paragraph : ""
 });
 
 exports = {
