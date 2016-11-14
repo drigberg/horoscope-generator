@@ -16,7 +16,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
-seedDB();
+// seedDB();
 
 //ROOT ROUTE
 app.get("/", function (req, res){
