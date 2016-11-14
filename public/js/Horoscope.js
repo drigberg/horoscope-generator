@@ -1,27 +1,3 @@
-// var horoscope = require("./models/horoscope.js")
-
-$(document).ready(function() {
-    horoscope.loadGrammar();
-    horoscope.loadCalendar();
-    horoscope.loadSignPaths();
-    if ($('li').length > $('li:visible').length) {
-        $("#showMore").show();
-    } else {
-        $("#showMore").hide()
-    }
-});
-
-$("#generate").click(function() {
-    horoscope.processHoroscopeForm();
-});
-
-$("#showMore").click(function () {
-    $('li:hidden').slice(0, 10).show();
-    if ($('li').length == $('li:visible').length) {
-        $("#showMore").fadeOut(2000);
-    }
-});
-
 var Horoscope = function(args){
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
@@ -32,7 +8,7 @@ var Horoscope = function(args){
         //adds name to grammar
         this.date = moment().format("MMMM Do YYYY, h:mm a");
         if (this.userData["name"] !== ""){
-            this.sentence_types["name_signDeclaration"] = {
+            this.sentenceTypes["name_signDeclaration"] = {
                 "object" : "sign",
                 "voice" : "active",
                 "name" : true,
@@ -79,7 +55,7 @@ var Horoscope = function(args){
         }
         for (var n = 0; n < this.structure.length - 1; n ++) {
             currentSentenceType = this.structure[n];
-            if (currentSentenceType in this.sentence_types) {
+            if (currentSentenceType in this.sentenceTypes) {
                 if (this.paragraph != "") {
                     this.paragraph += " "
                 }
@@ -91,7 +67,7 @@ var Horoscope = function(args){
     this.generateSentence = function(sentenceType){
         this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
-        this.sentence.tags = this.sentence_types[sentenceType];
+        this.sentence.tags = this.sentenceTypes[sentenceType];
         this.sentence.complete = false;
         //convert nonterminals until only terminals are left (nonterminals begin with @ symbol)
         while (this.sentence.complete == false){
@@ -174,17 +150,38 @@ var Horoscope = function(args){
     this.loadGrammar = function(){
         var that = this;
         $.ajax({
-            url: "/json/grammars.json",
+            url: "/json/grammar.json",
             dataType: "json",
             success: function(data) {
-                that.grammar = data.grammar;
-                that.sentence_types = data.sentence_types;
-                that.sentenceBigramProbabilities = data.sentenceBigramProbabilities;
+                that.grammar = data;
             }
         });
     };
+
+    this.loadSentenceTypes = function(){
+      var that = this;
+      $.ajax({
+          url: "/json/sentenceTypes.json",
+          dataType: "json",
+          success: function(data) {
+              that.sentenceTypes = data;
+          }
+      });
+    };
+
+    this.loadSentenceBigramProbabilities = function(){
+      var that = this;
+      $.ajax({
+          url: "/json/sentenceBigramProbabilities.json",
+          dataType: "json",
+          success: function(data) {
+              that.sentenceBigramProbabilities = data;
+          }
+      });
+    };
+
     this.loadCalendar = function(){
-        var that = this;
+      var that = this;
         $.ajax({
             url: "/json/calendar.json",
             dataType: "json",
@@ -195,12 +192,12 @@ var Horoscope = function(args){
     };
 
     this.loadSignPaths = function(){
-        var that = this;
+      var that = this;
         $.ajax({
             url: "/json/signImages.json",
             dataType: "json",
             success: function(data) {
-                that.signImages = data;
+                that.signPaths = data;
             }
         });
     };
@@ -229,9 +226,6 @@ var Horoscope = function(args){
 
     //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
-        this.userData.name = $("#userName").val();
-        this.userData.hometown = $("#hometown").val();
-        this.userData.birthday = $("#birthday").val();
         var that = this;
         var formValidation = this.validateForm()
         if (formValidation){
@@ -246,7 +240,7 @@ var Horoscope = function(args){
                         abridged_text   : that.sentence.cleanedContent,
                         name            : that.userData["name"],
                         hometown        : that.userData["hometown"],
-                        image           : that.signImages[that.userData["sign"]]["path"],
+                        image           : that.signPaths[that.userData["sign"]]["path"],
                         date            : that.date,
                         sign            : that.userData["sign"],
                     },
@@ -263,32 +257,6 @@ var Horoscope = function(args){
       }
     };
 };
-
-var horoscope = new Horoscope({
-    //inializes horoscope object
-    sentence_types : {},
-    grammar : {},
-    calendar : {},
-    userData : {
-        "name" : "",
-        "hometown" : "",
-        "birthday" : "",
-        "sign" : ""
-    },
-    date: "",
-    sentence : {
-        complete: false,
-        compound: false,
-        content: [],
-        tags: {},
-        possibleConversions : [],
-        testForAgreement : true,
-        newText : "",
-        cleanedContent : ""
-    } ,
-    structure : [],
-    paragraph : ""
-});
 
 exports = {
     Horoscope : Horoscope,
