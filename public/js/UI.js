@@ -6,9 +6,7 @@ $(document).ready(function() {
     } else {
         $("#showMore").hide()
     }
-    horoscope = new Horoscope({
-        //inializes horoscope object
-    });
+    horoscope = new Horoscope();
     horoscope.loadCalendar();
     horoscope.loadGrammar();
     horoscope.loadSentenceTypes();
