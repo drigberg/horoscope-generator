@@ -79,5 +79,11 @@ describe("Paragraphs", function(){
         it("Structure ends with @END", function(){
             assert(correctStructure.structure.indexOf("@END") == correctStructure.structure.length - 1, "structure does not end with @END");
         });
+        it("Structure only contains elements from the bigram probabilities", function(){
+            assert(correctStructure.testing.structureContainsOnlyBigramElements(), "structure contains foreign elements");
+        });
+        it("Structure only contains nonzero bigrams", function(){
+            assert(correctStructure.testing.structureContainsOnlyNonzeroBigrams(), "structure contains zero-probability bigrams");
+        });
     });
 });

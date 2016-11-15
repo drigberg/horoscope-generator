@@ -71,7 +71,7 @@ var Horoscope = function(args){
     this.generateParagraph = function(){
         this.structure = ["@START"];
         //use bigrams to generate paragraph structure
-        while (this.structure[this.structure.length - 1] != "@END") {
+        while (this.structure[this.structure.length - 1] in this.sentenceBigramProbabilities) {
             var lastItem = this.structure[this.structure.length - 1];
             var rand = Math.random();
             var probSum = 0;
@@ -271,6 +271,26 @@ var Horoscope = function(args){
         structureTerminatesCorrectly : function(){
             if (that.structure.indexOf("@END") == (that.structure.length - 1)){
                 return true;
+            }
+        },
+        structureContainsOnlyBigramElements : function(){
+            for (var n = 0; n < that.structure.length - 1; n++) {
+                if (!(that.structure[n] in that.sentenceBigramProbabilities || that.structure[n] == "@END") && (that.structure[n + 1] in that.sentenceBigramProbabilities || that.structure[n + 1] == "@END")){
+                    return false;
+                }
+            }
+            return true;
+        },
+        structureContainsOnlyNonzeroBigrams : function(){
+            if (this.structureContainsOnlyBigramElements()){
+                for (var n = 0; n < that.structure.length - 1; n++) {
+                    if (that.sentenceBigramProbabilities[that.structure[n]][that.structure[n+1]] == 0) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
             }
         }
     };
