@@ -67,7 +67,7 @@ describe("Sign Evaluation", function(){
 });
 
 describe("Sentences", function(){
-    describe("Structure valid if...", function(){
+    describe("Sentence valid if...", function(){
         validSentence = new horoscope({
             sentenceContainsOnlyTerminals : function(){
                 for (var n = 0; n < that.sentence.content.length; n++){
@@ -81,7 +81,8 @@ describe("Sentences", function(){
         validSentence.calendar = calendar;
         validSentence.grammar = grammar;
         validSentence.sentenceTypes = sentenceTypes;
-        var allValid = true
+
+        var allValid = true;
         for (var n = 0; n < 10000; n++) {
             validSentence.generateSentence();
             if (!(validSentence.sentenceContainsOnlyTerminals())){
@@ -89,8 +90,8 @@ describe("Sentences", function(){
             }
         }
 
-        it("Sentence contains only terminals", function(){
-            assert(allValid, "Generate can output nonterminals");
+        it("it contains only terminals", function(){
+            assert(allValid, "Generator can output nonterminals");
         });
     });
 });
@@ -120,16 +121,16 @@ describe("Paragraphs", function(){
             }
         });
         correctStructure.structure = helpers.correctStructure;
-        it("Structure begins with @START", function(){
+        it("it begins with @START", function(){
             assert(correctStructure.structure.indexOf("@START") == 0, "structure does not begin with @START");
         });
-        it("Structure ends with @END", function(){
+        it("it ends with @END", function(){
             assert(correctStructure.structure.indexOf("@END") == correctStructure.structure.length - 1, "structure does not end with @END");
         });
-        it("Structure only contains elements from the bigram probabilities", function(){
+        it("it only contains elements from the bigram probabilities", function(){
             assert(correctStructure.structureContainsOnlyBigramElements(), "structure contains foreign elements");
         });
-        it("Structure only contains nonzero bigrams", function(){
+        it("it only contains nonzero bigrams", function(){
             assert(correctStructure.structureContainsOnlyNonzeroBigrams(), "structure contains zero-probability bigrams");
         });
     });
