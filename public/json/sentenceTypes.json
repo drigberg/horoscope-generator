@@ -5,14 +5,14 @@
 		"tense" : "present",
 		"person" : "second" ,
 		"verbtype" : "linking"
-	} ,
+	},
 	"signDeclaration_thirdPerson" : {
 		"object" : "sign" ,
 		"voice" : "active" ,
 		"tense" : "present" ,
 		"person" : "third" ,
 		"verbtype" : "linking"
-	} ,
+	},
 	"badStatement_secondPerson_present" : {
 		"good/bad" : "bad" ,
 		"tense" : "present" ,
@@ -20,7 +20,15 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking"
-	} ,
+	},
+	"goodStatement_secondPerson_present" : {
+		"good/bad" : "good" ,
+		"tense" : "present" ,
+		"person" : "second",
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking"
+	},
 	"badStatement_secondPerson_future" : {
 		"good/bad" : "bad" ,
 		"tense" : "future" ,
@@ -28,7 +36,15 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking"
-	} ,
+	},
+	"goodStatement_secondPerson_future" : {
+		"good/bad" : "good" ,
+		"tense" : "future" ,
+		"person" : "second",
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking"
+	},
 	"badStatement_thirdPerson_present" : {
 		"good/bad" : "bad" ,
 		"tense" : "present" ,
@@ -36,10 +52,28 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking"
-	}  ,
+	},
 	"badStatement_thirdPerson_past" : {
 		"good/bad" : "bad" ,
 		"tense" : "past" ,
+		"person" : "third" ,
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking" ,
+		"name" : false
+	},
+	"goodStatement_thirdPerson_past" : {
+		"good/bad" : "good" ,
+		"tense" : "past" ,
+		"person" : "third" ,
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking" ,
+		"name" : false
+	},
+	"goodStatement_thirdPerson_present" : {
+		"good/bad" : "good" ,
+		"tense" : "present" ,
 		"person" : "third" ,
 		"object" : "role" ,
 		"modified_object" : true ,

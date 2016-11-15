@@ -7,6 +7,9 @@
 	"@VerbPhrase" : {
 		"@Verb @Object" : {
 			"weight": 4
+		},
+		"@Adverb @Verb @Object" : {
+			"weight": 1
 		}
 	} ,
 	"@Subject" : {
@@ -62,7 +65,24 @@
 			"voice" : "active",
 			"person" : "second",
 			"verbtype" : "linking"
-
+		} ,
+		"might be" : {
+			"weight": 2,
+			"tense" : "present",
+			"voice" : "active",
+			"verbtype" : "linking"
+		} ,
+		"could be" : {
+			"weight": 2,
+			"tense" : "present",
+			"voice" : "active",
+			"verbtype" : "linking"
+		} ,
+		"could have been" : {
+			"weight": 2,
+			"tense" : "past",
+			"voice" : "active",
+			"verbtype" : "linking"
 		} ,
 		"were" : {
 			"weight": 4,
@@ -120,6 +140,11 @@
 	} ,
 	"@Article" : {
 		"a" : {
+			"weight": 4
+		}
+	} ,
+	"@Adverb" : {
+		"possibly" : {
 			"weight": 4
 		}
 	} ,
