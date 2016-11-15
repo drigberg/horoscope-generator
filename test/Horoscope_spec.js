@@ -66,6 +66,35 @@ describe("Sign Evaluation", function(){
     });
 });
 
+describe("Sentences", function(){
+    describe("Structure valid if...", function(){
+        validSentence = new horoscope({
+            sentenceContainsOnlyTerminals : function(){
+                for (var n = 0; n < that.sentence.content.length; n++){
+                    if (that.sentence.content[n][0] == "@"){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
+        validSentence.calendar = calendar;
+        validSentence.grammar = grammar;
+        validSentence.sentenceTypes = sentenceTypes;
+        var allValid = true
+        for (var n = 0; n < 10000; n++) {
+            validSentence.generateSentence();
+            if (!(validSentence.sentenceContainsOnlyTerminals())){
+                allValid = false;
+            }
+        }
+
+        it("Sentence contains only terminals", function(){
+            assert(allValid, "Generate can output nonterminals");
+        });
+    });
+});
+
 describe("Paragraphs", function(){
     describe("Structure valid if...", function(){
         correctStructure = new horoscope({
