@@ -1,38 +1,44 @@
-// var horoscope = require("./models/horoscope.js")
-
-$(document).ready(function() {
-    horoscope.loadGrammar();
-    horoscope.loadCalendar();
-    horoscope.loadSignPaths();
-    if ($('li').length > $('li:visible').length) {
-        $("#showMore").show();
-    } else {
-        $("#showMore").hide()
-    }
-});
-
-$("#generate").click(function() {
-    horoscope.processHoroscopeForm();
-});
-
-$("#showMore").click(function () {
-    $('li:hidden').slice(0, 10).show();
-    if ($('li').length == $('li:visible').length) {
-        $("#showMore").fadeOut(2000);
-    }
-});
+var module = module || false;
+if (module) {
+    var _ = require("underscore");
+    var moment = require("moment");
+}
 
 var Horoscope = function(args){
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
     _.extend(this,args);
-    this.initializeHoroscope = function(){
+    this.sentence_types = {};
+    this.grammar = {};
+    this.sentenceBigramProbabilities = {};
+    this.sentenceTypes = {};
+    this.calendar = {};
+    this.userData = {
+        "name" : "",
+        "hometown" : "",
+        "birthday" : "",
+        "sign" : ""
+    };
+    this.date = "";
+    this.sentence = {
+        complete: false,
+        compound: false,
+        content: [],
+        tags: {},
+        possibleConversions : [],
+        testForAgreement : true,
+        newText : "",
+        cleanedContent : ""
+    };
+    this.structure = [];
+    this.paragraph = "";
+    this.addUserDataToGrammar = function(){
         //imports form info to horoscope object
         //finds user's sign, initializes sentence
         //adds name to grammar
         this.date = moment().format("MMMM Do YYYY, h:mm a");
         if (this.userData["name"] !== ""){
-            this.sentence_types["name_signDeclaration"] = {
+            this.sentenceTypes["name_signDeclaration"] = {
                 "object" : "sign",
                 "voice" : "active",
                 "name" : true,
@@ -79,7 +85,7 @@ var Horoscope = function(args){
         }
         for (var n = 0; n < this.structure.length - 1; n ++) {
             currentSentenceType = this.structure[n];
-            if (currentSentenceType in this.sentence_types) {
+            if (currentSentenceType in this.sentenceTypes) {
                 if (this.paragraph != "") {
                     this.paragraph += " "
                 }
@@ -91,7 +97,7 @@ var Horoscope = function(args){
     this.generateSentence = function(sentenceType){
         this.sentence.content = ["@ROOT"];
         this.sentence.complete = false;
-        this.sentence.tags = this.sentence_types[sentenceType];
+        this.sentence.tags = this.sentenceTypes[sentenceType];
         this.sentence.complete = false;
         //convert nonterminals until only terminals are left (nonterminals begin with @ symbol)
         while (this.sentence.complete == false){
@@ -130,7 +136,7 @@ var Horoscope = function(args){
                             }
                         }
                     } else {
-                        console.log("I accidentally evaluated a terminal!!!");
+                        return "terminalTreatedAsNonterminal";
                     }
                 }
             }
@@ -163,28 +169,57 @@ var Horoscope = function(args){
         //finds appropriate sign according to signCalendar.json data
         if (moment(date).format() !== "Invalid date"){
             if (moment(date).format("MMM") in this.calendar) {
-                let first_in_month = this.calendar[moment(date).format("MMM")]["first"];
-                let second_in_month = this.calendar[moment(date).format("MMM")]["second"];
-                let split = this.calendar[moment(date).format("MMM")]["divide"];
+                var first_in_month = this.calendar[moment(date).format("MMM")]["first"];
+                var second_in_month = this.calendar[moment(date).format("MMM")]["second"];
+                var split = this.calendar[moment(date).format("MMM")]["divide"];
                 var sign = (parseInt(moment(date).format("DD")) <= split ? first_in_month : second_in_month);
             }
         }
         return sign;
     };
+
+    //takes in form data, validates, generates horoscope, and pushes to database
+    this.processHoroscopeForm = function(){
+        var formValidation = this.testing.validateForm()
+        if (formValidation){
+            this.addUserDataToGrammar();
+            this.generateParagraph();
+        } else {
+            return "Please fill out all fields!"
+        }
+    };
     this.loadGrammar = function(){
         var that = this;
         $.ajax({
-            url: "/json/grammars.json",
+            url: "/json/grammar.json",
             dataType: "json",
             success: function(data) {
-                that.grammar = data.grammar;
-                that.sentence_types = data.sentence_types;
-                that.sentenceBigramProbabilities = data.sentenceBigramProbabilities;
+                that.grammar = data;
             }
         });
     };
+    this.loadSentenceTypes = function(){
+      var that = this;
+      $.ajax({
+          url: "/json/sentenceTypes.json",
+          dataType: "json",
+          success: function(data) {
+              that.sentenceTypes = data;
+          }
+      });
+    };
+    this.loadSentenceBigramProbabilities = function(){
+      var that = this;
+      $.ajax({
+          url: "/json/sentenceBigramProbabilities.json",
+          dataType: "json",
+          success: function(data) {
+              that.sentenceBigramProbabilities = data;
+          }
+      });
+    };
     this.loadCalendar = function(){
-        var that = this;
+      var that = this;
         $.ajax({
             url: "/json/calendar.json",
             dataType: "json",
@@ -193,103 +228,43 @@ var Horoscope = function(args){
             }
         });
     };
-
     this.loadSignPaths = function(){
-        var that = this;
+      var that = this;
         $.ajax({
             url: "/json/signImages.json",
             dataType: "json",
             success: function(data) {
-                that.signImages = data;
+                that.signPaths = data;
             }
         });
     };
-
-    //form validation functions
-    this.nameIsValid = function(){
-        if (this.userData.name !== "") {
-            return true;
+    //functions for testing
+    that = this;
+    this.testing = {
+        //form validation functions
+        nameIsValid : function(){
+            if (that.userData.name !== "") {
+                return true;
+            }
+        },
+        hometownIsValid : function(){
+            if (that.userData.hometown !== "") {
+                return true;
+            }
+        },
+        birthdayIsValid : function(){
+            if (that.userData.birthday !== "") {
+                return true;
+            }
+        },
+        validateForm : function(){
+            if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
+                return true;
+            }
         }
-    };
-    this.hometownIsValid = function(){
-        if (this.userData.hometown !== "") {
-            return true;
-        }
-    };
-    this.birthdayIsValid = function(){
-        if (this.userData.birthday !== "") {
-            return true;
-        }
-    };
-    this.validateForm = function(){
-        if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
-            return true;
-        }
-    };
-
-    //takes in form data, validates, generates horoscope, and pushes to database
-    this.processHoroscopeForm = function(){
-        this.userData.name = $("#userName").val();
-        this.userData.hometown = $("#hometown").val();
-        this.userData.birthday = $("#birthday").val();
-        var that = this;
-        var formValidation = this.validateForm()
-        if (formValidation){
-            async.series([
-                this.initializeHoroscope(),
-                this.generateParagraph(),
-                $.ajax({
-                    type: 'POST',
-                    url:  "/horoscopes",
-                    data:  {
-                        full_text       : that.paragraph,
-                        abridged_text   : that.sentence.cleanedContent,
-                        name            : that.userData["name"],
-                        hometown        : that.userData["hometown"],
-                        image           : that.signImages[that.userData["sign"]]["path"],
-                        date            : that.date,
-                        sign            : that.userData["sign"],
-                    },
-                    dataType: 'json',
-                    success: function(data){
-                        if (data.redirect){
-                            window.location.href = data.redirect;
-                        };
-                    }
-                })
-            ]);
-      } else {
-          $("#error-message").html("Please fill out all fields!");
-      }
     };
 };
 
-var horoscope = new Horoscope({
-    //inializes horoscope object
-    sentence_types : {},
-    grammar : {},
-    calendar : {},
-    userData : {
-        "name" : "",
-        "hometown" : "",
-        "birthday" : "",
-        "sign" : ""
-    },
-    date: "",
-    sentence : {
-        complete: false,
-        compound: false,
-        content: [],
-        tags: {},
-        possibleConversions : [],
-        testForAgreement : true,
-        newText : "",
-        cleanedContent : ""
-    } ,
-    structure : [],
-    paragraph : ""
-});
-
-exports = {
-    Horoscope : Horoscope,
+module.exports = {
+    Horoscope : Horoscope
 }
