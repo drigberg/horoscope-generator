@@ -6,6 +6,7 @@ var sentenceBigramProbabilities   = require("../public/json/sentenceBigramProbab
 var sentenceTypes                 = require("../public/json/sentenceTypes.json");
 var Horoscope                     = require("../public/js/Horoscope.js");
 
+//set up validation functions
 var horoscope = Horoscope.Horoscope;
 
 describe("Horoscope form requirements", function(){
@@ -13,24 +14,22 @@ describe("Horoscope form requirements", function(){
         it("all validators successful", function(){
             var validForm = new horoscope();
             validForm.userData = helpers.validForm;
-            assert(validForm.testing.validateForm(), "At least one validator unsuccessful");
+            assert(validForm.validation.validateForm(), "At least one validator unsuccessful");
         });
     });
 
     describe("Form invalid if...", function(){
         it("hometown is blank", function(){
             var invalidForm = new horoscope();
-            assert(!invalidForm.testing.hometownIsValid())
+            assert(!invalidForm.validation.hometownIsValid())
         });
-
         it("name is blank", function () {
             var invalidForm = new horoscope();
-            assert(!invalidForm.testing.nameIsValid());
+            assert(!invalidForm.validation.nameIsValid());
         });
-
         it("birthday is incomplete", function () {
             var invalidForm = new horoscope();
-            assert(!invalidForm.testing.birthdayIsValid());
+            assert(!invalidForm.validation.birthdayIsValid());
         });
     });
 });
@@ -69,21 +68,40 @@ describe("Sign Evaluation", function(){
 
 describe("Paragraphs", function(){
     describe("Structure valid if...", function(){
-        correctStructure = new horoscope();
+        correctStructure = new horoscope({
+            structureContainsOnlyBigramElements : function(){
+                for (var n = 0; n < that.structure.length - 1; n++) {
+                    if (!(horoscope.structure[n] in horoscope.sentenceBigramProbabilities || horoscope.structure[n] == "@END") && (horoscope.structure[n + 1] in horoscope.sentenceBigramProbabilities || horoscope.structure[n + 1] == "@END")){
+                        return false;
+                    }
+                }
+                return true;
+            },
+            structureContainsOnlyNonzeroBigrams : function(){
+                if (this.structureContainsOnlyBigramElements()){
+                    for (var n = 0; n < that.structure.length - 1; n++) {
+                        if (that.sentenceBigramProbabilities[that.structure[n]][that.structure[n+1]] == 0) {
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
         correctStructure.structure = helpers.correctStructure;
-
         it("Structure begins with @START", function(){
             assert(correctStructure.structure.indexOf("@START") == 0, "structure does not begin with @START");
         });
-
         it("Structure ends with @END", function(){
             assert(correctStructure.structure.indexOf("@END") == correctStructure.structure.length - 1, "structure does not end with @END");
         });
         it("Structure only contains elements from the bigram probabilities", function(){
-            assert(correctStructure.testing.structureContainsOnlyBigramElements(), "structure contains foreign elements");
+            assert(correctStructure.structureContainsOnlyBigramElements(), "structure contains foreign elements");
         });
         it("Structure only contains nonzero bigrams", function(){
-            assert(correctStructure.testing.structureContainsOnlyNonzeroBigrams(), "structure contains zero-probability bigrams");
+            assert(correctStructure.structureContainsOnlyNonzeroBigrams(), "structure contains zero-probability bigrams");
         });
     });
 });

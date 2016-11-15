@@ -181,7 +181,7 @@ var Horoscope = function(args){
 
     //takes in form data, validates, generates horoscope, and pushes to database
     this.processHoroscopeForm = function(){
-        var formValidation = this.testing.validateForm()
+        var formValidation = this.validation.validateForm()
         if (formValidation){
             this.addUserDataToGrammar();
             this.generateParagraph();
@@ -241,8 +241,7 @@ var Horoscope = function(args){
     };
     //functions for testing
     that = this;
-    this.testing = {
-        //form validation functions
+    this.validation = {
         nameIsValid : function(){
             if (that.userData.name !== "") {
                 return true;
@@ -261,36 +260,6 @@ var Horoscope = function(args){
         validateForm : function(){
             if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
                 return true;
-            }
-        },
-        structureBeginsCorrectly : function(){
-            if (that.structure.indexOf("@START") == 0){
-                return true;
-            }
-        },
-        structureTerminatesCorrectly : function(){
-            if (that.structure.indexOf("@END") == (that.structure.length - 1)){
-                return true;
-            }
-        },
-        structureContainsOnlyBigramElements : function(){
-            for (var n = 0; n < that.structure.length - 1; n++) {
-                if (!(that.structure[n] in that.sentenceBigramProbabilities || that.structure[n] == "@END") && (that.structure[n + 1] in that.sentenceBigramProbabilities || that.structure[n + 1] == "@END")){
-                    return false;
-                }
-            }
-            return true;
-        },
-        structureContainsOnlyNonzeroBigrams : function(){
-            if (this.structureContainsOnlyBigramElements()){
-                for (var n = 0; n < that.structure.length - 1; n++) {
-                    if (that.sentenceBigramProbabilities[that.structure[n]][that.structure[n+1]] == 0) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
             }
         }
     };
