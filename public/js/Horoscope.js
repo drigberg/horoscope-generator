@@ -8,6 +8,30 @@ var Horoscope = function(args){
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
     _.extend(this,args);
+    this.sentence_types = {};
+    this.grammar = {};
+    this.sentenceBigramProbabilities = {};
+    this.sentenceTypes = {};
+    this.calendar = {};
+    this.userData = {
+        "name" : "",
+        "hometown" : "",
+        "birthday" : "",
+        "sign" : ""
+    };
+    this.date = "";
+    this.sentence = {
+        complete: false,
+        compound: false,
+        content: [],
+        tags: {},
+        possibleConversions : [],
+        testForAgreement : true,
+        newText : "",
+        cleanedContent : ""
+    };
+    this.structure = [];
+    this.paragraph = "";
     this.addUserDataToGrammar = function(){
         //imports form info to horoscope object
         //finds user's sign, initializes sentence
@@ -163,6 +187,56 @@ var Horoscope = function(args){
         } else {
             return "Please fill out all fields!"
         }
+    };
+    this.loadGrammar = function(){
+        var that = this;
+        $.ajax({
+            url: "/json/grammar.json",
+            dataType: "json",
+            success: function(data) {
+                that.grammar = data;
+            }
+        });
+    };
+    this.loadSentenceTypes = function(){
+      var that = this;
+      $.ajax({
+          url: "/json/sentenceTypes.json",
+          dataType: "json",
+          success: function(data) {
+              that.sentenceTypes = data;
+          }
+      });
+    };
+    this.loadSentenceBigramProbabilities = function(){
+      var that = this;
+      $.ajax({
+          url: "/json/sentenceBigramProbabilities.json",
+          dataType: "json",
+          success: function(data) {
+              that.sentenceBigramProbabilities = data;
+          }
+      });
+    };
+    this.loadCalendar = function(){
+      var that = this;
+        $.ajax({
+            url: "/json/calendar.json",
+            dataType: "json",
+            success: function(data) {
+                that.calendar = data;
+            }
+        });
+    };
+    this.loadSignPaths = function(){
+      var that = this;
+        $.ajax({
+            url: "/json/signImages.json",
+            dataType: "json",
+            success: function(data) {
+                that.signPaths = data;
+            }
+        });
     };
     //functions for testing
     that = this;

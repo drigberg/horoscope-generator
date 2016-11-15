@@ -8,26 +8,24 @@ var Horoscope                     = require("../public/js/Horoscope.js");
 
 describe("Horoscope form requirements", function(){
     var horoscope = Horoscope.Horoscope;
-    console.log(horoscope);
-    before(function(){
-        validForm = new horoscope({userData: helpers.validForm});
-    });
     describe("Form valid if...", function(){
+        validForm = new horoscope();
+        validForm.userData = helpers.validForm;
         it("all validators successful", function(){
             assert(validForm.testing.validateForm(), "Not valid");
         });
     });
     describe("Form invalid if...", function(){
         it("hometown is blank", function(){
-            var invalidForm = new horoscope({userData : {hometown: ""}});
+            var invalidForm = new horoscope();
             assert(!invalidForm.testing.hometownIsValid())
         });
         it("name is blank", function () {
-            var invalidForm = new horoscope({userData : {name : ""}});
+            var invalidForm = new horoscope();
             assert(!invalidForm.testing.nameIsValid());
         });
         it("birthday is incomplete", function () {
-            var invalidForm = new horoscope({userData : {birthday : ""}});
+            var invalidForm = new horoscope();
             assert(!invalidForm.testing.birthdayIsValid());
         });
     });
@@ -40,7 +38,9 @@ describe("Sign Evaluation", function(){
             var all_correct = true;
             for (i = 0; i < helpers.correctSigns.length; i++){
                 var date = "2000-" + Object.keys(helpers.correctSigns[i])[0];
-                var user = new horoscope({userData : {birthday : date}, calendar : calendar});
+                var user = new horoscope();
+                user.userData.birthday = date;
+                user.calendar = calendar;
                 if (user.evaluateSign(user.userData.birthday) != helpers.correctSigns[i][Object.keys(helpers.correctSigns[i])[0]]){
                     all_correct = false;
                 }
