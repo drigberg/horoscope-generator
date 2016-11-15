@@ -6,6 +6,7 @@ if (module) {
 }
 
 var Horoscope = function(args){
+    that = this;
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
     _.extend(this,args);
@@ -190,7 +191,6 @@ var Horoscope = function(args){
         }
     };
     this.loadGrammar = function(){
-        var that = this;
         $.ajax({
             url: "/json/grammar.json",
             dataType: "json",
@@ -200,7 +200,6 @@ var Horoscope = function(args){
         });
     };
     this.loadSentenceTypes = function(){
-      var that = this;
       $.ajax({
           url: "/json/sentenceTypes.json",
           dataType: "json",
@@ -210,7 +209,6 @@ var Horoscope = function(args){
       });
     };
     this.loadSentenceBigramProbabilities = function(){
-      var that = this;
       $.ajax({
           url: "/json/sentenceBigramProbabilities.json",
           dataType: "json",
@@ -220,7 +218,6 @@ var Horoscope = function(args){
       });
     };
     this.loadCalendar = function(){
-      var that = this;
         $.ajax({
             url: "/json/calendar.json",
             dataType: "json",
@@ -230,7 +227,6 @@ var Horoscope = function(args){
         });
     };
     this.loadSignPaths = function(){
-      var that = this;
         $.ajax({
             url: "/json/signImages.json",
             dataType: "json",
@@ -240,7 +236,6 @@ var Horoscope = function(args){
         });
     };
     //functions for testing
-    that = this;
     this.validation = {
         nameIsValid : function(){
             if (that.userData.name !== "") {
