@@ -29,7 +29,7 @@ exports.correctSigns = [
     {"11-23" : "Sagittarius"},
     {"12-01" : "Sagittarius"},
     {"12-22" : "Capricorn"},
-  ]
+];
 
 exports.incorrectSigns = [
     {"01-20" : "Aquarius"},
@@ -44,4 +44,6 @@ exports.incorrectSigns = [
     {"10-23" : "Scorpius"},
     {"11-22" : "Sagittarius"},
     {"12-21" : "Capricorn"}
-]
+];
+
+exports.correctStructure = ["@START", "FILLER", "FILLER", "@END"];

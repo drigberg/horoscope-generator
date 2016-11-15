@@ -6,24 +6,28 @@ var sentenceBigramProbabilities   = require("../public/json/sentenceBigramProbab
 var sentenceTypes                 = require("../public/json/sentenceTypes.json");
 var Horoscope                     = require("../public/js/Horoscope.js");
 
+var horoscope = Horoscope.Horoscope;
+
 describe("Horoscope form requirements", function(){
-    var horoscope = Horoscope.Horoscope;
     describe("Form valid if...", function(){
-        validForm = new horoscope();
-        validForm.userData = helpers.validForm;
         it("all validators successful", function(){
-            assert(validForm.testing.validateForm(), "Not valid");
+            var validForm = new horoscope();
+            validForm.userData = helpers.validForm;
+            assert(validForm.testing.validateForm(), "At least one validator unsuccessful");
         });
     });
+
     describe("Form invalid if...", function(){
         it("hometown is blank", function(){
             var invalidForm = new horoscope();
             assert(!invalidForm.testing.hometownIsValid())
         });
+
         it("name is blank", function () {
             var invalidForm = new horoscope();
             assert(!invalidForm.testing.nameIsValid());
         });
+
         it("birthday is incomplete", function () {
             var invalidForm = new horoscope();
             assert(!invalidForm.testing.birthdayIsValid());
@@ -32,7 +36,6 @@ describe("Horoscope form requirements", function(){
 });
 
 describe("Sign Evaluation", function(){
-    var horoscope = Horoscope.Horoscope;
     describe("Evaluation correct if...", function(){
         it("All months split correctly", function(){
             var all_correct = true;
@@ -48,6 +51,7 @@ describe("Sign Evaluation", function(){
             assert(all_correct, "Sign mismatch");
         });
     });
+
     describe("Evaluation incorrect if...", function(){
         it("Months split noninclusively along divide", function(){
             var all_incorrect = true;
@@ -59,6 +63,21 @@ describe("Sign Evaluation", function(){
                 }
             }
             assert(all_incorrect, "Splits inclusively along divide within months");
+        });
+    });
+});
+
+describe("Paragraphs", function(){
+    describe("Structure valid if...", function(){
+        correctStructure = new horoscope();
+        correctStructure.structure = helpers.correctStructure;
+
+        it("Structure begins with @START", function(){
+            assert(correctStructure.structure.indexOf("@START") == 0, "structure does not begin with @START");
+        });
+
+        it("Structure ends with @END", function(){
+            assert(correctStructure.structure.indexOf("@END") == correctStructure.structure.length - 1, "structure does not end with @END");
         });
     });
 });

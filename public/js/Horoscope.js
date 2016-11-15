@@ -1,4 +1,5 @@
 var module = module || false;
+
 if (module) {
     var _ = require("underscore");
     var moment = require("moment");
@@ -259,6 +260,16 @@ var Horoscope = function(args){
         },
         validateForm : function(){
             if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
+                return true;
+            }
+        },
+        structureBeginsCorrectly : function(){
+            if (that.structure.indexOf("@START") == 0){
+                return true;
+            }
+        },
+        structureTerminatesCorrectly : function(){
+            if (that.structure.indexOf("@END") == (that.structure.length - 1)){
                 return true;
             }
         }
