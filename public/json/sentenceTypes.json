@@ -5,7 +5,9 @@
 		"tense" : "present",
 		"person" : "second" ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
+
 	},
 	"signDeclaration_thirdPerson" : {
 		"object" : "sign" ,
@@ -13,6 +15,7 @@
 		"tense" : "present" ,
 		"person" : "third" ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"badStatement_secondPerson_present" : {
@@ -22,6 +25,7 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"goodStatement_secondPerson_present" : {
@@ -31,6 +35,7 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"badStatement_secondPerson_future" : {
@@ -40,6 +45,7 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"goodStatement_secondPerson_future" : {
@@ -49,6 +55,7 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"badStatement_thirdPerson_present" : {
@@ -58,6 +65,7 @@
 		"object" : "role" ,
 		"modified_object" : true ,
 		"verbtype" : "linking",
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"badStatement_thirdPerson_past" : {
@@ -68,6 +76,7 @@
 		"modified_object" : true ,
 		"verbtype" : "linking" ,
 		"name" : false,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"goodStatement_thirdPerson_past" : {
@@ -78,6 +87,7 @@
 		"modified_object" : true ,
 		"verbtype" : "linking" ,
 		"name" : false,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"goodStatement_thirdPerson_present" : {
@@ -88,42 +98,52 @@
 		"modified_object" : true ,
 		"verbtype" : "linking" ,
 		"name" : false,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"neutralStatement_secondPerson_present" : {
 		"tense" : "present" ,
 		"person" : "second",
 		"object" : "role" ,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"neutralStatement_secondPerson_past" : {
 		"tense" : "past" ,
 		"person" : "second",
 		"object" : "role" ,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"neutralStatement_secondPerson_future" : {
 		"tense" : "future" ,
 		"person" : "second",
 		"object" : "role" ,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"neutralStatement_thirdPerson_present" : {
 		"tense" : "present" ,
 		"person" : "third",
 		"object" : "role" ,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"neutralStatement_thirdPerson_past" : {
 		"tense" : "past" ,
 		"person" : "third",
 		"object" : "role" ,
+		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"neutralStatement_thirdPerson_future" : {
 		"tense" : "future" ,
 		"person" : "third",
 		"object" : "role" ,
+		"connector" : false,
 		"grammatical_number" : "singular"
+	},
+	"causation_connector" : {
+		"connector" : "causation"
 	}
 }
