@@ -5,7 +5,7 @@ import json
 
 def main():
     with open('new_grammar.json') as grammar_data:
-        with open('occupations.txt') as dictionary_data:
+        with open('adjectives.txt') as dictionary_data:
             with open ('ignore.json') as ignore_data:
                 ignore = json.load(ignore_data)
                 grammar = json.load(grammar_data)
@@ -18,7 +18,7 @@ def main():
 
                 for word in dictionary_data:
                     word = word.strip()
-                    if word != "" and breaker != "y" and word not in ignore:
+                    if len(word) > 1 and breaker != "y" and word not in ignore:
                         skip = False
                         if position_in_alphabet != "no":
                             if word[0].lower() != position_in_alphabet:
