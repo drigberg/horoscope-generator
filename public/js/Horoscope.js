@@ -58,7 +58,7 @@ var Horoscope = function(args){
         //     };
         // }
         this.userData.sign = this.evaluateSign(this.userData.birthday);
-        this.grammar["@Noun"]["@Sign"] = {
+        this.grammar["@NounSingular"]["@Sign"] = {
             "weight" : 50 ,
             "object" : "sign"
         };
@@ -152,7 +152,7 @@ var Horoscope = function(args){
                 if (i == 0){
                     this.sentence.cleanedContent = this.sentence.content[i];
                 } else {
-                    if (this.sentence.content[i] == "a" && this.sentence.content[i+1][0].toLowerCase() in {"a":0,"e":0,"i":0,"o":0,"u":0}){
+                    if (this.sentence.content[i] == "a" && "aeiou".indexOf(this.sentence.content[i+1][0].toLowerCase()) != -1){
                         this.sentence.content[i] = "an";
                     }
                     if (this.sentence.content[i] !== "," && this.sentence.content[i-1] !== ";"){
@@ -191,10 +191,13 @@ var Horoscope = function(args){
     };
     this.loadGrammar = function(){
         $.ajax({
-            url: "/json/grammar.json",
+            url: "/json/new_grammar.json",
             dataType: "json",
             success: function(data) {
                 that.grammar = data;
+            },
+            failure: function() {
+                console.log("Failed to load grammar!");
             }
         });
     };

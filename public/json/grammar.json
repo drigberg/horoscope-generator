@@ -43,18 +43,26 @@
 			"person": "third" ,
 			"name" : false
 		}
-	} ,
+	},
 	"@Object" : {
 		"@ProperNoun" : {
 			"weight": 7,
 			"object" : "name"
-		} ,
-		"@Article @Noun" : {
+		},
+		"@Article @NounSingular" : {
 			"weight": 7 ,
+			"modified_object" : false,
+		},
+		"@Article @Adjective @NounSingular" : {
+			"weight" : 2 ,
+			"modified_object" : true
+		},
+		"@NounPlural" : {
+			"weight": 3 ,
 			"modified_object" : false
 		} ,
-		"@Article @Adjective @Noun" : {
-			"weight" : 2 ,
+		"@Adjective @NounPlural" : {
+			"weight": 3 ,
 			"modified_object" : true
 		}
 	} ,
@@ -136,7 +144,10 @@
 		}
 	} ,
 	"@ProperNoun" : {
-		"God" : {"weight": 4}
+		"God" : {
+			"weight": 4,
+			"object" : "thing"
+		}
 	} ,
 	"@Article" : {
 		"a" : {
