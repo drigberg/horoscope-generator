@@ -567,6 +567,17 @@
 			"weight": 4
 		}
 	},
+  "@CausationConnector": {
+		"and so": {
+			"weight": 4
+		},
+    "therefore,": {
+			"weight": 4
+		},
+    "so I'd bet that": {
+			"weight": 4
+		}
+	},
 	"@Conjunction": {
 		"and": {
 			"weight": 4
@@ -592,7 +603,12 @@
 	},
 	"@ROOT": {
 		"@Subject @VerbPhrase": {
-			"weight": 4
+			"weight": 4,
+      "connector": false
+		},
+    "@CausationConnector": {
+			"weight": 4,
+      "connector": "causation"
 		}
 	}
 }

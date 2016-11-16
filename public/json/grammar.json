@@ -51,7 +51,7 @@
 		},
 		"@Article @NounSingular" : {
 			"weight": 7 ,
-			"modified_object" : false,
+			"modified_object" : false
 		},
 		"@Article @Adjective @NounSingular" : {
 			"weight" : 2 ,
