@@ -12,7 +12,7 @@ def main():
                 counter = 0
                 breaker = ""
                 default = raw_input("Set default part of speech for this session? ([default] or 'n'): ")
-                position_in_alphabet = raw_input("Want to focus on a part of the alphabet in this session? ([letter] or 'n'): ")
+                position_in_alphabet = raw_input("Want to focus on a part of the alphabet in this session? ([letter] or 'no'): ")
                 if default not in ["@Verb", "@Adverb", "@NounSingular", "@NounPlural", "@ProperNoun", "@Adjective"]:
                     default = False
 
@@ -20,7 +20,7 @@ def main():
                     word = word.strip()
                     if word != "" and breaker != "y" and word not in ignore:
                         skip = False
-                        if position_in_alphabet != "n":
+                        if position_in_alphabet != "no":
                             if word[0].lower() != position_in_alphabet:
                                 skip = True
                         if not skip:
@@ -31,8 +31,9 @@ def main():
                             if not already_in_grammar:
                                 plural_version = False
                                 singular_version = True
-                                if counter % 5 == 0:
-                                    breaker = raw_input("break after this one? (y/n) ")
+                                if counter % 5 == 0 :
+                                    if counter != 0:
+                                        breaker = raw_input("break after this one? (y/n) ")
                                     if not default:
                                         print "Reminder! Parts of speech are @Verb, @Adverb, @NounSingular, @NounPlural, @ProperNoun, @Adjective!"
                                 counter += 1
