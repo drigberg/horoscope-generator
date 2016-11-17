@@ -1,14 +1,15 @@
 // This is called with the results from from FB.getLoginStatus().
 //
 $("#fb_share").click(function() {
+    console.log("hello!");
     FB.ui(
         {
             method: 'share',
             href: 'http://www.horoscopegen.com/',
-            quote: 'If this is it, please let me know! If this aint love, you had better let me know!'
+            quote: horoscope.userData["name"] + " was informed, '" +  horoscope.full_text + "' Discover your own truth today!!!'"
         }, function(response){}
     );
-}
+});
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
   console.log(response);

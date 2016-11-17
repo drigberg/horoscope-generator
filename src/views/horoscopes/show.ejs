@@ -1,4 +1,8 @@
 <% include ../partials/header %>
+<% var horoscope = horoscope %>
+<script>
+  var horoscope = "<%= horoscope.abridged_text %>"
+</script>
 <div class="container" id="main">
     <div id="header">
         <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
@@ -7,7 +11,11 @@
     <div id="header">
         <h3 class="heading"><%= horoscope.full_text %></h3>
     </div>
-    <button id="fb_share" class="btn btn-primary btn-lg">Share on Facebook!</Button
-    <a id="link" class="btn btn-warning btn-lg" href="/horoscopes">Back to home!</a>
+    <div class="col-sm-6">
+        <button id="fb_share" class="link col-lg-6 btn btn-primary btn-lg">Share on Facebook</Button>
+    </div>
+    <div class="col-sm-6">
+        <a class="link col-lg-6 btn btn-warning btn-lg" href="/horoscopes">Back to home</a>
+    </div>
 </div>
 <% include ../partials/footer %>
