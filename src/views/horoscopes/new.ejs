@@ -19,5 +19,12 @@
     <div id="content-box">
         <h3 class="heading" id="content"><strong></strong></h3>
     </div>
+
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+    </fb:login-button>
+
+    <div id="status">
+    </div>
+
 </div>
 <% include ../partials/footer %>
