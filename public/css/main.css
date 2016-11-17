@@ -23,11 +23,13 @@ body {
 		text-shadow: 0 0 2px red;
 }
 
-#link {
-	margin: 20px auto 0 auto;
+.link {
+	margin: 0 auto 0 auto;
 	display: block;
 	width: 200px;
+	float: none;
 }
+
 #newPage-link {
 	margin: 10px auto;
 	display: block;
@@ -45,7 +47,7 @@ body {
 	padding: 20px 10px 20px 10px;
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 	width: 90%;
-	margin: 0 auto 30px auto;
+	margin: 15 auto 15px auto;
 	transition: all 0.1s;
 	-webkit-transition: all 0.1s;
 }
@@ -199,13 +201,6 @@ h3 {
 	background-color: #d9534f;
 	opacity: 0.85;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-div #popupContact {
-	position:relative;
-	left:50%;
-	top:17%;
-    margin-left:-202px;
 }
 
 #userInfo {
