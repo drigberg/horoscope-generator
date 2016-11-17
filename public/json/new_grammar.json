@@ -407,7 +407,6 @@
 	},
 	"@Verb": {
 		"will be": {
-			"person": "second",
 			"voice": "active",
 			"tense": "future",
 			"weight": 4,
