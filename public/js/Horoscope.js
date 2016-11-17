@@ -23,7 +23,6 @@ var Horoscope = function(args){
     this.date = "";
     this.sentence = {
         complete: false,
-        compound: false,
         content: [],
         tags: {},
         possibleConversions : [],
@@ -90,7 +89,8 @@ var Horoscope = function(args){
                 if (this.paragraph != "") {
                     this.paragraph += " "
                 }
-                this.paragraph += this.cleanSentence(this.generateSentence(this.structure[n]));
+                var new_sentence = this.cleanSentence(this.generateSentence(this.structure[n]));
+                this.paragraph += new_sentence;
             }
         }
         return this.paragraph;
@@ -137,7 +137,8 @@ var Horoscope = function(args){
                             }
                         }
                     } else {
-                        return "terminalTreatedAsNonterminal";
+                        //this error needs to be louder
+                        return "Evaluated a terminal!"
                     }
                 }
             }
