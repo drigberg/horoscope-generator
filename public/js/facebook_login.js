@@ -6,7 +6,7 @@ $("#fb_share").click(function() {
         {
             method: 'share',
             href: 'http://www.horoscopegen.com/',
-            quote: horoscope.userData["name"] + " was informed, '" +  horoscope.abridged_text + "' Discover your own truth today!!!'"
+            quote: horoscope_user_name + " was informed, '" +  abdridged_horoscope + "' Discover your own truth today!!!'"
         }, function(response){}
     );
 });

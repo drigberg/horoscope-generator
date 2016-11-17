@@ -3,7 +3,7 @@ var horoscopeSchema = new mongoose.Schema({
     full_text       : String,
     abridged_text   : String,
     image           : String,
-    author          : String,
+    name            : String,
     hometown        : String,
     date            : String,
     sign            : String
