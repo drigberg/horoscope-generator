@@ -39,11 +39,11 @@
     version    : 'v2.8' // use graph api version 2.8
   });
 
-  FB.ui(
- {
-  method: 'share',
-  href: 'https://developers.facebook.com/docs/'
-}, function(response){});
+  FB.ui({
+    method: 'share',
+    href: 'https://developers.facebook.com/docs/'
+  }, function(response){}
+  );
 
   // Now that we've initialized the JavaScript SDK, we call
   // FB.getLoginStatus().  This function gets the state of the
