@@ -16,12 +16,19 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+
 <div class="container" id="main">
-      <div
-      class="fb-like"
-      data-share="true"
-      data-width="450"
-      data-show-faces="true">
+    <div class="container" id="fbButtons">
+        <div
+          class="fb-like"
+          data-share="true"
+          data-width="450"
+          data-show-faces="true">
+        </div>
+        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" id="fbLogin">
+        </fb:login-button>
+        <div id="status">
+        </div>
     </div>
     <div id="header">
         <h1 class="heading"><strong>97% Organic Horoscope Generation</strong></h1>
@@ -43,11 +50,6 @@
         <h3 class="heading" id="content"><strong></strong></h3>
     </div>
 
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-    </fb:login-button>
-
-    <div id="status">
-    </div>
 
 </div>
 <% include ../partials/footer %>

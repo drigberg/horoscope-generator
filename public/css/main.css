@@ -5,6 +5,15 @@ body {
 	transition: 4s;
 }
 
+#fbLogin {
+	display: inline-block;
+	float: right;
+}
+
+#fbButtons {
+	margin: 10px 0;
+}
+
 #error-message {
 		display: block;
 		color: white;
@@ -63,7 +72,6 @@ body {
 }
 
 #main {
-	padding-top: 50px;
 	margin-bottom: 50px;
 }
 
