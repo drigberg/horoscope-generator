@@ -23,7 +23,6 @@ var Horoscope = function(args){
     this.date = "";
     this.sentence = {
         complete: false,
-        compound: false,
         content: [],
         tags: {},
         possibleConversions : [],
@@ -58,7 +57,7 @@ var Horoscope = function(args){
         //     };
         // }
         this.userData.sign = this.evaluateSign(this.userData.birthday);
-        this.grammar["@Noun"]["@Sign"] = {
+        this.grammar["@NounSingular"]["@Sign"] = {
             "weight" : 50 ,
             "object" : "sign"
         };
@@ -90,7 +89,8 @@ var Horoscope = function(args){
                 if (this.paragraph != "") {
                     this.paragraph += " "
                 }
-                this.paragraph += this.cleanSentence(this.generateSentence(this.structure[n]));
+                var new_sentence = this.cleanSentence(this.generateSentence(this.structure[n]));
+                this.paragraph += new_sentence;
             }
         }
         return this.paragraph;
@@ -137,7 +137,8 @@ var Horoscope = function(args){
                             }
                         }
                     } else {
-                        return "terminalTreatedAsNonterminal";
+                        //this error needs to be louder
+                        return "Evaluated a terminal!"
                     }
                 }
             }
@@ -152,7 +153,7 @@ var Horoscope = function(args){
                 if (i == 0){
                     this.sentence.cleanedContent = this.sentence.content[i];
                 } else {
-                    if (this.sentence.content[i] == "a" && this.sentence.content[i+1][0].toLowerCase() in {"a":0,"e":0,"i":0,"o":0,"u":0}){
+                    if (this.sentence.content[i] == "a" && "aeiou".indexOf(this.sentence.content[i+1][0].toLowerCase()) != -1){
                         this.sentence.content[i] = "an";
                     }
                     if (this.sentence.content[i] !== "," && this.sentence.content[i-1] !== ";"){
@@ -189,12 +190,42 @@ var Horoscope = function(args){
             return "Please fill out all fields!"
         }
     };
+    //functions for testing
+    this.validation = {
+        nameIsValid : function(){
+            if (that.userData.name !== "") {
+                return true;
+            }
+        },
+        hometownIsValid : function(){
+            if (that.userData.hometown !== "") {
+                return true;
+            }
+        },
+        birthdayIsValid : function(){
+            if (that.userData.birthday !== "") {
+                return true;
+            }
+        },
+        validateForm : function(){
+            if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
+                return true;
+            }
+        }
+    };
+};
+
+var HoroscopeAPI = function(){
+    var that = this;
     this.loadGrammar = function(){
         $.ajax({
-            url: "/json/grammar.json",
+            url: "/json/new_grammar.json",
             dataType: "json",
             success: function(data) {
                 that.grammar = data;
+            },
+            failure: function() {
+                console.log("Failed to load grammar!");
             }
         });
     };
@@ -234,30 +265,7 @@ var Horoscope = function(args){
             }
         });
     };
-    //functions for testing
-    this.validation = {
-        nameIsValid : function(){
-            if (that.userData.name !== "") {
-                return true;
-            }
-        },
-        hometownIsValid : function(){
-            if (that.userData.hometown !== "") {
-                return true;
-            }
-        },
-        birthdayIsValid : function(){
-            if (that.userData.birthday !== "") {
-                return true;
-            }
-        },
-        validateForm : function(){
-            if (this.nameIsValid() && this.birthdayIsValid() && this.hometownIsValid()){
-                return true;
-            }
-        }
-    };
-};
+}
 
 module.exports = {
     Horoscope : Horoscope

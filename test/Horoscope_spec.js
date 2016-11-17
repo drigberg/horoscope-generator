@@ -69,9 +69,9 @@ describe("Sign Evaluation", function(){
 describe("Sentences", function(){
     describe("Sentence valid if...", function(){
         validSentence = new horoscope({
-            sentenceContainsOnlyTerminals : function(){
-                for (var n = 0; n < that.sentence.content.length; n++){
-                    if (that.sentence.content[n][0] == "@"){
+            sentenceContainsOnlyTerminals : function(sentence){
+                for (var n = 0; n < sentence.content.length; n++){
+                    if (sentence.cleanedContent.indexOf("@") > -1){
                         return false;
                     }
                 }
@@ -84,10 +84,9 @@ describe("Sentences", function(){
 
         var allValid = true;
         for (var n = 0; n < 10000; n++) {
-            validSentence.generateSentence();
-            if (!(validSentence.sentenceContainsOnlyTerminals())){
+            if (!(validSentence.sentenceContainsOnlyTerminals(validSentence.generateSentence()))){
                 allValid = false;
-            }
+            };
         }
 
         it("it contains only terminals", function(){
