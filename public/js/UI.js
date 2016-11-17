@@ -12,11 +12,7 @@ $(document).ready(function() {
     } else {
         $("#showMore").hide()
     }
-    loadingAPI.loadCalendar();
-    loadingAPI.loadGrammar();
-    loadingAPI.loadSentenceTypes();
-    loadingAPI.loadSentenceBigramProbabilities();
-    loadingAPI.loadSignPaths();
+    loadingAPI.loadAllJsonData();
 });
 
 $("#generate").click(function() {
@@ -30,30 +26,29 @@ $("#generate").click(function() {
     horoscope.userData.hometown = $("#hometown").val();
     horoscope.userData.birthday = $("#birthday").val();
     var error = horoscope.processHoroscopeForm();
-    console.log(horoscope.paragraph);
-    // if (error){
-    //     $("#error-message").html(error);
-    // } else {
-    //     $.ajax({
-    //         type: 'POST',
-    //         url:  "/horoscopes",
-    //         data:  {
-    //             full_text       : horoscope.paragraph,
-    //             abridged_text   : horoscope.sentence.cleanedContent,
-    //             name            : horoscope.userData["name"],
-    //             hometown        : horoscope.userData["hometown"],
-    //             image           : horoscope.signPaths[horoscope.userData["sign"]]["path"],
-    //             date            : horoscope.date,
-    //             sign            : horoscope.userData["sign"],
-    //         },
-    //         dataType: 'json',
-    //         success: function(data){
-    //             if (data.redirect){
-    //                 window.location.href = data.redirect;
-    //             };
-    //         }
-    //     });
-    // }
+    if (error){
+        $("#error-message").html(error);
+    } else {
+        $.ajax({
+            type: 'POST',
+            url:  "/horoscopes",
+            data:  {
+                full_text       : horoscope.paragraph,
+                abridged_text   : horoscope.sentence.cleanedContent,
+                name            : horoscope.userData["name"],
+                hometown        : horoscope.userData["hometown"],
+                image           : horoscope.signPaths[horoscope.userData["sign"]]["path"],
+                date            : horoscope.date,
+                sign            : horoscope.userData["sign"],
+            },
+            dataType: 'json',
+            success: function(data){
+                if (data.redirect){
+                    window.location.href = data.redirect;
+                };
+            }
+        });
+    }
 });
 
 $("#showMore").click(function () {

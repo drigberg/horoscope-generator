@@ -217,6 +217,13 @@ var Horoscope = function(args){
 
 var HoroscopeAPI = function(){
     var that = this;
+    this.loadAllJsonData = function(){
+        this.loadCalendar();
+        this.loadGrammar();
+        this.loadSentenceTypes();
+        this.loadSentenceBigramProbabilities();
+        this.loadSignPaths();
+    },
     this.loadGrammar = function(){
         $.ajax({
             url: "/json/new_grammar.json",
