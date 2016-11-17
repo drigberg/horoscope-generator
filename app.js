@@ -8,8 +8,8 @@ var express    	= require("express"),
     port       	= process.env.PORT || 5000;
 
 
-// var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
-var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
+var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
+// var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
 mongoose.connect(databaseUrl);
 
 app.use(express.static("public"));
