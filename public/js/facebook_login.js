@@ -41,7 +41,8 @@
 
   FB.ui({
     method: 'share',
-    href: 'https://developers.facebook.com/docs/'
+    href: 'http://www.horoscopegen.com/',
+    quote: 'If this is it, please let me know! If this aint love, you had better let me know!'
   }, function(response){}
   );
 
