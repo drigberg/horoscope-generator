@@ -51,7 +51,8 @@ app.get("/horoscopes", function (req, res){
             console.log(err);
         } else {
             allHoroscopes.reverse();
-            res.render("horoscopes/index", {allHoroscopes:allHoroscopes});
+            firstTenHoroscopes = allHoroscopes.slice(0,10)
+            res.render("horoscopes/index", {firstTenHoroscopes:firstTenHoroscopes});
         };
     });
 });
