@@ -234,8 +234,7 @@ var HoroscopeAPI = function(){
           dataType: "json",
           success: function(data) {
               that.sentenceBigrams = data;
-          },
-          failure: console.log("failed to load bigrams!!!")
+          }
       });
     };
     this.loadCalendar = function(){
