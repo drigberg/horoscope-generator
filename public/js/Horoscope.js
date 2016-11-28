@@ -10,6 +10,7 @@ var Horoscope = function(args){
     //takes in form and grammar data to generate contextually sensible horoscope
     args || (args = {});
     _.extend(this,args);
+    this.signPath = "";
     this.grammar = {};
     this.sentenceBigramProbabilities = {};
     this.sentenceTypes = {};
@@ -167,6 +168,7 @@ var Horoscope = function(args){
         if (formValidation){
             this.addUserDataToGrammar();
             this.generateParagraph();
+            this.signPath = this.signPaths[this.userData["sign"]]["path"]
         } else {
             return "Please fill out all fields!"
         }
