@@ -7,7 +7,7 @@
     </div>
     <div class="container" id="leaderboard">
         <ul id="leaderboard-list">
-            <% allHoroscopes.forEach(function(horoscope){ %>
+            <% firstTenHoroscopes.forEach(function(horoscope){ %>
                 <li>
                     <h5 class="list-item-date"><%= horoscope.date %></h5>
                     <img class="list-icon" src="<%= horoscope.image %>">
@@ -16,7 +16,6 @@
                 </li>
             <% }); %>
         </ul>
-        <button class="btn btn-lg btn-danger" id="showMore">Show More!</button>
     </div>
 </div>
 <% include ../partials/footer %>
