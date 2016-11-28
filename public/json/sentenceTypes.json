@@ -9,15 +9,6 @@
 		"grammatical_number" : "singular"
 
 	},
-	"signDeclaration_thirdPerson" : {
-		"object" : "sign" ,
-		"voice" : "active" ,
-		"tense" : "present" ,
-		"person" : "third" ,
-		"verbtype" : "linking",
-		"connector" : false,
-		"grammatical_number" : "singular"
-	},
 	"badStatement_secondPerson_present" : {
 		"good/bad" : "bad" ,
 		"tense" : "present" ,

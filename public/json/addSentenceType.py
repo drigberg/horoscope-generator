@@ -20,7 +20,11 @@ def main():
                 print "******"
                 tags[new_tag] = tag_value
 
-            sentenceTypes[title] = tags    
+            sentenceTypes[title] = tags
+
+            for key in bigramProbs.keys():
+                bigramProbs[title][key] =  
+                bigramProbs[key]
 
 
     with open('sentenceTypes.json', 'w') as revisedSentenceTypes_file:
