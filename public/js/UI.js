@@ -25,34 +25,31 @@ $("#generate").click(function() {
     if (error){
         $("#error-message").html(error);
     } else {
-        socket.emit('new_horoscope', horoscope);
-        // $.ajax({
-        //     type: 'POST',
-        //     url:  "/horoscopes",
-        //     data:  {
-        //         full_text       : horoscope.paragraph,
-        //         abridged_text   : horoscope.sentence.cleanedContent,
-        //         name            : horoscope.userData["name"],
-        //         hometown        : horoscope.userData["hometown"],
-        //         image           : horoscope.signPath,
-        //         date            : horoscope.date,
-        //         sign            : horoscope.userData["sign"],
-        //     },
-        //     dataType: 'json',
-        //     success: function(data){
-        //         socket.emit('new_horoscope', data);
-        //         if (data.redirect){
-        //             window.location.href = data.redirect;
-        //         };
-        //     }
-        // });
+        $.ajax({
+            type: 'POST',
+            url:  "/horoscopes",
+            data:  {
+                full_text       : horoscope.paragraph,
+                abridged_text   : horoscope.sentence.cleanedContent,
+                name            : horoscope.userData["name"],
+                hometown        : horoscope.userData["hometown"],
+                image           : horoscope.signPath,
+                date            : horoscope.date,
+                sign            : horoscope.userData["sign"],
+            },
+            dataType: 'json',
+            success: function(data){
+                socket.emit('new_horoscope', horoscope);
+                if (data.redirect){
+                    window.location.href = data.redirect;
+                };
+            }
+        });
     }
 });
 
 var socket_data = 0
 socket.on('new_horoscope', function (data) {
-    console.log(data);
-    socket_data = data;
     var newHoroscope = $(document.createElement('li'));
     var newElements = [
         $("<h5 class='list-item-date'>" + data.horoscope.date + "</h5>"),
