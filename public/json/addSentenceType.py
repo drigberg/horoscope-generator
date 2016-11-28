@@ -4,10 +4,14 @@ import json
 
 
 def main():
-    with open('sentenceTypes.json') as sentenceTypes_data:
-        with open('sentenceBigramProbabilities.json') as bigramProbs_data:
-            sentenceTypes = json.load(sentenceTypes_data)
-            bigramProbs = json.load(bigramProbs_data)
+    with open('sentence_types.json') as sentence_types_data:
+        with open('sentencebigrams.json') as bigrams_data:
+            exceptions = {
+                "signDeclaration_secondPerson" : 0,
+                "@END"                         : 0.3
+            }
+            sentence_types = json.load(sentence_types_data)
+            bigrams = json.load(bigrams_data)
             counter = 0
             breaker = ""
             title = raw_input("Sentence type name: ")
@@ -20,18 +24,20 @@ def main():
                 print "******"
                 tags[new_tag] = tag_value
 
-            sentenceTypes[title] = tags
+            sentence_types[title] = tags
 
-            for key in bigramProbs.keys():
-                bigramProbs[title][key] =  
-                bigramProbs[key]
+            #add sentence type as conversion for each existing type and as node
 
 
-    with open('sentenceTypes.json', 'w') as revisedSentenceTypes_file:
-        json.dump(sentenceTypes, revisedSentenceTypes_file)
 
-    with open('sentenceBigramProbabilities.json', 'w') as revisedProbs_file:
-        json.dump(bigramProbs, revisedProbs_file)
+
+
+
+    # with open('sentence_types.json', 'w') as revised_sentence_types_file:
+    #     json.dump(sentence_types, revised_sentence_types_file)
+    #
+    # with open('sentencebigrams.json', 'w') as revised_bigrams_file:
+    #     json.dump(bigrams, revised_bigrams_file)
 
 if __name__ == '__main__':
     main()

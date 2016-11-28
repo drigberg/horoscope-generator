@@ -208,25 +208,6 @@
 		"causation_connector" : 0.1,
 		"@END" : 0.3
 	},
-	"goodStatement_secondPerson_present" : {
-		"signDeclaration_secondPerson" : 0,
-		"badStatement_secondPerson_present" : 0.1,
-		"badStatement_secondPerson_future" : 0.1,
-		"badStatement_thirdPerson_present" : 0.04,
-		"badStatement_thirdPerson_past" : 0.04,
-		"goodStatement_thirdPerson_present" : 0.05,
-		"goodStatement_thirdPerson_past" : 0.05,
-		"goodStatement_secondPerson_future" : 0.05,
-		"goodStatement_secondPerson_present" : 0.05,
-		"neutralStatement_secondPerson_present" : 0.02,
-		"neutralStatement_secondPerson_past" : 0.02,
-		"neutralStatement_secondPerson_future" : 0.02,
-		"neutralStatement_thirdPerson_present" : 0.02,
-		"neutralStatement_thirdPerson_past" : 0.02,
-		"neutralStatement_thirdPerson_future" : 0.02,
-		"causation_connector" : 0.1,
-		"@END" : 0.3
-	},
 	"neutralStatement_secondPerson_past" : {
 		"signDeclaration_secondPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
