@@ -1,6 +1,7 @@
 import math
 import sys
 import json
+import cleanBigrams
 
 
 def main():
