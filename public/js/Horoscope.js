@@ -12,7 +12,7 @@ var Horoscope = function(args){
     _.extend(this,args);
     this.signPath = "";
     this.grammar = {};
-    this.sentenceBigramProbabilities = {};
+    this.sentenceBigrams = {};
     this.sentenceTypes = {};
     this.calendar = {};
     this.userData = {
@@ -52,13 +52,13 @@ var Horoscope = function(args){
     this.generateParagraph = function(){
         this.structure = ["@START"];
         //use bigrams to generate paragraph structure
-        while (this.structure[this.structure.length - 1] in this.sentenceBigramProbabilities) {
+        while (this.structure[this.structure.length - 1] in this.sentenceBigrams) {
             var lastItem = this.structure[this.structure.length - 1];
             var rand = Math.random();
             var probSum = 0;
-            for (var n = 0; n < Object.keys(this.sentenceBigramProbabilities[lastItem]).length; n++) {
-                var key = Object.keys(this.sentenceBigramProbabilities[lastItem])[n]
-                probSum += this.sentenceBigramProbabilities[lastItem][key]
+            for (var n = 0; n < Object.keys(this.sentenceBigrams[lastItem]).length; n++) {
+                var key = Object.keys(this.sentenceBigrams[lastItem])[n]
+                probSum += this.sentenceBigrams[lastItem][key]
                 if (rand < probSum){
                     this.structure.push(key);
                     break
@@ -204,7 +204,7 @@ var HoroscopeAPI = function(){
         this.loadCalendar();
         this.loadGrammar();
         this.loadSentenceTypes();
-        this.loadSentenceBigramProbabilities();
+        this.loadSentenceBigrams();
         this.loadSignPaths();
     },
     this.loadGrammar = function(){
@@ -228,13 +228,14 @@ var HoroscopeAPI = function(){
           }
       });
     };
-    this.loadSentenceBigramProbabilities = function(){
+    this.loadSentenceBigrams = function(){
       $.ajax({
-          url: "/json/sentenceBigramProbabilities.json",
+          url: "/json/sentenceBigrams.json",
           dataType: "json",
           success: function(data) {
-              that.sentenceBigramProbabilities = data;
-          }
+              that.sentenceBigrams = data;
+          },
+          failure: console.log("failed to load bigrams!!!")
       });
     };
     this.loadCalendar = function(){
