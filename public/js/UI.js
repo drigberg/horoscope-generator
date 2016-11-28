@@ -34,7 +34,7 @@ $("#generate").click(function() {
         //         abridged_text   : horoscope.sentence.cleanedContent,
         //         name            : horoscope.userData["name"],
         //         hometown        : horoscope.userData["hometown"],
-        //         image           : horoscope.signPaths[horoscope.userData["sign"]]["path"],
+        //         image           : horoscope.signPath,
         //         date            : horoscope.date,
         //         sign            : horoscope.userData["sign"],
         //     },
