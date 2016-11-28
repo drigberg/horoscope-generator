@@ -8,11 +8,6 @@ var loadingAPI = new HoroscopeAPI();
 var socket = io.connect('http://localhost');
 
 $(document).ready(function() {
-    if ($('li').length > $('li:visible').length) {
-        $("#showMore").show();
-    } else {
-        $("#showMore").hide()
-    }
     loadingAPI.loadAllJsonData();
 });
 
@@ -51,13 +46,6 @@ $("#generate").click(function() {
         //         };
         //     }
         // });
-    }
-});
-
-$("#showMore").click(function () {
-    $('li:hidden').slice(0, 10).show();
-    if ($('li').length == $('li:visible').length) {
-        $("#showMore").fadeOut(2000);
     }
 });
 
