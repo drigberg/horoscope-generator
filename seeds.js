@@ -118,17 +118,17 @@ function seedDB(){
             console.log("Error: " + err);
         } else {
         console.log("removed horoscopes");
-        data.forEach(function(seed){
-            horoscope.create(seed, function (err, horoscope){
-                if(err){
-                    console.log("Error: " + err);
-                } else {
-                    horoscope.save();
-                    console.log("added a horoscope");
-                    //create a comment
-                }
-            });
-        });
+        // data.forEach(function(seed){
+        //     horoscope.create(seed, function (err, horoscope){
+        //         if(err){
+        //             console.log("Error: " + err);
+        //         } else {
+        //             horoscope.save();
+        //             console.log("added a horoscope");
+        //             //create a comment
+        //         }
+        //     });
+        // });
         };
     });
 
