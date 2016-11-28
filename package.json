@@ -15,7 +15,8 @@
     "express": "^4.13.4",
     "mongodb": "^2.1.16",
     "mongoose": "^4.4.12",
-    "requirejs": "^2.2.0"
+    "requirejs": "^2.2.0",
+    "socket.io": "^1.7.1"
   },
   "devDependencies": {
     "mocha": "^2.4.5",

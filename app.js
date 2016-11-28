@@ -5,11 +5,10 @@ var express    	= require("express"),
     seeds       = require("./seeds.js"),
     bodyParser  = require("body-parser"),
     seedDB      = require("./seeds"),
-    server      = require("http").Server(app);
-    io          = require("socket.io")(server);
+    socketIO    = require("socket.io");
     port       	= process.env.PORT || 5000;
 
-server.listen(port, function(err){
+const server = app.listen(port, function(err){
     console.log("Horoscope Generator server is running on port " + port);
 });
 
@@ -24,6 +23,7 @@ app.set("view engine", "ejs");
 // seedDB();
 
 //IO
+const io = socketIO(server);
 io.on('connection', function (socket) {
     console.log("socket is connected!");
     socket.on('new_horoscope', function (data) {
