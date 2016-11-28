@@ -53,11 +53,22 @@ var socket_data = 0
 socket.on('new_horoscope', function (data) {
     console.log(data);
     socket_data = data;
-    var newHoroscope = $(document.createElement('li'))
-    //add elements with correct classes
-    newHoroscope.append(document.createTextNode(data.horoscope.sentence.cleanedContent));
-    // newHoroscope.append(document.createTextNode('HEYO'));
-    // newHoroscope.append(document.createTextNode('HEYO'));
+    var newHoroscope = $(document.createElement('li'));
+    var newElements = [
+        $("<h5 class='list-item-date'>" + data.horoscope.date + "</h5>"),
+        $("<img class='list-icon' src=" + data.horoscope.signPath + ">"),
+        $('<h4 class="list-text">'
+            + data.horoscope.userData["name"]
+            + ' from '
+            + data.horoscope.userData["hometown"]
+            + ' got "'
+            + data.horoscope.sentence.cleanedContent
+            + '"<h4>'
+        )
+    ];
+    for (var i = 0; i < newElements.length; i++){
+        newHoroscope.append(newElements[i]);
+    }
 
     var leader = $("#leaderboard-list").children()[0];
     newHoroscope.insertBefore(leader);
