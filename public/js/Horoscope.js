@@ -37,25 +37,6 @@ var Horoscope = function(args){
         //finds user's sign, initializes sentence
         //adds name to grammar
         this.date = moment().format("MMMM Do YYYY, h:mm a");
-        // if (this.userData["name"] !== ""){
-        //     this.sentenceTypes["name_signDeclaration"] = {
-        //         "object" : "sign",
-        //         "voice" : "active",
-        //         "name" : true,
-        //         "tense" : "present",
-        //         "person" : "third" ,
-        //         "verbtype" : "linking"
-        //     };
-        //     this.grammar["@Subject"]["@Name"] = {
-        //         "weight" : 50,
-        //         "person" : "third" ,
-        //         "name" : true
-        //     };
-        //     this.grammar["@Name"] = {};
-        //     this.grammar["@Name"][this.userData["name"]] = {
-        //         "weight" : 4
-        //     };
-        // }
         this.userData.sign = this.evaluateSign(this.userData.birthday);
         this.grammar["@NounSingular"]["@Sign"] = {
             "weight" : 50 ,
