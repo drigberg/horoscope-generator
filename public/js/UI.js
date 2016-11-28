@@ -5,8 +5,8 @@ var sentenceTypes = {};
 var sentenceBigramProbabilities = {};
 var signPaths = {};
 var loadingAPI = new HoroscopeAPI();
-// var socket = io.connect('http://www.horoscopegen.com');
-var socket = io.connect('http://localhost');
+var socket = io.connect('http://www.horoscopegen.com');
+// var socket = io.connect('http://localhost');
 
 
 $(document).ready(function() {
