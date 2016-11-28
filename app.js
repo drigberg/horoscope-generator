@@ -5,8 +5,13 @@ var express    	= require("express"),
     seeds       = require("./seeds.js"),
     bodyParser  = require("body-parser"),
     seedDB      = require("./seeds"),
+    server      = require("http").Server(app);
+    io          = require("socket.io")(server);
     port       	= process.env.PORT || 5000;
 
+server.listen(port, function(err){
+    console.log("Horoscope Generator server is running on port " + port);
+});
 
 var databaseUrl = "mongodb://admin:cookiecoder@ds011331.mlab.com:11331/horoscope-generator";
 // var databaseUrl = "mongodb://localhost:27017/horoscope-generator";
@@ -17,6 +22,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 // seedDB();
+
+//IO
+io.on('connection', function (socket) {
+    console.log("socket is connected!");
+    socket.on('new_horoscope', function (data) {
+        // we tell the client to execute 'new message'
+        console.log("received at server!")
+        socket.broadcast.emit('new_horoscope', {horoscope: data});
+    });
+});
 
 //ROOT ROUTE
 app.get("/", function (req, res){
@@ -36,7 +51,8 @@ app.get("/horoscopes", function (req, res){
             console.log(err);
         } else {
             allHoroscopes.reverse();
-            res.render("horoscopes/index", {allHoroscopes:allHoroscopes});
+            firstTenHoroscopes = allHoroscopes.slice(0,10)
+            res.render("horoscopes/index", {firstTenHoroscopes:firstTenHoroscopes});
         };
     });
 });
@@ -84,6 +100,6 @@ app.get("*", function (req, res){
     res.redirect("/");
 });
 
-app.listen(port, function(err){
-    console.log("Horoscope Generator server is running on port " + port);
-});
+// app.listen(port, function(err){
+//     console.log("Horoscope Generator server is running on port " + port);
+// });

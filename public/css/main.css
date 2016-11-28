@@ -24,24 +24,11 @@ body {
 }
 
 .link {
-	margin: 0 auto 0 auto;
+	margin: 10 auto;
 	display: block;
 	width: 200px;
-	float: none;
 }
 
-#newPage-link {
-	margin: 10px auto;
-	display: block;
-	width: 200px;
-	width: 30%;
-}
-
-#generate {
-	display: block;
-	width: 30%;
-	margin: 0px auto;
-}
 #header {
 	background-color: rgba(0,0,0,0.2);
 	padding: 20px 10px 20px 10px;

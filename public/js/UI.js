@@ -5,13 +5,9 @@ var sentenceTypes = {};
 var sentenceBigramProbabilities = {};
 var signPaths = {};
 var loadingAPI = new HoroscopeAPI();
+var socket = io.connect('http://localhost');
 
 $(document).ready(function() {
-    if ($('li').length > $('li:visible').length) {
-        $("#showMore").show();
-    } else {
-        $("#showMore").hide()
-    }
     loadingAPI.loadAllJsonData();
 });
 
@@ -37,12 +33,13 @@ $("#generate").click(function() {
                 abridged_text   : horoscope.sentence.cleanedContent,
                 name            : horoscope.userData["name"],
                 hometown        : horoscope.userData["hometown"],
-                image           : horoscope.signPaths[horoscope.userData["sign"]]["path"],
+                image           : horoscope.signPath,
                 date            : horoscope.date,
                 sign            : horoscope.userData["sign"],
             },
             dataType: 'json',
             success: function(data){
+                socket.emit('new_horoscope', horoscope);
                 if (data.redirect){
                     window.location.href = data.redirect;
                 };
@@ -51,9 +48,25 @@ $("#generate").click(function() {
     }
 });
 
-$("#showMore").click(function () {
-    $('li:hidden').slice(0, 10).show();
-    if ($('li').length == $('li:visible').length) {
-        $("#showMore").fadeOut(2000);
+var socket_data = 0
+socket.on('new_horoscope', function (data) {
+    var newHoroscope = $(document.createElement('li'));
+    var newElements = [
+        $("<h5 class='list-item-date'>" + data.horoscope.date + "</h5>"),
+        $("<img class='list-icon' src=" + data.horoscope.signPath + ">"),
+        $('<h4 class="list-text">'
+            + data.horoscope.userData["name"]
+            + ' from '
+            + data.horoscope.userData["hometown"]
+            + ' got "'
+            + data.horoscope.sentence.cleanedContent
+            + '"<h4>'
+        )
+    ];
+    for (var i = 0; i < newElements.length; i++){
+        newHoroscope.append(newElements[i]);
     }
+
+    var leader = $("#leaderboard-list").children()[0];
+    newHoroscope.insertBefore(leader);
 });
