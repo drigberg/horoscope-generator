@@ -1,5 +1,5 @@
 int numConstellations = 200;
-float probabilityOfSingleStars = 0.9;
+float probabilityOfSingleStars = 0.8;
 int minStarsInConstellation = 3;
 int maxStarsInConstellation = 12;
 
@@ -10,24 +10,23 @@ void setup() {
   background(255, 255, 255);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++){
-    float xmin = random(0, width);
-    float ymin = random(0, height);
-    float xmax = random(xmin, width);
-    float ymax = random(ymin, height);
-    int numStars = int(random(minStarsInConstellation, maxStarsInConstellation));
-    float singleStar = random(0, 1);
-    if (singleStar < probabilityOfSingleStars){
-        numStars = 1;
-    }
-    constellations[i] = new Constellation(numStars, xmin, xmax, ymin, ymax);
+    constellations[i] = newConstellation(-width, width * 1.5, -height, height * 1.5);
   };
 }
 
 void draw() {
   background(230,230,230);
   for (int i = 0; i < constellations.length; i++){
+    boolean offscreen = false;
     for (int j = 0; j < constellations[i].constellationStars.length; j++){
         constellations[i].constellationStars[j].update();
+        if (constellations[i].constellationStars[j].xpos > width && constellations[i].constellationStars[j].ypos > height){
+            offscreen = true;
+        };
+        if (offscreen) {
+            constellations[i] = newConstellation(-width * 4, 0, -height, height/2);
+            break;
+        };
     };
     for (int j = 0; j < constellations[i].constellationLines.length; j++){
         constellations[i].constellationLines[j].update();
@@ -37,7 +36,7 @@ void draw() {
 
 class Star { 
   float xpos, ypos, size, red, green, blue; 
-  float speed = 0.05;
+  float speed = 4;
   Star (float x, float y, float s, float r, float g, float b) {  
     xpos = x;
     ypos = y; 
@@ -51,12 +50,6 @@ class Star {
     fill(red, green, blue);
     xpos += speed; 
     ypos += speed / 4;
-    if (ypos > height) { 
-      ypos = 0; 
-    };
-    if (xpos > width) { 
-      xpos = 0; 
-    };
     ellipse(xpos, ypos, size, size);
   };
 };
@@ -109,4 +102,22 @@ float[] findUnitVector(Star star1, Star star2){
     unitVector[1] = normalVector[1]/d;
     return unitVector;
 };
+
+float findAngle(float[] vector1, float[] vector2){
+    float angle = 0;
+    return angle;
+};
+
+Constellation newConstellation(float minx, float maxx, float miny, float maxy){
+    float xmin = random(minx, maxx);
+    float ymin = random(miny, maxy);
+    float xmax = random(xmin, maxx);
+    float ymax = random(ymin, maxy);
+    int numStars = int(random(minStarsInConstellation, maxStarsInConstellation));
+    float singleStar = random(0, 1);
+    if (singleStar < probabilityOfSingleStars){
+        numStars = 1;
+    };
+    return new Constellation(numStars, xmin, xmax, ymin, ymax);
+}
   
