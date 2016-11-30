@@ -1,6 +1,6 @@
 //global defaults
 int numConstellations = 300;
-float probabilityOfSingleStars = 0.8;
+float probabilityOfSingleStars = 0.5;
 int minStarsInConstellation = 3;
 int maxStarsInConstellation = 12;
 float minStarSize = 1;
@@ -8,7 +8,7 @@ float maxStarSize = 5;
 float speed = 5;
 float minMagnitude = 5;
 float maxMagnitude = 100;
-float minAngle = PI / 7;
+float minAngle = PI / 4;
 
 //vector helpers
 PVector zeroDegreeUnitVector = new PVector(1, 0);
@@ -72,10 +72,10 @@ class Constellation {
     b = 255;
     float startX = random(minx, maxx);
     float startY = random(miny, maxy);
-    constellationChain.set("0", 0.4);
-    constellationChain.set("1", 0.1);
-    constellationChain.set("2", 0.1);
-    constellationChain.set("3", 0.2);
+    constellationChain.set("0", 0.5);
+    constellationChain.set("1", 0.2);
+    constellationChain.set("2", 0.2);
+    constellationChain.set("3", 0.1);
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
     float singleStar = random(0, 1);
     if (singleStar > probabilityOfSingleStars) {
@@ -109,7 +109,6 @@ void workFromNode(Constellation constellation, Star node, PVector startVector) {
       constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
       workFromNode(constellation, newStar, newVector);
     };
-
     //allow for old node to fail and reset if not possible without a collision
     //make new node and/or path, evaluate new node if applicable
   }
@@ -149,6 +148,7 @@ PVector newVector(Constellation constellation, PVector startVector, Star node) {
   PVector vector = new PVector();
   boolean angleConflicts = true;
   if (startVector == emptyVector) {
+    angleConflicts = false;
     angle = random(0, 2 * PI);
     vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
   } else {
@@ -156,7 +156,8 @@ PVector newVector(Constellation constellation, PVector startVector, Star node) {
     //flip old vector in order to evaluate against end point, not start point
     //evaluate against all other vectors in constellation that contain the start point
     int counter = 0;
-    while (counter < 10 && angleConflicts){
+    while (counter < 10 && angleConflicts == true){
+      counter += 1;
       angleConflicts = false;
       angle = random(minAngle / 2, 2 * PI - minAngle / 2);
       float startAngle = findAngle(zeroDegreeUnitVector, startVector) - PI;
@@ -165,7 +166,15 @@ PVector newVector(Constellation constellation, PVector startVector, Star node) {
       for (int i = 0; i < constellation.constellationLines.size(); i++){
         if (constellation.constellationLines.get(i).lineStars[0] == node){
           PVector evaluatingVector = findUnitVector(constellation.constellationLines.get(i).lineStars[0], constellation.constellationLines.get(i).lineStars[1]);
-          if (findAngle(vector, evaluatingVector) < minAngle){
+          float evaluatingAngle = findAngle(vector, evaluatingVector);
+          while (evaluatingAngle > 2 * PI){
+            evaluatingAngle -= 2* PI;
+          };
+          while (evaluatingAngle < -2 * PI){
+            evaluatingAngle += 2* PI;
+          };
+          if (evaluatingAngle < minAngle){
+            print("CONFLICT!!!");
             angleConflicts = true;
             break;
           }
@@ -174,11 +183,11 @@ PVector newVector(Constellation constellation, PVector startVector, Star node) {
           evaluatingVector.x *= -1;
           evaluatingVector.y *= -1;
           if (findAngle(vector, evaluatingVector) < minAngle){
+            print("CONFLICT!");
             angleConflicts = true;
             break;
-          }
-        }
-
+          };
+        };
       }
     };
   };
@@ -199,6 +208,7 @@ PVector findUnitVector(Star star1, Star star2) {
 float findAngle(PVector vector1, PVector vector2) {
   //finds angle between two vectors
   float angle = acos(vector1.dot(vector2));
+  print(angle);
   return angle;
 };
 
