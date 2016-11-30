@@ -1,3 +1,4 @@
+//global defaults
 int numConstellations = 300;
 float probabilityOfSingleStars = 0.8;
 int minStarsInConstellation = 3;
@@ -7,7 +8,11 @@ float maxStarSize = 5;
 float speed = 0.05;
 float minMagnitude = 5;
 float maxMagnitude = 100;
-float[] verticalUnitVector = {1,0};
+float minAngle = PI / 6;
+
+//vector helpers
+float[] zeroDegreeUnitVector = {1,0};
+float[] emptyVector = {0,0};
 
 
 
@@ -57,13 +62,15 @@ class Constellation {
     float b = random(0, 255 - g);
     float startX = random(minx, maxx);
     float startY = random(miny, maxy);
-    float singleStar = random(0, 1);
-    if (singleStar < probabilityOfSingleStars){
-        //numStars = 1;
-    };
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
-    workFromNode(constellationStars.get(0));
+    float singleStar = random(0, 1);
+    if (singleStar > probabilityOfSingleStars){
+        workFromNode(constellationStars.get(0), emptyVector);
+    };  
   };
+};
+
+void workFromNode(Star node, float[] startVector){
 };
 
 class Star { 
@@ -85,15 +92,26 @@ class Star {
   };
 };
 
-void workFromNode(Star node){
-  
-};
-
-float[] newVector(float[] oldVector){
+float[] newVector(float[] startVector){
+  //create new vector sprouting from end of old vector
+  //empty vector is used as check for starting vector of constellation
   float[] vector = new float[2];
-  //angle = random(findAngle
-  vector[0] = 1;
-  vector[1] = 1;
+  float angle;
+  float magnitude = random(minMagnitude, maxMagnitude);
+  if (startVector == emptyVector){
+    angle = random(0, 2 * PI);
+    vector[0] = cos(angle) * magnitude;
+    vector[1] = sin(angle) * magnitude;  
+  } else {
+    //if sprouting from old vector, generate new random angle outside of minimum cone
+    //flip old vector in order to evaluate against end point, not start point
+    angle = random(minAngle / 2, 2 * PI - minAngle / 2);
+    float startAngle = findAngle(zeroDegreeUnitVector, startVector) - PI;
+    angle += startAngle;
+    vector[0] = cos(angle) * magnitude;
+    vector[1] = sin(angle) * magnitude;
+  };
+
   return vector;
 }
   
