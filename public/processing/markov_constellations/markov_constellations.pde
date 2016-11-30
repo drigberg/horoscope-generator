@@ -1,6 +1,6 @@
 //global defaults
-int numConstellations = 100;
-float probabilityOfSingleStars = 0.2;
+int numConstellations = 50;
+float probabilityOfSingleStars = 0.1;
 int minStarsInConstellation = 3;
 int maxStarsInConstellation = 12;
 float minStarSize = 3;
@@ -11,13 +11,13 @@ float maxMagnitude = 100;
 float minAngle = PI/4;
 
 //vector helpers
-PVector zeroDegreeUnitVector = new PVector(1, 0);
 PVector emptyVector = new PVector(0, 0);
 
-//Generate constellation as arraylist
-//Generate first Star: random in space
-//Work from node recursively
+//------TO DO-------
 //Reference constellation colors; too many arguments being passed on
+//Reconsider singleStar catch
+//Intersection check
+//Closed loops
 
 
 Constellation[] constellations;
@@ -142,14 +142,12 @@ boolean intersect(PVector vector1, PVector vector2){
 PVector newVector(Constellation constellation, Star node) {
   //creates new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
-
   float angle;
   float magnitude = random(minMagnitude, maxMagnitude);
   PVector vector = new PVector();
   boolean angleConflicts = true;
-  //if sprouting from old vector, generate new random angle outside of minimum cone
-  //flip old vector in order to evaluate against end point, not start point
-  //evaluate against all other vectors in constellation that contain the start point
+  
+  //evaluate for minimum angle against all vectors in constellation that contain the new vector's start point
   int counter = 0;
   while (counter < 10 && angleConflicts == true){
     counter += 1;
@@ -163,22 +161,23 @@ PVector newVector(Constellation constellation, Star node) {
       float star1y = existingLine.lineStars[0].ypos;
       float star2x = existingLine.lineStars[1].xpos;
       float star2y = existingLine.lineStars[1].ypos;
-      float proposedAngle = 9999;
       PVector existingVector = emptyVector;
+      
       if (existingLine.lineStars[0] == node){
         existingVector = findUnitVector(star1x, star1y, star2x, star2y);
       } else if (existingLine.lineStars[1] == node){
         existingVector = findUnitVector(star2x, star2y, star1x, star1y);
       };
+      
       if (existingVector != emptyVector){
-        proposedAngle = findAngle(newUnitVector, existingVector);
+        float proposedAngle = findAngle(newUnitVector, existingVector);
         while (proposedAngle > 2 * PI){
           proposedAngle -= 2 * PI;
         };
         while (proposedAngle < -2 * PI){
           proposedAngle += 2 * PI;
         };
-        if (proposedAngle != 9999 && proposedAngle < minAngle || proposedAngle > 360 - minAngle){
+        if (proposedAngle < minAngle || proposedAngle > 360 - minAngle){
           angleConflicts = true;
           break;
         };
@@ -200,7 +199,7 @@ PVector findUnitVector(float x1, float y1, float x2, float y2) {
 };
 
 float findAngle(PVector vector1, PVector vector2) {
-  //finds angle between two vectors
+  //finds angle between two vectors, assuming same starting point
   float angle = acos(vector1.dot(vector2));
   return angle;
 };
