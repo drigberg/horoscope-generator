@@ -5,6 +5,15 @@ int maxStarsInConstellation = 12;
 float minStarSize = 0.1;
 float maxStarSize = 5;
 float speed = 0.05;
+float minMagnitude = 5;
+float maxMagnitude = 100;
+float[] verticalUnitVector = {1,0};
+
+
+
+//Generate constellation as arraylist
+//Generate first Star: random in space
+//Work from node recursively
 
 
 Constellation[] constellations;
@@ -14,7 +23,7 @@ void setup() {
   background(255, 255, 255);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++){
-    constellations[i] = newConstellation(-width, width, -height, height);
+    constellations[i] = new Constellation(-width, width, -height, height);
   };
 }
 
@@ -28,7 +37,7 @@ void draw() {
             offscreen = true;
         };
         if (offscreen) {
-            constellations[i] = newConstellation(-width, 0, -height/4, height * 3 / 4);
+            constellations[i] = new Constellation(-width, 0, -height/4, height * 3 / 4);
             break;
         };
     };
@@ -42,26 +51,20 @@ void draw() {
 class Constellation {
   ArrayList<Star> constellationStars = new ArrayList<Star>();
   ArrayList<Line> constellationLines = new ArrayList<Line>();
-  Constellation (int numStars, float startX, float startY){
+  Constellation (float minx, float maxx, float miny, float maxy){
     float r = random(0, 255);
     float g = random(0, 255 - r);
     float b = random(0, 255 - g);
-    
+    float startX = random(minx, maxx);
+    float startY = random(miny, maxy);
+    float singleStar = random(0, 1);
+    if (singleStar < probabilityOfSingleStars){
+        //numStars = 1;
+    };
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
     workFromNode(constellationStars.get(0));
   };
 };
-
-Constellation newConstellation(float minx, float maxx, float miny, float maxy){
-    float startX = random(minx, maxx);
-    float startY = random(miny, maxy);
-    int numStars = int(random(minStarsInConstellation, maxStarsInConstellation));
-    float singleStar = random(0, 1);
-    if (singleStar < probabilityOfSingleStars){
-        numStars = 1;
-    };
-    return new Constellation(numStars, startX, startY);
-}
 
 class Star { 
   float xpos, ypos, size, red, green, blue; 
@@ -85,6 +88,14 @@ class Star {
 void workFromNode(Star node){
   
 };
+
+float[] newVector(float[] oldVector){
+  float[] vector = new float[2];
+  //angle = random(findAngle
+  vector[0] = 1;
+  vector[1] = 1;
+  return vector;
+}
   
 float[] findUnitVector(Star star1, Star star2){
     //calculate normal vector
@@ -100,7 +111,7 @@ float[] findUnitVector(Star star1, Star star2){
 };
 
 float findAngle(float[] vector1, float[] vector2){
-    float angle = 0;
+    float angle = acos(vector1[0] * vector2[0] + vector1[1] * vector2[1]) * 180 / PI;
     return angle;
 };
 
