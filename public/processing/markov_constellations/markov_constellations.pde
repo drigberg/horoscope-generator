@@ -1,14 +1,14 @@
 //global defaults
-int numConstellations = 200;
-float probabilityOfSingleStars = 0.8;
+int numConstellations = 100;
+float probabilityOfSingleStars = 0.2;
 int minStarsInConstellation = 3;
 int maxStarsInConstellation = 12;
 float minStarSize = 3;
 float maxStarSize = 8;
-float speed = 0.6;
+float speed = 0.7;
 float minMagnitude = 5;
 float maxMagnitude = 100;
-float minAngle = PI / 2;
+float minAngle = PI/4;
 
 //vector helpers
 PVector zeroDegreeUnitVector = new PVector(1, 0);
@@ -79,12 +79,12 @@ class Constellation {
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
     float singleStar = random(0, 1);
     if (singleStar > probabilityOfSingleStars) {
-      workFromNode(this, emptyVector, constellationStars.get(0));
+      workFromNode(this, constellationStars.get(0));
     };
   };
 };
 
-void workFromNode(Constellation constellation, PVector startVector, Star node) {
+void workFromNode(Constellation constellation, Star node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
   float nextMoveProb = random(0, 1);
   String nextMove = "";
@@ -100,14 +100,14 @@ void workFromNode(Constellation constellation, PVector startVector, Star node) {
   for (int j = 0; j < newNodes; j++) {
     //make new node or connect to old node; lower probability of connecting to old node if selected
     //only make new vector if newVector function was able to find a nonconflicting option within 10 tries (arbitrary value)
-    PVector newVector = newVector(constellation, startVector, node);
+    PVector newVector = newVector(constellation, node);
     if (newVector != emptyVector){
       float x = newVector.x + node.xpos;
       float y = newVector.y + node.ypos;
       Star newStar = new Star(x, y, random(minStarSize, maxStarSize), constellation.r, constellation.g, constellation.b);
       constellation.constellationStars.add(newStar);
       constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
-      workFromNode(constellation, newVector, newStar);
+      workFromNode(constellation, newStar);
     };
     //allow for old node to fail and reset if not possible without a collision
     //make new node and/or path, evaluate new node if applicable
@@ -139,7 +139,7 @@ boolean intersect(PVector vector1, PVector vector2){
   return true;
 }
 
-PVector newVector(Constellation constellation, PVector startVector, Star node) {
+PVector newVector(Constellation constellation, Star node) {
   //creates new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
 
@@ -147,49 +147,40 @@ PVector newVector(Constellation constellation, PVector startVector, Star node) {
   float magnitude = random(minMagnitude, maxMagnitude);
   PVector vector = new PVector();
   boolean angleConflicts = true;
-  if (startVector == emptyVector) {
+  //if sprouting from old vector, generate new random angle outside of minimum cone
+  //flip old vector in order to evaluate against end point, not start point
+  //evaluate against all other vectors in constellation that contain the start point
+  int counter = 0;
+  while (counter < 10 && angleConflicts == true){
+    counter += 1;
     angleConflicts = false;
     angle = random(0, 2 * PI);
     vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
-  } else {
-    //if sprouting from old vector, generate new random angle outside of minimum cone
-    //flip old vector in order to evaluate against end point, not start point
-    //evaluate against all other vectors in constellation that contain the start point
-    int counter = 0;
-    while (counter < 10 && angleConflicts == true){
-      counter += 1;
-      angleConflicts = false;
-      angle = random(minAngle / 2, 2 * PI - minAngle / 2);
-      PVector startUnitVector = findUnitVector(0, 0, startVector.x, startVector.y);
-      float startAngle = findAngle(zeroDegreeUnitVector, startUnitVector) - PI;
-      angle += startAngle;
-      vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
-      PVector newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
-      for (int i = 0; i < constellation.constellationLines.size(); i++){
-        Line existingLine = constellation.constellationLines.get(i);
-        float star1x = existingLine.lineStars[0].xpos;
-        float star1y = existingLine.lineStars[0].ypos;
-        float star2x = existingLine.lineStars[1].xpos;
-        float star2y = existingLine.lineStars[1].ypos;
-        float proposedAngle = 9999;
-        PVector existingVector = emptyVector;
-        if (existingLine.lineStars[0] == node){
-          existingVector = findUnitVector(star1x, star1y, star2x, star2y);
-        } else if (existingLine.lineStars[1] == node){
-          existingVector = findUnitVector(star2x, star2y, star1x, star1y);
+    PVector newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
+    for (int i = 0; i < constellation.constellationLines.size(); i++){
+      Line existingLine = constellation.constellationLines.get(i);
+      float star1x = existingLine.lineStars[0].xpos;
+      float star1y = existingLine.lineStars[0].ypos;
+      float star2x = existingLine.lineStars[1].xpos;
+      float star2y = existingLine.lineStars[1].ypos;
+      float proposedAngle = 9999;
+      PVector existingVector = emptyVector;
+      if (existingLine.lineStars[0] == node){
+        existingVector = findUnitVector(star1x, star1y, star2x, star2y);
+      } else if (existingLine.lineStars[1] == node){
+        existingVector = findUnitVector(star2x, star2y, star1x, star1y);
+      };
+      if (existingVector != emptyVector){
+        proposedAngle = findAngle(newUnitVector, existingVector);
+        while (proposedAngle > 2 * PI){
+          proposedAngle -= 2 * PI;
         };
-        if (existingVector != emptyVector){
-          proposedAngle = findAngle(newUnitVector, existingVector);
-          while (proposedAngle > 2 * PI){
-            proposedAngle -= 2 * PI;
-          };
-          while (proposedAngle < -2 * PI){
-            proposedAngle += 2 * PI;
-          };
-          if (proposedAngle != 9999 && (proposedAngle < minAngle / 2 || proposedAngle > 360 - minAngle / 2)){
-            angleConflicts = true;
-            break;
-          };
+        while (proposedAngle < -2 * PI){
+          proposedAngle += 2 * PI;
+        };
+        if (proposedAngle != 9999 && proposedAngle < minAngle || proposedAngle > 360 - minAngle){
+          angleConflicts = true;
+          break;
         };
       };
     };
