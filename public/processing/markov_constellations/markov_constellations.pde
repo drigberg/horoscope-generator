@@ -11,8 +11,8 @@ float maxMagnitude = 100;
 float minAngle = PI / 6;
 
 //vector helpers
-float[] zeroDegreeUnitVector = {1,0};
-float[] emptyVector = {0,0};
+PVector zeroDegreeUnitVector = new PVector(1,0);
+PVector emptyVector = new PVector(0,0);
 
 
 
@@ -70,7 +70,7 @@ class Constellation {
   };
 };
 
-void workFromNode(Star node, float[] startVector){
+void workFromNode(Star node, PVector startVector){
 };
 
 class Star { 
@@ -92,44 +92,39 @@ class Star {
   };
 };
 
-float[] newVector(float[] startVector){
+PVector newVector(PVector startVector){
   //create new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
-  float[] vector = new float[2];
+  
   float angle;
   float magnitude = random(minMagnitude, maxMagnitude);
+  PVector vector = new PVector();
   if (startVector == emptyVector){
     angle = random(0, 2 * PI);
-    vector[0] = cos(angle) * magnitude;
-    vector[1] = sin(angle) * magnitude;  
+    vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
   } else {
     //if sprouting from old vector, generate new random angle outside of minimum cone
     //flip old vector in order to evaluate against end point, not start point
     angle = random(minAngle / 2, 2 * PI - minAngle / 2);
     float startAngle = findAngle(zeroDegreeUnitVector, startVector) - PI;
     angle += startAngle;
-    vector[0] = cos(angle) * magnitude;
-    vector[1] = sin(angle) * magnitude;
+    vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
   };
 
   return vector;
 }
   
-float[] findUnitVector(Star star1, Star star2){
+PVector findUnitVector(Star star1, Star star2){
     //calculate normal vector
-    float[] normalVector = new float[2];
-    normalVector[0] = star2.xpos - star2.xpos;
-    normalVector[1] = star2.ypos - star1.ypos;  
+    PVector normalVector = new PVector(star2.xpos - star2.xpos, star2.ypos - star1.ypos);
     //calculate unit vector
-    float d = sqrt(sq(normalVector[0]) + sq(normalVector[1]));
-    float[] unitVector = new float[2];
-    unitVector[0] = normalVector[0]/d;
-    unitVector[1] = normalVector[1]/d;
+    float d = sqrt(sq(normalVector.x) + sq(normalVector.y));
+    PVector unitVector = new PVector(normalVector.x/d, normalVector.y/d);
     return unitVector;
 };
 
-float findAngle(float[] vector1, float[] vector2){
-    float angle = acos(vector1[0] * vector2[0] + vector1[1] * vector2[1]) * 180 / PI;
+float findAngle(PVector vector1, PVector vector2){
+    float angle = acos(vector1.dot(vector2)) * 180 / PI;
     return angle;
 };
 
