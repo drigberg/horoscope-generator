@@ -17,16 +17,15 @@ void setup() {
 void draw() {
   background(230,230,230);
   for (int i = 0; i < constellations.length; i++){
-    boolean offscreen = false;
+    boolean offscreen = true;
     for (int j = 0; j < constellations[i].constellationStars.length; j++){
         constellations[i].constellationStars[j].update();
-        if (constellations[i].constellationStars[j].xpos > width && constellations[i].constellationStars[j].ypos > height){
-            offscreen = true;
+        if (constellations[i].constellationStars[j].xpos < width && constellations[i].constellationStars[j].ypos < height){
+            offscreen = false;
         };
-        if (offscreen) {
-            constellations[i] = newConstellation(-width * 4, 0, -height, height/2);
-            break;
-        };
+    };
+    if (offscreen) {
+      constellations[i] = newConstellation(-width * 4, 0, -height, height/2);
     };
     for (int j = 0; j < constellations[i].constellationLines.length; j++){
         constellations[i].constellationLines[j].update();
