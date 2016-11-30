@@ -24,8 +24,9 @@ PVector emptyVector = new PVector(0,0);
 Constellation[] constellations;
 
 void setup() {
+  //generate constellations
   size(1080, 720);
-  background(255, 255, 255);
+  background(#4da6ff);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++){
     constellations[i] = new Constellation(-width, width, -height, height);
@@ -33,19 +34,21 @@ void setup() {
 }
 
 void draw() {
-  background(230,230,230);
+  //move all constellations
+  background(#4da6ff);
   for (int i = 0; i < constellations.length; i++){
-    boolean offscreen = false;
+    boolean offscreen = true;
     for (int j = 0; j < constellations[i].constellationStars.size(); j++){
         constellations[i].constellationStars.get(j).update();
-        if (constellations[i].constellationStars.get(j).xpos > width && constellations[i].constellationStars.get(j).ypos > height){
-            offscreen = true;
-        };
-        if (offscreen) {
-            constellations[i] = new Constellation(-width, 0, -height/4, height * 3 / 4);
-            break;
+        //check if entire constellation is offscreen
+        if (constellations[i].constellationStars.get(j).xpos < width && constellations[i].constellationStars.get(j).ypos < height){
+            offscreen = false;
         };
     };
+    //if offscreen, replace with new constellation to the left of and slightly above the screen
+    if (offscreen) {
+      constellations[i] = new Constellation(-width, 0, -height/4, height * 3 / 4);
+     };
     for (int j = 0; j < constellations[i].constellationLines.size(); j++){
         constellations[i].constellationLines.get(j).update();
     };   
@@ -54,12 +57,16 @@ void draw() {
 
 
 class Constellation {
+  //collection of stars and lines which connect them, or single star
   ArrayList<Star> constellationStars = new ArrayList<Star>();
   ArrayList<Line> constellationLines = new ArrayList<Line>();
   Constellation (float minx, float maxx, float miny, float maxy){
-    float r = random(0, 255);
-    float g = random(0, 255 - r);
-    float b = random(0, 255 - g);
+    //float r = random(0, 255);
+    //float g = random(0, 255 - r);
+    //float b = random(0, 255 - g);
+    float r = 255;
+    float g = 255;
+    float b = 255;
     float startX = random(minx, maxx);
     float startY = random(miny, maxy);
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
@@ -71,9 +78,11 @@ class Constellation {
 };
 
 void workFromNode(Star node, PVector startVector){
+  //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
 };
 
 class Star { 
+  //set of coordinates, radius, and color
   float xpos, ypos, size, red, green, blue; 
   Star (float x, float y, float s, float r, float g, float b) {  
     xpos = x;
@@ -93,7 +102,7 @@ class Star {
 };
 
 PVector newVector(PVector startVector){
-  //create new vector sprouting from end of old vector
+  //creates new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
   
   float angle;
@@ -115,20 +124,21 @@ PVector newVector(PVector startVector){
 }
   
 PVector findUnitVector(Star star1, Star star2){
-    //calculate normal vector
+    //calculates normal vector between stars (in order), converts to unit vector
     PVector normalVector = new PVector(star2.xpos - star2.xpos, star2.ypos - star1.ypos);
-    //calculate unit vector
     float d = sqrt(sq(normalVector.x) + sq(normalVector.y));
     PVector unitVector = new PVector(normalVector.x/d, normalVector.y/d);
     return unitVector;
 };
 
 float findAngle(PVector vector1, PVector vector2){
-    float angle = acos(vector1.dot(vector2)) * 180 / PI;
-    return angle;
+  //finds angle between two vectors
+  float angle = acos(vector1.dot(vector2)) * 180 / PI;
+  return angle;
 };
 
 class Line {
+  //line between two stars
   Star[] lineStars;
   float red, green, blue;
   Line (Star star1, Star star2, float r, float g, float b){
