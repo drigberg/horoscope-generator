@@ -15,7 +15,6 @@ PVector zeroDegreeUnitVector = new PVector(1,0);
 PVector emptyVector = new PVector(0,0);
 
 
-
 //Generate constellation as arraylist
 //Generate first Star: random in space
 //Work from node recursively
@@ -60,6 +59,7 @@ class Constellation {
   //collection of stars and lines which connect them, or single star
   ArrayList<Star> constellationStars = new ArrayList<Star>();
   ArrayList<Line> constellationLines = new ArrayList<Line>();
+  FloatDict constellationChain = new FloatDict();  
   Constellation (float minx, float maxx, float miny, float maxy){
     //float r = random(0, 255);
     //float g = random(0, 255 - r);
@@ -69,16 +69,36 @@ class Constellation {
     float b = 255;
     float startX = random(minx, maxx);
     float startY = random(miny, maxy);
+    constellationChain.set("0", 0);
+    constellationChain.set("1", 0.4);
+    constellationChain.set("2", 0.3);
+    constellationChain.set("3", 0.3);
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
     float singleStar = random(0, 1);
     if (singleStar > probabilityOfSingleStars){
-        workFromNode(constellationStars.get(0), emptyVector);
+        workFromNode(this, constellationStars.get(0), emptyVector);
     };  
   };
 };
 
-void workFromNode(Star node, PVector startVector){
+void workFromNode(Constellation constellation, Star node, PVector startVector){
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
+  float nextMoveProb = random(0,1);
+  String nextMove = "";
+  for (int i = 0; i < constellation.constellationChain.keyArray().length; i++){
+    if (nextMoveProb <= constellation.constellationChain.get(constellation.constellationChain.keyArray()[i])){
+       nextMove = constellation.constellationChain.keyArray()[i];
+       break;
+    } else {
+      nextMoveProb -= constellation.constellationChain.get(constellation.constellationChain.keyArray()[i]);
+    }
+  }
+  int newNodes = int(nextMove);
+  for (int j = 0; j < newNodes; n++){
+    //make new node or connect to old node; lower probability of connecting to old node if selected
+    //allow for old node to fail and reset if not possible without a collision
+    //make new node and/or path, evaluate new node if applicable
+  }
 };
 
 class Star { 
@@ -148,9 +168,9 @@ class Line {
     red = r;
     green = g;
     blue = b;
-  }
+  };
   void update() {
       stroke(red, green, blue);
       line(lineStars[0].xpos, lineStars[0].ypos, lineStars[1].xpos, lineStars[1].ypos);
-  }
-}
+  };
+};
