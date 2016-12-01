@@ -1,19 +1,20 @@
 //global defaults
 int numConstellations = 200;
-float probabilityOfSingleStars = 0.85;
+float probabilityOfSingleStars = 0.8;
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
 int minimumConstellationSize = 4;
+int maximumConstellationSize = 8;
 float minStarSize = 1;
 float maxStarSize = 5;
 float speed = 0.7;
 float minMagnitude = 10;
 float maxMagnitude = 100;
-float minAngle = PI/8;
+float minAngle = PI/4;
 float zeroNodeProbAfterMinSizeReached = 0.5;
 float initialZeroNodeProb = 0;
-float initialOneNodeProb = 0.5;
+float initialOneNodeProb = 0.4;
 float initialTwoNodeProb = 0.4;
-float initialThreeNodeProb = 0.1;
+float initialThreeNodeProb = 0.2;
 int persistence = 10;
  
 
@@ -68,6 +69,7 @@ class Constellation {
   ArrayList<Star> constellationStars = new ArrayList<Star>();
   ArrayList<Line> constellationLines = new ArrayList<Line>();
   FloatDict constellationChain = new FloatDict();
+  int closedLoops = 0;
   float r;
   float g;
   float b;
@@ -94,7 +96,6 @@ class Constellation {
 
 void workFromNode(Constellation constellation, Star node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
-  float nextMoveProb = random(0, 1);
   int newNodes = 0;
   if (constellation.constellationStars.size() >= minimumConstellationSize && constellation.constellationChain.get("0") == 0){
     constellation.constellationChain.set("0", zeroNodeProbAfterMinSizeReached);
@@ -102,6 +103,8 @@ void workFromNode(Constellation constellation, Star node) {
     constellation.constellationChain.set("2", constellation.constellationChain.get("0") - zeroNodeProbAfterMinSizeReached / 3);
     constellation.constellationChain.set("3", constellation.constellationChain.get("0") - zeroNodeProbAfterMinSizeReached / 3);
   };
+ 
+  float nextMoveProb = random(0, 1);
   for (int i = 0; i < constellation.constellationChain.keyArray().length; i++) {
     if (nextMoveProb <= constellation.constellationChain.get(constellation.constellationChain.keyArray()[i])) {
       newNodes = int(constellation.constellationChain.keyArray()[i]);
@@ -121,19 +124,21 @@ void workFromNode(Constellation constellation, Star node) {
     
   //};
   for (int j = 0; j < newNodes; j++) {
-    //make new node or connect to old node; lower probability of connecting to old node if selected
-    //only make new vector if newVector function was able to find a nonconflicting option within 10 tries (arbitrary value)
-    PVector newVector = newVector(constellation, node);
-    if (newVector != emptyVector){
-      float x = newVector.x + node.xpos;
-      float y = newVector.y + node.ypos;
-      Star newStar = new Star(x, y, random(minStarSize, maxStarSize), constellation.r, constellation.g, constellation.b);
-      constellation.constellationStars.add(newStar);
-      constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
-      workFromNode(constellation, newStar);
-    };
-    //allow for old node to fail and reset if not possible without a collision
-    //make new node and/or path, evaluate new node if applicable
+    if (constellation.constellationStars.size() < maximumConstellationSize){
+      //make new node or connect to old node; lower probability of connecting to old node if selected
+      //only make new vector if newVector function was able to find a nonconflicting option within 10 tries (arbitrary value)
+      PVector newVector = newVector(constellation, node);
+      if (newVector != emptyVector){
+        float x = newVector.x + node.xpos;
+        float y = newVector.y + node.ypos;
+        Star newStar = new Star(x, y, random(minStarSize, maxStarSize), constellation.r, constellation.g, constellation.b);
+        constellation.constellationStars.add(newStar);
+        constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
+        workFromNode(constellation, newStar);
+      };
+      //allow for old node to fail and reset if not possible without a collision
+      //make new node and/or path, evaluate new node if applicable    
+    }
   }
 };
 
