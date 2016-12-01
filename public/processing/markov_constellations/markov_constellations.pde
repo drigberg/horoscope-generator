@@ -23,7 +23,7 @@ float initialOneNodeProb = 0.4;
 float initialTwoNodeProb = 0.4;
 float initialThreeNodeProb = 0.2;
 float probabilityOfClosedLoops = 0.4;
-int persistence = 5;
+int persistence = 2;
  
 //vector helper
 PVector emptyVector = new PVector(0, 0);
@@ -35,6 +35,9 @@ PVector emptyVector = new PVector(0, 0);
 
 Constellation[] constellations;
 
+//=========================
+//Main functions
+//=========================
 void setup() {
   //generate constellations
   size(1080, 720);
@@ -51,6 +54,8 @@ void draw() {
   for (int i = 0; i < constellations.length; i++) {
     boolean offscreen = true;
     for (int j = 0; j < constellations[i].constellationStars.size(); j++) {
+      noStroke();
+      fill(constellations[i].r, constellations[i].g, constellations[i].b);
       constellations[i].constellationStars.get(j).update();
       //check if entire constellation is offscreen
       if (constellations[i].constellationStars.get(j).xpos < width && constellations[i].constellationStars.get(j).ypos < height) {
@@ -62,12 +67,16 @@ void draw() {
       constellations[i] = new Constellation(-width, 0, -height/4, height * 3 / 4);
     };
     for (int j = 0; j < constellations[i].constellationLines.size(); j++) {
+      stroke(constellations[i].r, constellations[i].g, constellations[i].b);
       constellations[i].constellationLines.get(j).update();
     };
   };
 };
 
 
+//=========================
+//Classes
+//=========================
 class Constellation {
   //collection of stars and lines which connect them, or single star
   ArrayList<Star> constellationStars = new ArrayList<Star>();
@@ -90,13 +99,46 @@ class Constellation {
     constellationChain.set("1", initialOneNodeProb);
     constellationChain.set("2", initialTwoNodeProb);
     constellationChain.set("3", initialThreeNodeProb);
-    constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
+    constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize)));
     float singleStar = random(0, 1);
     if (singleStar > probabilityOfSingleStars) {
       workFromNode(this, constellationStars.get(0));
     };
   };
 };
+
+class Star {
+  //set of coordinates, radius, and color
+  float xpos, ypos, size;
+  Star (float x, float y, float s) {
+    xpos = x;
+    ypos = y;
+    size = s;
+  };
+  void update() {
+    xpos += speed;
+    ypos += speed / 4;
+    ellipse(xpos, ypos, size, size);
+  };
+};
+
+class Line {
+  //line between two stars
+  Star[] lineStars;
+  float red, green, blue;
+  Line (Star star1, Star star2) {
+    lineStars = new Star[2];
+    lineStars[0] = star1;
+    lineStars[1] = star2;
+  };
+  void update() {
+    line(lineStars[0].xpos, lineStars[0].ypos, lineStars[1].xpos, lineStars[1].ypos);
+  };
+};
+
+//=========================
+//Custom functions
+//=========================
 
 void workFromNode(Constellation constellation, Star node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
@@ -131,8 +173,6 @@ void workFromNode(Constellation constellation, Star node) {
     boolean complete = false;
     if (constellation.constellationStars.size() < maximumConstellationSize){
       if (constellation.constellationStars.size() >= 3 && constellation.closedLoops < 2 && random(0,1) < probabilityOfClosedLoops){
-        print("Trying for a closed loop!");
-        println();
         for(int k = 0; k < constellation.constellationStars.size(); k++){
           boolean connected = false;
           for (int m = 0; m < constellation.constellationLines.size(); m++){
@@ -165,11 +205,9 @@ void workFromNode(Constellation constellation, Star node) {
               }; 
             };   
           if (!intersect) {
-            constellation.constellationLines.add(new Line(node, constellation.constellationStars.get(k), constellation.r, constellation.g, constellation.b));
+
             constellation.closedLoops += 1;
             workFromNode(constellation, constellation.constellationStars.get(k));
-            print("closed loop success!!!");
-            println();
             complete = true;
           };
           };
@@ -184,35 +222,15 @@ void workFromNode(Constellation constellation, Star node) {
         if (newVector != emptyVector){
           float x = newVector.x + node.xpos;
           float y = newVector.y + node.ypos;
-          Star newStar = new Star(x, y, random(minStarSize, maxStarSize), constellation.r, constellation.g, constellation.b);
+          Star newStar = new Star(x, y, random(minStarSize, maxStarSize));
           constellation.constellationStars.add(newStar);
-          constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
+          constellation.constellationLines.add(new Line(node, newStar));
           workFromNode(constellation, newStar);
         };
       //allow for old node to fail and reset if not possible without a collision
       //make new node and/or path, evaluate new node if applicable    
       };
     };
-  };
-};
-
-class Star {
-  //set of coordinates, radius, and color
-  float xpos, ypos, size, red, green, blue;
-  Star (float x, float y, float s, float r, float g, float b) {
-    xpos = x;
-    ypos = y;
-    size = s;
-    red = r;
-    green = g;
-    blue = b;
-  };
-  void update() {
-    noStroke();
-    fill(red, green, blue);
-    xpos += speed;
-    ypos += speed / 4;
-    ellipse(xpos, ypos, size, size);
   };
 };
 
@@ -341,22 +359,4 @@ float findAngle(PVector vector1, PVector vector2) {
   //finds angle between two vectors, assuming same starting point
   float angle = acos(vector1.dot(vector2));
   return angle;
-};
-
-class Line {
-  //line between two stars
-  Star[] lineStars;
-  float red, green, blue;
-  Line (Star star1, Star star2, float r, float g, float b) {
-    lineStars = new Star[2];
-    lineStars[0] = star1;
-    lineStars[1] = star2;
-    red = r;
-    green = g;
-    blue = b;
-  };
-  void update() {
-    stroke(red, green, blue);
-    line(lineStars[0].xpos, lineStars[0].ypos, lineStars[1].xpos, lineStars[1].ypos);
-  };
 };
