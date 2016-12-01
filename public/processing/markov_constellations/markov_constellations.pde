@@ -1,21 +1,22 @@
 //global defaults
 int numConstellations = 200;
-float probabilityOfSingleStars = 0.8;
+float probabilityOfSingleStars = 0.7;
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
 int minimumConstellationSize = 4;
-int maximumConstellationSize = 8;
+int maximumConstellationSize = 12;
 float minStarSize = 1;
 float maxStarSize = 5;
 float speed = 0.7;
 float minMagnitude = 10;
 float maxMagnitude = 100;
-float minAngle = PI/4;
+float minAngle = PI/10;
 float zeroNodeProbAfterMinSizeReached = 0.5;
 float initialZeroNodeProb = 0;
 float initialOneNodeProb = 0.4;
 float initialTwoNodeProb = 0.4;
 float initialThreeNodeProb = 0.2;
-int persistence = 10;
+int persistence = 5;
+float probabilityOfClosedLoops = 0.4;
  
 
 //vector helpers
@@ -24,8 +25,6 @@ PVector emptyVector = new PVector(0, 0);
 //------TO DO-------
 //MERGE AFTER SENTENCE EXPANSION (to get rid of matching commits) :P :P :P
 //Reference constellation colors; too many arguments being passed on
-//Reconsider singleStar catch
-//Intersection check
 //Closed loops
 
 
@@ -34,7 +33,7 @@ Constellation[] constellations;
 void setup() {
   //generate constellations
   size(1080, 720);
-  background(#1a4791);
+  background(#011433);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
@@ -43,7 +42,7 @@ void setup() {
 
 void draw() {
   //move all constellations
-  background(#1a4791);
+  background(#011433);
   for (int i = 0; i < constellations.length; i++) {
     boolean offscreen = true;
     for (int j = 0; j < constellations[i].constellationStars.size(); j++) {
@@ -124,22 +123,72 @@ void workFromNode(Constellation constellation, Star node) {
     
   //};
   for (int j = 0; j < newNodes; j++) {
+    boolean complete = false;
     if (constellation.constellationStars.size() < maximumConstellationSize){
+      if (constellation.constellationStars.size() >= 3 && constellation.closedLoops < 2 && random(0,1) < probabilityOfClosedLoops){
+        print("Trying for a closed loop!");
+        println();
+        for(int k = 0; k < constellation.constellationStars.size(); k++){
+          boolean connected = false;
+          for (int m = 0; m < constellation.constellationLines.size(); m++){
+            if ((constellation.constellationLines.get(m).lineStars[0] == constellation.constellationStars.get(k) && constellation.constellationLines.get(m).lineStars[1] == node) || (constellation.constellationLines.get(m).lineStars[1] == constellation.constellationStars.get(k) && constellation.constellationLines.get(m).lineStars[0] == node)){
+            connected = true;
+            break;
+            };
+          };
+
+          if(!connected){
+            PVector vector = new PVector(constellation.constellationStars.get(k).xpos - node.xpos, constellation.constellationStars.get(k).ypos - node.ypos);
+            vector = checkForAngleConflicts(constellation, node, vector);
+            //check for intersection with lines in this constellation
+            boolean intersect = false;
+            for (int h = 0; h < constellation.constellationLines.size(); h++) {
+              if (!intersect) {
+                Line existingLine = constellation.constellationLines.get(h);
+                intersect = intersection(node, vector, existingLine);          
+              };
+            };
+            //check for intersection with lines in all other constellations
+            for (int i = 0; i < constellations.length; i++) {
+              if (constellations[i] != null){
+                for (int l = 0; l < constellations[i].constellationLines.size(); l++) {
+                  if (!intersect) {
+                    Line existingLine = constellations[i].constellationLines.get(l);
+                    intersect = intersection(node, vector, existingLine);          
+                  };
+                };
+              }; 
+            };   
+          if (!intersect) {
+            constellation.constellationLines.add(new Line(node, constellation.constellationStars.get(k), constellation.r, constellation.g, constellation.b));
+            constellation.closedLoops += 1;
+            workFromNode(constellation, constellation.constellationStars.get(k));
+            print("closed loop success!!!");
+            println();
+            complete = true;
+          };
+          };
+        };
+      };
+     
+      
       //make new node or connect to old node; lower probability of connecting to old node if selected
       //only make new vector if newVector function was able to find a nonconflicting option within 10 tries (arbitrary value)
-      PVector newVector = newVector(constellation, node);
-      if (newVector != emptyVector){
-        float x = newVector.x + node.xpos;
-        float y = newVector.y + node.ypos;
-        Star newStar = new Star(x, y, random(minStarSize, maxStarSize), constellation.r, constellation.g, constellation.b);
-        constellation.constellationStars.add(newStar);
-        constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
-        workFromNode(constellation, newStar);
-      };
+      if (!complete){
+        PVector newVector = newVector(constellation, node);
+        if (newVector != emptyVector){
+          float x = newVector.x + node.xpos;
+          float y = newVector.y + node.ypos;
+          Star newStar = new Star(x, y, random(minStarSize, maxStarSize), constellation.r, constellation.g, constellation.b);
+          constellation.constellationStars.add(newStar);
+          constellation.constellationLines.add(new Line(node, newStar, constellation.r, constellation.g, constellation.b));
+          workFromNode(constellation, newStar);
+        };
       //allow for old node to fail and reset if not possible without a collision
       //make new node and/or path, evaluate new node if applicable    
-    }
-  }
+      };
+    };
+  };
 };
 
 class Star {
@@ -210,7 +259,10 @@ PVector newVector(Constellation constellation, Star node) {
   while (counter < persistence && vector == emptyVector){
     intersect = false;
     counter += 1;
-    vector = checkForAngleConflicts(constellation, node);
+    float angle = random(0, 2 * PI);
+    float magnitude = random(minMagnitude, maxMagnitude);
+    vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
+    vector = checkForAngleConflicts(constellation, node, vector);
     if (vector != emptyVector){
       //check for intersection with lines in this constellation
       for (int h = 0; h < constellation.constellationLines.size(); h++) {
@@ -239,10 +291,7 @@ PVector newVector(Constellation constellation, Star node) {
   return vector;
 }
 
-PVector checkForAngleConflicts(Constellation constellation, Star node){
-  float angle = random(0, 2 * PI);
-  float magnitude = random(minMagnitude, maxMagnitude);
-  PVector vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
+PVector checkForAngleConflicts(Constellation constellation, Star node, PVector vector){
   PVector newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
   for (int i = 0; i < constellation.constellationLines.size(); i++){
     Line existingLine = constellation.constellationLines.get(i);
