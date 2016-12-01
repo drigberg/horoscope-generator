@@ -1,31 +1,36 @@
-//global defaults
+//----------global defaults
+//---display
+int backgroundColor = #011433;
+float speed = 0.7;
 int numConstellations = 200;
-float probabilityOfSingleStars = 0.7;
+
+
+//---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
 int minimumConstellationSize = 4;
 int maximumConstellationSize = 12;
 float minStarSize = 1;
 float maxStarSize = 5;
-float speed = 0.7;
 float minMagnitude = 10;
 float maxMagnitude = 100;
 float minAngle = PI/10;
+
+//probabilities
+float probabilityOfSingleStars = 0.7;
 float zeroNodeProbAfterMinSizeReached = 0.5;
 float initialZeroNodeProb = 0;
 float initialOneNodeProb = 0.4;
 float initialTwoNodeProb = 0.4;
 float initialThreeNodeProb = 0.2;
-int persistence = 5;
 float probabilityOfClosedLoops = 0.4;
+int persistence = 5;
  
-
-//vector helpers
+//vector helper
 PVector emptyVector = new PVector(0, 0);
 
 //------TO DO-------
 //MERGE AFTER SENTENCE EXPANSION (to get rid of matching commits) :P :P :P
 //Reference constellation colors; too many arguments being passed on
-//Closed loops
 
 
 Constellation[] constellations;
@@ -33,7 +38,7 @@ Constellation[] constellations;
 void setup() {
   //generate constellations
   size(1080, 720);
-  background(#011433);
+  background(backgroundColor);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
@@ -42,7 +47,7 @@ void setup() {
 
 void draw() {
   //move all constellations
-  background(#011433);
+  background(backgroundColor);
   for (int i = 0; i < constellations.length; i++) {
     boolean offscreen = true;
     for (int j = 0; j < constellations[i].constellationStars.size(); j++) {
