@@ -1,6 +1,6 @@
 //global defaults
-int numConstellations = 50;
-float probabilityOfSingleStars = 0.1;
+int numConstellations = 100;
+float probabilityOfSingleStars = 0;
 int minStarsInConstellation = 3;
 int maxStarsInConstellation = 12;
 float minStarSize = 3;
@@ -14,6 +14,7 @@ float minAngle = PI/4;
 PVector emptyVector = new PVector(0, 0);
 
 //------TO DO-------
+//MERGE AFTER SENTENCE EXPANSION (to get rid of matching commits) :P :P :P
 //Reference constellation colors; too many arguments being passed on
 //Reconsider singleStar catch
 //Intersection check
@@ -134,10 +135,35 @@ class Star {
   };
 };
 
-boolean intersect(PVector vector1, PVector vector2){
+boolean intersect(Star star1, PVector vector1, Star star2, PVector vector2){
+  //find point of intersection of lines; return true if overlap
+  float line1_slope, line2_slope, line1_b, line2_b, int_x, line1_x1, line1_x2, line1_y1, line1_y2, line2_x1, line2_x2, line2_y1, line2_y2;
+  line1_x1 = star1.xpos;
+  line1_x2 = star1.xpos + vector1.x; 
+  line1_y1 = star1.ypos;
+  line1_y2 = star1.ypos + vector1.y;
+  line2_x1 = star2.xpos;
+  line2_x2 = star2.xpos + vector2.x; 
+  line2_y1 = star2.ypos;
+  line2_y2 = star2.ypos + vector2.y;
+  if (max(line1_x1, line1_x2) < min(line2_x1, line2_x2) || max(line1_y1, line1_y2) < min(line2_y1, line2_y2)){
+    return true;
+  }
+  
+  line1_slope = (line1_y2 - line1_y1) / (line1_x2 - line1_x1);
+  line2_slope = (line2_y2 - line2_y1) / (line2_x2 - line2_x1);
+  line1_b = line1_y1 - line1_slope * line1_x1;
+  line2_b = line2_y1 - line2_slope * line2_x1;
+  
+  int_x = (line2_b - line1_b) / (line1_slope - line2_slope);
+  
+  //check if both line segments' domains cover the point of their lines' intersection
+  if (int_x < max(line1_x1, line2_x1) || int_x > min(line1_x2, line1_x2)){
+      return true;
+  }
 
-  return true;
-}
+  return false;
+};
 
 PVector newVector(Constellation constellation, Star node) {
   //creates new vector sprouting from end of old vector
