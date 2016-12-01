@@ -1,13 +1,11 @@
 //global defaults
-int numConstellations = 100;
-float probabilityOfSingleStars = 0;
-int minStarsInConstellation = 3;
-int maxStarsInConstellation = 12;
-float minStarSize = 3;
-float maxStarSize = 8;
+int numConstellations = 300;
+float probabilityOfSingleStars = 0.7;
+float minStarSize = 1;
+float maxStarSize = 5;
 float speed = 0.7;
-float minMagnitude = 5;
-float maxMagnitude = 100;
+float minMagnitude = 20;
+float maxMagnitude = 200;
 float minAngle = PI/4;
 
 //vector helpers
@@ -29,7 +27,7 @@ void setup() {
   background(#1a4791);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++) {
-    constellations[i] = new Constellation(-width, width, -height, height);
+    constellations[i] = new Constellation(-width, width, -height / 4, height);
   };
 }
 
@@ -73,9 +71,9 @@ class Constellation {
     b = 255;
     float startX = random(minx, maxx);
     float startY = random(miny, maxy);
-    constellationChain.set("0", 0.5);
-    constellationChain.set("1", 0.35);
-    constellationChain.set("2", 0.1);
+    constellationChain.set("0", 0.4);
+    constellationChain.set("1", 0.1);
+    constellationChain.set("2", 0.35);
     constellationChain.set("3", 0.05);
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize), r, g, b));
     float singleStar = random(0, 1);
@@ -135,19 +133,20 @@ class Star {
   };
 };
 
-boolean intersect(Star star1, PVector vector1, Star star2, PVector vector2){
+boolean intersection(Star star1, PVector vector1, Line existingLine){
   //find point of intersection of lines; return true if overlap
   float line1_slope, line2_slope, line1_b, line2_b, int_x, line1_x1, line1_x2, line1_y1, line1_y2, line2_x1, line2_x2, line2_y1, line2_y2;
   line1_x1 = star1.xpos;
   line1_x2 = star1.xpos + vector1.x; 
   line1_y1 = star1.ypos;
   line1_y2 = star1.ypos + vector1.y;
-  line2_x1 = star2.xpos;
-  line2_x2 = star2.xpos + vector2.x; 
-  line2_y1 = star2.ypos;
-  line2_y2 = star2.ypos + vector2.y;
+  line2_x1 = existingLine.lineStars[0].xpos;
+  line2_x2 = existingLine.lineStars[1].xpos; 
+  line2_y1 = existingLine.lineStars[0].ypos;
+  line2_y2 = existingLine.lineStars[1].ypos;
+  
   if (max(line1_x1, line1_x2) < min(line2_x1, line2_x2) || max(line1_y1, line1_y2) < min(line2_y1, line2_y2)){
-    return true;
+    return false;
   }
   
   line1_slope = (line1_y2 - line1_y1) / (line1_x2 - line1_x1);
@@ -155,66 +154,99 @@ boolean intersect(Star star1, PVector vector1, Star star2, PVector vector2){
   line1_b = line1_y1 - line1_slope * line1_x1;
   line2_b = line2_y1 - line2_slope * line2_x1;
   
-  int_x = (line2_b - line1_b) / (line1_slope - line2_slope);
+  //rule out parallel lines, avoid dividing by zero later
+  if (line1_slope == line2_slope){
+    return false;
+  };
   
-  //check if both line segments' domains cover the point of their lines' intersection
-  if (int_x < max(line1_x1, line2_x1) || int_x > min(line1_x2, line1_x2)){
-      return true;
+  int_x = (line2_b - line1_b) / (line1_slope - line2_slope);
+
+  //check if intersection is outside of the overlap of the line segments' domains
+  if (int_x < max(min(line1_x1, line1_x2), min(line2_x1, line2_x2)) || int_x > min(max(line1_x1, line1_x2), max(line2_x1, line2_x2))){
+      return false;
   }
 
-  return false;
+  return true;
 };
 
 PVector newVector(Constellation constellation, Star node) {
   //creates new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
-  float angle;
-  float magnitude = random(minMagnitude, maxMagnitude);
   PVector vector = new PVector();
-  boolean angleConflicts = true;
+  vector = emptyVector;
   
   //evaluate for minimum angle against all vectors in constellation that contain the new vector's start point
   int counter = 0;
-  while (counter < 10 && angleConflicts == true){
+  boolean intersect = true;
+  while (counter < 5 && vector == emptyVector){
+    intersect = false;
     counter += 1;
-    angleConflicts = false;
-    angle = random(0, 2 * PI);
-    vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
-    PVector newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
-    for (int i = 0; i < constellation.constellationLines.size(); i++){
-      Line existingLine = constellation.constellationLines.get(i);
-      float star1x = existingLine.lineStars[0].xpos;
-      float star1y = existingLine.lineStars[0].ypos;
-      float star2x = existingLine.lineStars[1].xpos;
-      float star2y = existingLine.lineStars[1].ypos;
-      PVector existingVector = emptyVector;
-      
-      if (existingLine.lineStars[0] == node){
-        existingVector = findUnitVector(star1x, star1y, star2x, star2y);
-      } else if (existingLine.lineStars[1] == node){
-        existingVector = findUnitVector(star2x, star2y, star1x, star1y);
+    vector = checkForAngleConflicts(constellation, node);
+    if (vector != emptyVector){
+      for (int h = 0; h < constellation.constellationLines.size(); h++) {
+        if (!intersect) {
+          Line existingLine = constellation.constellationLines.get(h);
+          intersect = intersection(node, vector, existingLine);
+          //System.out.format("Intersection = %b, because (%f, %f) --> (%f, %f) || (%f, %f) --> (%f, %f)", intersect, node.xpos, node.ypos, node.xpos + vector.x, node.ypos + vector.y, existingLine.lineStars[0].xpos, existingLine.lineStars[0].ypos, existingLine.lineStars[1].xpos, existingLine.lineStars[1].ypos);
+          //println();            
+        };
       };
-      
-      if (existingVector != emptyVector){
-        float proposedAngle = findAngle(newUnitVector, existingVector);
-        while (proposedAngle > 2 * PI){
-          proposedAngle -= 2 * PI;
-        };
-        while (proposedAngle < -2 * PI){
-          proposedAngle += 2 * PI;
-        };
-        if (proposedAngle < minAngle || proposedAngle > 360 - minAngle){
-          angleConflicts = true;
-          break;
-        };
+          
+      for (int i = 0; i < constellations.length; i++) {
+        if (constellations[i] != null){
+          for (int j = 0; j < constellations[i].constellationLines.size(); j++) {
+            if (!intersect) {
+              Line existingLine = constellations[i].constellationLines.get(j);
+              intersect = intersection(node, vector, existingLine);
+              //System.out.format("Intersection = %b, because (%f, %f) --> (%f, %f) || (%f, %f) --> (%f, %f)", intersect, node.xpos, node.ypos, node.xpos + vector.x, node.ypos + vector.y, existingLine.lineStars[0].xpos, existingLine.lineStars[0].ypos, existingLine.lineStars[1].xpos, existingLine.lineStars[1].ypos);
+              //println();            
+            };
+          };
+        }; 
+       };
+     };
+     if (intersect){
+       vector = emptyVector;
+     };
+  };
+  return vector;
+}
+
+PVector checkForAngleConflicts(Constellation constellation, Star node){
+  float angle = random(0, 2 * PI);
+  float magnitude = random(minMagnitude, maxMagnitude);
+  PVector vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
+  PVector newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
+  for (int i = 0; i < constellation.constellationLines.size(); i++){
+    Line existingLine = constellation.constellationLines.get(i);
+    float star1x = existingLine.lineStars[0].xpos;
+    float star1y = existingLine.lineStars[0].ypos;
+    float star2x = existingLine.lineStars[1].xpos;
+    float star2y = existingLine.lineStars[1].ypos;
+    PVector existingVector = emptyVector;
+    
+    if (existingLine.lineStars[0] == node){
+      existingVector = findUnitVector(star1x, star1y, star2x, star2y);
+    } else if (existingLine.lineStars[1] == node){
+      existingVector = findUnitVector(star2x, star2y, star1x, star1y);
+    };
+    
+    if (existingVector != emptyVector){
+      float proposedAngle = findAngle(newUnitVector, existingVector);
+      while (proposedAngle > 2 * PI){
+        proposedAngle -= 2 * PI;
+      };
+      while (proposedAngle < -2 * PI){
+        proposedAngle += 2 * PI;
+      };
+      if (proposedAngle < minAngle || proposedAngle > 360 - minAngle){
+        vector = emptyVector;
+        break;
       };
     };
-  };
-  if (!angleConflicts) {
-    return vector;
-  }
-  return emptyVector;
-}
+  };  
+  return vector;
+};
 
 PVector findUnitVector(float x1, float y1, float x2, float y2) {
   //calculates normal vector between stars (in order), converts to unit vector
