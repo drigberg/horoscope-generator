@@ -82,7 +82,7 @@ function draw() {
   if (frameCounter % 1 == 0){
     background(0, 75);
     for (var i = 0; i < constellations.length; i++) {
-      boolean offscreen = true;
+      var offscreen = true;
       for (var j = 0; j < constellations[i].constellationStars.length; j++) {
         noStroke();
         fill(constellations[i].r, constellations[i].g, constellations[i].b);
@@ -158,7 +158,7 @@ var Line = function (star1, star2){
 //Functions
 //=========================
 
-function workFromNode(Constellation constellation, Star node) {
+function workFromNode(constellation, node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
   var newNodes = 0;
   if (constellation.constellationStars.length >= minimumConstellationSize && constellation.zeroNodeProb == 0) {
@@ -206,13 +206,13 @@ function createClosedLoop(complete, constellation, node){
   //connect to old node if chance dictates and if possible, but do not retrace an existing line
   if (constellation.constellationStars.length >= 3 && constellation.closedLoops < maxClosedLoopsPerConstellation && random(0, 1) < probabilityOfClosedLoops) {
         for (var k = 0; k < constellation.constellationStars.length; k++) {
-          if (node == constellation.constellationStars.[k]){
+          if (node == constellation.constellationStars[k]){
             continue;
           };
           var connected = false;
           for (var m = 0; m < constellation.constellationLines.length; m++) {
-            boolean oldStarInLine = (constellation.constellationLines[m]).star1 == constellation.constellationStars.[k] || constellation.constellationLines[m].star2 == constellation.constellationStars[k]);
-            boolean nodeInLine = (constellation.constellationLines[m].star1 == node && constellation.constellationLines[m].star2 == node);
+            var oldStarInLine = constellation.constellationLines[m].star1 == constellation.constellationStars[k] || constellation.constellationLines[m].star2 == constellation.constellationStars[k];
+            var nodeInLine = constellation.constellationLines[m].star1 == node && constellation.constellationLines[m].star2 == node;
             if (oldStarInLine && nodeInLine) {
               connected = true;
               break;
@@ -220,13 +220,13 @@ function createClosedLoop(complete, constellation, node){
           };
 
           if (!connected) {
-            PVector vector = new PVector(constellation.constellationStars.get(k).xpos - node.xpos, constellation.constellationStars.get(k).ypos - node.ypos);
+            var vector = new PVector(constellation.constellationStars.get(k).xpos - node.xpos, constellation.constellationStars.get(k).ypos - node.ypos);
             //vector = checkForAngleConflicts(constellation, node, vector);
             //check for intersection with lines in this constellation
-            boolean intersect = false;
+            var intersect = false;
             for (var h = 0; h < constellation.constellationLines.size(); h++) {
               if (!intersect) {
-                Line existingLine = constellation.constellationLines.get(h);
+                var existingLine = constellation.constellationLines[h];
                 intersect = intersection(node, vector, existingLine);
               };
             };
@@ -235,7 +235,7 @@ function createClosedLoop(complete, constellation, node){
               if (constellations[i] != null) {
                 for (var l = 0; l < constellations[i].constellationLines.size(); l++) {
                   if (!intersect) {
-                    Line existingLine = constellations[i].constellationLines.get(l);
+                    var existingLine = constellations[i].constellationLines[l];
                     intersect = intersection(node, vector, existingLine);
                   };
                 };
@@ -243,8 +243,8 @@ function createClosedLoop(complete, constellation, node){
             };
             if (!intersect) {
               constellation.closedLoops += 1;
-              constellation.constellationLines.add(new Line(node, constellation.constellationStars.get(k)));
-              workFromNode(constellation, constellation.constellationStars.get(k));
+              constellation.constellationLines.append(new Line(node, constellation.constellationStars[k]));
+              workFromNode(constellation, constellation.constellationStars[k]);
               complete = true;
             };
           };
@@ -292,24 +292,23 @@ function intersection(star1, vector1, existingLine) {
 function createNewVector(constellation, node) {
   //creates new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
-  PVector vector = new PVector();
-  vector = emptyVector;
+  var vector = emptyVector;
 
   //evaluate for minimum angle against all vectors in constellation that contain the new vector's start point
   var counter = 0;
-  boolean intersect = true;
+  var intersect = true;
   while (counter < persistence && vector == emptyVector) {
     intersect = false;
     counter += 1;
     var angle = random(0, 2 * PI);
     var magnitude = random(minMagnitude, maxMagnitude);
-    vector = new PVector(cos(angle) * magnitude, sin(angle) * magnitude);
+    vector = [cos(angle) * magnitude, sin(angle) * magnitude];
     vector = checkForAngleConflicts(constellation, node, vector);
     if (vector != emptyVector) {
       //check for intersection with lines in this constellation
-      for (var h = 0; h < constellation.constellationLines.size(); h++) {
+      for (var h = 0; h < constellation.constellationLines.length; h++) {
         if (!intersect) {
-          Line existingLine = constellation.constellationLines.get(h);
+          var existingLine = constellation.constellationLines[h];
           intersect = intersection(node, vector, existingLine);
         };
       };
@@ -317,9 +316,9 @@ function createNewVector(constellation, node) {
       //check for intersection with lines in all other constellations
       for (var i = 0; i < constellations.length; i++) {
         if (constellations[i] != null) {
-          for (var j = 0; j < constellations[i].constellationLines.size(); j++) {
+          for (var j = 0; j < constellations[i].constellationLines.length; j++) {
             if (!intersect) {
-              Line existingLine = constellations[i].constellationLines.get(j);
+              var existingLine = constellations[i].constellationLines[j];
               intersect = intersection(node, vector, existingLine);
             };
           };
@@ -334,18 +333,18 @@ function createNewVector(constellation, node) {
 }
 
 function checkForAngleConflicts(constellation, node, vector) {
-  PVector newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
-  for (var i = 0; i < constellation.constellationLines.size(); i++) {
-    Line existingLine = constellation.constellationLines.get(i);
+  var newUnitVector = findUnitVector(0, 0, vector.x, vector.y);
+  for (var i = 0; i < constellation.constellationLines.length; i++) {
+    var existingLine = constellation.constellationLines[i];
     var star1x = existingLine.lineStars[0].xpos;
     var star1y = existingLine.lineStars[0].ypos;
     var star2x = existingLine.lineStars[1].xpos;
     var star2y = existingLine.lineStars[1].ypos;
-    PVector existingVector = emptyVector;
+    var existingVector = [];
 
-    if (existingLine.lineStars[0] == node) {
+    if (existingLine.star1 == node) {
       existingVector = findUnitVector(star1x, star1y, star2x, star2y);
-    } else if (existingLine.lineStars[1] == node) {
+    } else if (existingLine.star2 == node) {
       existingVector = findUnitVector(star2x, star2y, star1x, star1y);
     };
 
@@ -368,9 +367,9 @@ function checkForAngleConflicts(constellation, node, vector) {
 
 function findUnitVector(x1, y1, x2, y2) {
   //calculates normal vector between stars (in order), converts to unit vector
-  PVector normalVector = new PVector(x2 - x1, y2 - y1);
-  var d = sqrt(sq(normalVector.x) + sq(normalVector.y));
-  PVector unitVector = new PVector(normalVector.x/d, normalVector.y/d);
+  var normalVector = new [x2 - x1, y2 - y1];
+  var d = sqrt((normalVector.x) ** 2 + (normalVector.y) ** 2);
+  var unitVector = [normalVector.x / d, normalVector.y / d];
   return unitVector;
 };
 
