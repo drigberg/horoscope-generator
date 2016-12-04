@@ -1,5 +1,7 @@
 //----------global defaults
 //---display
+/* @pjs transparent="true"; */
+/* @pjs crisp="true"; pauseOnBlur="true"; */
 int backgroundColor = #011433;
 float speed = 1;
 int numConstellations = 100;
@@ -7,14 +9,15 @@ int numConstellations = 100;
 
 //---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
-int minimumConstellationSize = 3;
-int maximumConstellationSize = 8;
+int minimumConstellationSize = 5;
+int maximumConstellationSize = 10;
 float minStarSize = 1;
 float maxStarSize = 5;
 float minMagnitude = 20;
 float maxMagnitude = 100;
-float minAngle = PI/4;
+float minAngle = PI/10;
 int maxClosedLoopsPerConstellation = 2;
+int frameCounter = 0;
 
 //probabilities
 float probabilityOfSingleStars = 0.6;
@@ -44,8 +47,8 @@ Constellation[] constellations;
 //=========================
 void setup() {
   //generate constellations
-  size(1300, 800);
-  background(backgroundColor);
+  size(1300, 800, P2D);
+  //background(backgroundColor);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
@@ -54,27 +57,31 @@ void setup() {
 
 void draw() {
   //move all constellations
-  background(backgroundColor);
-  for (int i = 0; i < constellations.length; i++) {
-    boolean offscreen = true;
-    for (int j = 0; j < constellations[i].constellationStars.size(); j++) {
-      noStroke();
-      fill(constellations[i].r, constellations[i].g, constellations[i].b);
-      constellations[i].constellationStars.get(j).update();
-      //check if entire constellation is offscreen
-      if (constellations[i].constellationStars.get(j).xpos < width && constellations[i].constellationStars.get(j).ypos < height) {
-        offscreen = false;
+  frameCounter += 1;
+  if (frameCounter % 1 == 0){
+    background(0, 75);
+    for (int i = 0; i < constellations.length; i++) {
+      boolean offscreen = true;
+      for (int j = 0; j < constellations[i].constellationStars.size(); j++) {
+        noStroke();
+        fill(constellations[i].r, constellations[i].g, constellations[i].b);
+        constellations[i].constellationStars.get(j).update();
+        //check if entire constellation is offscreen
+        if (constellations[i].constellationStars.get(j).xpos < width && constellations[i].constellationStars.get(j).ypos < height) {
+          offscreen = false;
+        };
+      };
+      //if offscreen, replace with new constellation to the left of and slightly above the screen
+      if (offscreen) {
+        constellations[i] = new Constellation(-width * 1.5, -width * 0.5, -height/4, height * 3 / 4);
+      };
+      for (int j = 0; j < constellations[i].constellationLines.size(); j++) {
+        stroke(constellations[i].r, constellations[i].g, constellations[i].b);
+        constellations[i].constellationLines.get(j).update();
       };
     };
-    //if offscreen, replace with new constellation to the left of and slightly above the screen
-    if (offscreen) {
-      constellations[i] = new Constellation(-width * 1.5, -width * 0.5, -height/4, height * 3 / 4);
-    };
-    for (int j = 0; j < constellations[i].constellationLines.size(); j++) {
-      stroke(constellations[i].r, constellations[i].g, constellations[i].b);
-      constellations[i].constellationLines.get(j).update();
-    };
-  };
+  }
+
 };
 
 
