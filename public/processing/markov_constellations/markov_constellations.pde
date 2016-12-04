@@ -9,14 +9,14 @@ int numConstellations = 100;
 
 //---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
-int minimumConstellationSize = 5;
-int maximumConstellationSize = 10;
+int minimumConstellationSize = 4;
+int maximumConstellationSize = 8;
 float minStarSize = 1;
 float maxStarSize = 5;
-float minMagnitude = 20;
+float minMagnitude = 40;
 float maxMagnitude = 100;
-float minAngle = PI/10;
-int maxClosedLoopsPerConstellation = 2;
+float minAngle = PI/4;
+int maxClosedLoopsPerConstellation = 1;
 int frameCounter = 0;
 
 //probabilities
@@ -26,10 +26,10 @@ float initialZeroNodeProb = 0;
 float initialOneNodeProb = 0.3;
 float initialTwoNodeProb = 0.5;
 float initialThreeNodeProb = 0.2;
-float probabilityOfClosedLoops = 1;
+float probabilityOfClosedLoops = 0.5;
 
 //persistence = number of attempts at randomly creating a vector that has no intersect or angle conflicts
-int persistence = 5;
+int persistence = 3;
 
 //vector helper
 PVector emptyVector = new PVector(0, 0);
