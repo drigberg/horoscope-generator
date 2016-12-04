@@ -1,17 +1,17 @@
 //----------global defaults
 //---display
 int backgroundColor = #011433;
-float speed = 0.7;
-int numConstellations = 200;
+float speed = 1;
+int numConstellations = 100;
 
 
 //---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
-int minimumConstellationSize = 5;
+int minimumConstellationSize = 3;
 int maximumConstellationSize = 8;
 float minStarSize = 1;
 float maxStarSize = 5;
-float minMagnitude = 40;
+float minMagnitude = 20;
 float maxMagnitude = 100;
 float minAngle = PI/4;
 int maxClosedLoopsPerConstellation = 2;
@@ -26,7 +26,7 @@ float initialThreeNodeProb = 0.2;
 float probabilityOfClosedLoops = 1;
 
 //persistence = number of attempts at randomly creating a vector that has no intersect or angle conflicts
-int persistence = 90;
+int persistence = 5;
 
 //vector helper
 PVector emptyVector = new PVector(0, 0);
@@ -44,7 +44,7 @@ Constellation[] constellations;
 //=========================
 void setup() {
   //generate constellations
-  size(1300, 680);
+  size(1300, 800);
   background(backgroundColor);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++) {
@@ -85,7 +85,10 @@ class Constellation {
   //collection of stars and lines which connect them, or single star
   ArrayList<Star> constellationStars = new ArrayList<Star>();
   ArrayList<Line> constellationLines = new ArrayList<Line>();
-  FloatDict constellationChain = new FloatDict();
+  float zeroNodeProb;
+  float oneNodeProb;
+  float twoNodeProb;
+  float threeNodeProb;
   int closedLoops = 0;
   float r;
   float g;
@@ -99,10 +102,10 @@ class Constellation {
     b = 255;
     float startX = random(minx, maxx);
     float startY = random(miny, maxy);
-    constellationChain.set("0", initialZeroNodeProb);
-    constellationChain.set("1", initialOneNodeProb);
-    constellationChain.set("2", initialTwoNodeProb);
-    constellationChain.set("3", initialThreeNodeProb);
+    zeroNodeProb = initialZeroNodeProb;
+    oneNodeProb = initialOneNodeProb;
+    twoNodeProb = initialTwoNodeProb;
+    threeNodeProb = initialThreeNodeProb;
     constellationStars.add(new Star(startX, startY, random(minStarSize, maxStarSize)));
     float singleStar = random(0, 1);
     if (singleStar > probabilityOfSingleStars) {
@@ -147,20 +150,27 @@ class Line {
 void workFromNode(Constellation constellation, Star node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
   int newNodes = 0;
-  if (constellation.constellationStars.size() >= minimumConstellationSize && constellation.constellationChain.get("0") == 0) {
-    constellation.constellationChain.set("0", zeroNodeProbAfterMinSizeReached);
-    constellation.constellationChain.set("1", constellation.constellationChain.get("0") - zeroNodeProbAfterMinSizeReached / 3);
-    constellation.constellationChain.set("2", constellation.constellationChain.get("0") - zeroNodeProbAfterMinSizeReached / 3);
-    constellation.constellationChain.set("3", constellation.constellationChain.get("0") - zeroNodeProbAfterMinSizeReached / 3);
+  if (constellation.constellationStars.size() >= minimumConstellationSize && constellation.zeroNodeProb == 0) {
+    constellation.zeroNodeProb = zeroNodeProbAfterMinSizeReached;
+    constellation.oneNodeProb -= zeroNodeProbAfterMinSizeReached / 3;
+    constellation.twoNodeProb -= zeroNodeProbAfterMinSizeReached / 3;
+    constellation.threeNodeProb -= zeroNodeProbAfterMinSizeReached / 3;
   };
 
   float nextMoveProb = random(0, 1);
-  for (int i = 0; i < constellation.constellationChain.keyArray().length; i++) {
-    if (nextMoveProb <= constellation.constellationChain.get(constellation.constellationChain.keyArray()[i])) {
-      newNodes = int(constellation.constellationChain.keyArray()[i]);
+  //construct array out of node probabilities because processing.js can't handle dictionaries
+  float[] newNodeProbabilities = new float[4];
+  newNodeProbabilities[0] = constellation.zeroNodeProb;
+  newNodeProbabilities[1] = constellation.oneNodeProb;
+  newNodeProbabilities[2] = constellation.twoNodeProb;
+  newNodeProbabilities[3] = constellation.threeNodeProb;
+  
+  for (int i = 0; i < 4; i++) {
+    if (nextMoveProb <= newNodeProbabilities[i]) {
+      newNodes = i;
       break;
     } else {
-      nextMoveProb -= constellation.constellationChain.get(constellation.constellationChain.keyArray()[i]);
+      nextMoveProb -= newNodeProbabilities[i];
     }
   }
 
@@ -173,7 +183,7 @@ void workFromNode(Constellation constellation, Star node) {
       //make new node if closed loop was not created already
       //only make new vector if newVector function was able to find a nonconflicting option within 10 tries (arbitrary value)
       if (!closedLoop) {
-        PVector newVector = newVector(constellation, node);
+        PVector newVector = createNewVector(constellation, node);
         if (newVector != emptyVector) {
           float x = newVector.x + node.xpos;
           float y = newVector.y + node.ypos;
@@ -276,7 +286,7 @@ boolean intersection(Star star1, PVector vector1, Line existingLine) {
   return true;
 };
 
-PVector newVector(Constellation constellation, Star node) {
+PVector createNewVector(Constellation constellation, Star node) {
   //creates new vector sprouting from end of old vector
   //empty vector is used as check for starting vector of constellation
   PVector vector = new PVector();
