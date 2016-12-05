@@ -48,24 +48,23 @@ function setup() {
   //background(backgroundColor);
   constellations = new Array(numConstellations);
   backgroundColor = "#011433";
-  speed = 1;
-  numConstellations = 100;
-  minimumConstellationSize = 5;
-  maximumConstellationSize = 10;
+  speed = 0.5;
+  numConstellations = 150;
+  minimumConstellationSize = 4;
+  maximumConstellationSize = 8;
   minStarSize = 1;
   maxStarSize = 5;
-  minMagnitude = 20;
-  maxMagnitude = 100;
-  minAngle = PI/10;
-  maxClosedLoopsPerConstellation = 2;
-  frameCounter = 0;
-  probabilityOfSingleStars = 0.3;
+  minMagnitude = 10;
+  maxMagnitude = 60;
+  minAngle = PI/3;
+  maxClosedLoopsPerConstellation = 1;
+  probabilityOfSingleStars = 0.85;
   zeroNodeProbAfterMinSizeReached = 0.5;
   initialZeroNodeProb = 0;
   initialOneNodeProb = 0.3;
   initialTwoNodeProb = 0.5;
   initialThreeNodeProb = 0.2;
-  probabilityOfClosedLoops = 1;
+  probabilityOfClosedLoops = 0.5;
   persistence = 5;
 
   //vector helper
@@ -77,30 +76,27 @@ function setup() {
 
 function draw() {
   //move all constellations
-  frameCounter += 1;
-  if (frameCounter % 1 == 0){
-    background(backgroundColor);
-    for (var i = 0; i < constellations.length; i++) {
-      var offscreen = true;
-      for (var j = 0; j < constellations[i].constellationStars.length; j++) {
-        noStroke();
-        fill(constellations[i].r, constellations[i].g, constellations[i].b);
-        constellations[i].constellationStars[j].update();
-        //check if entire constellation is offscreen
-        if (constellations[i].constellationStars[j].xpos < width && constellations[i].constellationStars[j].ypos < height) {
-          offscreen = false;
-        };
-      };
-      //if offscreen, replace with new constellation to the left of and slightly above the screen
-      if (offscreen) {
-        constellations[i] = new Constellation(-width * 1.5, -width * 0.5, -height/4, height * 3 / 4);
-      };
-      for (var j = 0; j < constellations[i].constellationLines.length; j++) {
-        stroke(constellations[i].r, constellations[i].g, constellations[i].b);
-        constellations[i].constellationLines[j].update();
+  background(backgroundColor);
+  for (var i = 0; i < constellations.length; i++) {
+    var offscreen = true;
+    for (var j = 0; j < constellations[i].constellationStars.length; j++) {
+      noStroke();
+      fill(constellations[i].r, constellations[i].g, constellations[i].b);
+      constellations[i].constellationStars[j].update();
+      //check if entire constellation is offscreen
+      if (constellations[i].constellationStars[j].xpos < width && constellations[i].constellationStars[j].ypos < height) {
+        offscreen = false;
       };
     };
-  }
+    //if offscreen, replace with new constellation to the left of and slightly above the screen
+    if (offscreen) {
+      constellations[i] = new Constellation(-width * 1.5, -width * 0.5, -height/4, height * 3 / 4);
+    };
+    for (var j = 0; j < constellations[i].constellationLines.length; j++) {
+      stroke(constellations[i].r, constellations[i].g, constellations[i].b);
+      constellations[i].constellationLines[j].update();
+    };
+  };
 };
 
 
