@@ -1,29 +1,19 @@
 //----------global defaults
 //---display
-var backgroundColor;
-var speed;
-var numConstellations;
+var backgroundColor, speed, numConstellations;
 
 //---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
-var minimumConstellationSize;
-var maximumConstellationSize;
-var minStarSize;
-var maxStarSize;
-var minMagnitude;
-var maxMagnitude;
+var minimumConstellationSize, maximumConstellationSize;
+var minStarSize, maxStarSize;
+var minMagnitude, maxMagnitude;
 var minAngle;
 var maxClosedLoopsPerConstellation;
-var frameCounter;
 
 //probabilities
 var probabilityOfSingleStars;
-var zeroNodeProbAfterMinSizeReached;
-var initialZeroNodeProb;
-var initialOneNodeProb;
-var initialTwoNodeProb;
-var initialThreeNodeProb;
 var probabilityOfClosedLoops;
+var zeroNodeProbAfterMinSizeReached, initialZeroNodeProb, initialOneNodeProb, initialTwoNodeProb, initialThreeNodeProb;
 
 //persistence = number of attempts at randomly creating a vector that has no intersect or angle conflicts
 var persistence;
@@ -31,11 +21,14 @@ var persistence;
 //vector helper
 var emptyVector;
 
+//interface
+var minMagnitudeSlider, maxMagnitudeSlider, minAngleSlider;
+var spacing, sliderLeftAlign, textLeftAlign, interfaceRows, numElements, padding;
+
 //------TO DO-------
 //MERGE AFTER SENTENCE EXPANSION (to get rid of matching commits) :P :P :P
 //Reference constellation colors; too many arguments being passed on
 //Figure out bug with closed loop density
-
 
 var constellations;
 
@@ -43,21 +36,30 @@ var constellations;
 //Main functions
 //=========================
 function setup() {
+  makeCanvas();
+  createInterface();
+
   //generate constellations
-  var canvas = createCanvas($(window).width(), $(window).height());
-  canvas.parent('canvas-background');
-  //background(backgroundColor);
+  setInitialValues();
+  resetDisplay();
+}
+function makeCanvas(){
+    var canvas = createCanvas($(window).width(), $(window).height());
+    canvas.parent('canvas-background');
+    backgroundColor = "#011433";
+};
+
+function setInitialValues(){
   constellations = new Array(numConstellations);
-  backgroundColor = "#011433";
   speed = 0.5;
   numConstellations = 150;
   minimumConstellationSize = 4;
   maximumConstellationSize = 8;
   minStarSize = 1;
   maxStarSize = 5;
-  minMagnitude = 10;
-  maxMagnitude = 60;
-  minAngle = PI/3;
+  minMagnitude = minMagnitudeSlider.value();
+  maxMagnitude = maxMagnitudeSlider.value();
+  minAngle = minAngleSlider.value();
   maxClosedLoopsPerConstellation = 1;
   probabilityOfSingleStars = 0.85;
   zeroNodeProbAfterMinSizeReached = 0.5;
@@ -70,14 +72,60 @@ function setup() {
 
   //vector helper
   emptyVector = [0,0];
+};
+
+function createInterface(){
+  spacing = 20;
+  sliderLeftAlign = 200;
+  textLeftAlign = 20;
+  padding = 20;
+  rows = [];
+  numElements = 4;
+
+  for (var i = 1; i < numElements + 1; i++){
+    rows.push(height - i * spacing - padding)
+  }
+
+  minMagnitudeSlider = createSlider(5, 50, 15);
+  minMagnitudeSlider.position(sliderLeftAlign, rows[3]);
+  maxMagnitudeSlider = createSlider(60, 150, 100);
+  maxMagnitudeSlider.position(sliderLeftAlign, rows[2]);
+  minAngleSlider = createSlider(0, 0.97 * PI, PI/3);
+  minAngleSlider.position(sliderLeftAlign, rows[1]);
+
+  resetButton = createButton('Generate New Constellations');
+  resetButton.position(textLeftAlign, rows[0]);
+  resetButton.mousePressed(resetDisplay);
+
+  minMagnitudeSlider.style('width', '80px');
+  maxMagnitudeSlider.style('width', '80px');
+  minAngleSlider.style('width', '80px');
+
+
+};
+
+function resetDisplay(){
   for (var i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
   };
 }
+function drawText() {
+    var textSliderAlign = 13;
+    fill(255, 255, 255);
+    textSize(15);
+    text("Minimum Line Magnitude", textLeftAlign, rows[3] + textSliderAlign);
+    text("Maximum Line Magnitude", textLeftAlign, rows[2] + textSliderAlign);
+    text("Minimum Angle", textLeftAlign, rows[1] + textSliderAlign);
+};
 
 function draw() {
+  minMagnitude = minMagnitudeSlider.value();
+  maxMagnitude = maxMagnitudeSlider.value();
+  minAngle = minAngleSlider.value();
+
   //move all constellations
   background(backgroundColor);
+  drawText();
   for (var i = 0; i < constellations.length; i++) {
     var offscreen = true;
     for (var j = 0; j < constellations[i].constellationStars.length; j++) {
