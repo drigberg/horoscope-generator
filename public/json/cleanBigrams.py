@@ -41,7 +41,6 @@ def main():
 
 
     bigrams = cleanProbabilities(bigrams)
-    print bigrams
 
     with open('sentenceBigrams.json', 'w') as revised_bigrams_file:
         json.dump(bigrams, revised_bigrams_file)
@@ -66,16 +65,12 @@ def cleanProbabilities(bigram_data):
 
             prob_total = 0
             for conversion in bigram_data[sentence_type]:
-                if bigram_data[sentence_type][conversion]:
-                    prob_total += bigram_data[sentence_type][conversion]
+                bigram_data[sentence_type][conversion]
+                prob_total += bigram_data[sentence_type][conversion]
 
         print "\tTotal probability: %s" % prob_total
 
     return bigram_data
-
-
-
-
 
 if __name__ == '__main__':
     main()
