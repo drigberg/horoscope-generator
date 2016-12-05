@@ -2,7 +2,7 @@ var assert                        = require("assert");
 var helpers                       = require("./helpers");
 var calendar                      = require("../public/json/calendar.json");
 var grammar                       = require("../public/json/grammar.json");
-var sentenceBigramProbabilities   = require("../public/json/sentenceBigramProbabilities.json");
+var sentenceBigramProbabilities   = require("../public/json/sentenceBigrams.json");
 var sentenceTypes                 = require("../public/json/sentenceTypes.json");
 var Horoscope                     = require("../public/js/Horoscope.js");
 
