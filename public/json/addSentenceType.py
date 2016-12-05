@@ -45,11 +45,11 @@ def main():
     for key in sentence_types:
         print "\t %s" % key
 
-    # with open('sentence_types.json', 'w') as revised_sentence_types_file:
-    #     json.dump(sentence_types, revised_sentence_types_file)
-    #
-    # with open('sentencebigrams.json', 'w') as revised_bigrams_file:
-    #     json.dump(bigrams, revised_bigrams_file)
+    with open('sentence_types.json', 'w') as revised_sentence_types_file:
+        json.dump(sentence_types, revised_sentence_types_file)
+
+    with open('sentencebigrams.json', 'w') as revised_bigrams_file:
+        json.dump(bigrams, revised_bigrams_file)
 
 if __name__ == '__main__':
     main()
