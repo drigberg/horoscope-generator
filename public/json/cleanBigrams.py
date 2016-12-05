@@ -15,13 +15,13 @@ def main():
             sentence_types = json.load(sentence_types_data)
             bigrams = json.load(bigram_data)
 
-    bigrams = cleanProbabilities(checkForSentenceTypesInBigrams(sentence_types, bigrams))
+    bigrams = cleanProbabilities(checkForNewSentenceTypesInBigrams(sentence_types, bigrams))
     printBigrams(bigrams)
 
     with open('sentenceBigrams.json', 'w') as revised_bigrams_file:
         json.dump(bigrams, revised_bigrams_file)
 
-def checkForSentenceTypesInBigrams(sentence_types, bigrams):
+def checkForNewSentenceTypesInBigrams(sentence_types, bigrams):
     for sentence_type in sentence_types:
         #add sentence_type with all conversions to bigrams if not present
         if sentence_type not in bigrams:
@@ -50,9 +50,19 @@ def checkForSentenceTypesInBigrams(sentence_types, bigrams):
 
 def printBigrams(bigram_data):
     print "\n\n\n*****BIGRAM DATA******\n"
-    for sentence_type in bigrams_data:
-        print "\t"
-
+    for sentence_type in bigram_data:
+        print "\n\t%s:\n" % sentence_type
+        prob_total = 0
+        for conversion in bigram_data[sentence_type]:
+            prob_total += bigram_data[sentence_type][conversion]
+            conversion_for_display = conversion
+            while len(conversion_for_display) < 50:
+                conversion_for_display += " "
+            print "\t\t%s:\t\t%s" % (conversion_for_display, bigram_data[sentence_type][conversion])
+        total_display = "(Total)"
+        while len(total_display) < 50:
+            total_display += " "
+        print "\t\t%s:\t\t%s" % (total_display, round(prob_total, 3))
 
 def cleanProbabilities(bigram_data):
     for sentence_type in bigram_data:
