@@ -66,7 +66,7 @@
 		"goodStatement_thirdPerson_past" : 0.05,
 		"goodStatement_secondPerson_future" : 0.05,
 		"goodStatement_secondPerson_present" : 0.05,
-		"neutralStatement_secondPerson_present" : 0.02,
+		"neutralStatement_secondPerson_present" : 0.82,
 		"neutralStatement_secondPerson_past" : 0.02,
 		"neutralStatement_secondPerson_future" : 0.02,
 		"neutralStatement_thirdPerson_present" : 0.02,
@@ -173,7 +173,7 @@
 	"goodStatement_secondPerson_future" : {
 		"signDeclaration_secondPerson" : 0,
 		"badStatement_secondPerson_present" : 0.2,
-		"badStatement_secondPerson_future" : 0.5,
+		"badStatement_secondPerson_future" : 0.05,
 		"badStatement_thirdPerson_present" : 0.04,
 		"badStatement_thirdPerson_past" : 0.04,
 		"goodStatement_thirdPerson_present" : 0.05,

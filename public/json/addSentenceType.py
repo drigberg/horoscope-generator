@@ -5,12 +5,13 @@ import cleanBigrams
 
 
 def main():
-    with open('sentence_types.json') as sentence_types_data:
-        with open('sentencebigrams.json') as bigrams_data:
-            exceptions = {
-                "signDeclaration_secondPerson" : 0,
-                "@END"                         : 0.3
-            }
+    exceptions = {
+        "signDeclaration_secondPerson" : 0,
+        "@END"                         : 0.3
+    }
+    with open('sentenceTypes.json') as sentence_types_data:
+        with open('sentenceBigrams.json') as bigrams_data:
+
             sentence_types = json.load(sentence_types_data)
             bigrams = json.load(bigrams_data)
             counter = 0
