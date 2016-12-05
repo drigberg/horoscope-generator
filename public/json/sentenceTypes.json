@@ -7,7 +7,6 @@
 		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
-
 	},
 	"badStatement_secondPerson_present" : {
 		"good/bad" : "bad" ,
@@ -19,9 +18,29 @@
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
+	"badStatement_secondPerson_past" : {
+		"good/bad" : "bad" ,
+		"tense" : "past" ,
+		"person" : "second",
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking",
+		"connector" : false,
+		"grammatical_number" : "singular"
+	},
 	"goodStatement_secondPerson_present" : {
 		"good/bad" : "good" ,
 		"tense" : "present" ,
+		"person" : "second",
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking",
+		"connector" : false,
+		"grammatical_number" : "singular"
+	},
+	"goodStatement_secondPerson_past" : {
+		"good/bad" : "good" ,
+		"tense" : "past" ,
 		"person" : "second",
 		"object" : "role" ,
 		"modified_object" : true ,
@@ -70,6 +89,17 @@
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
+	"badStatement_thirdPerson_future" : {
+		"good/bad" : "bad" ,
+		"tense" : "future" ,
+		"person" : "third" ,
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking" ,
+		"name" : false,
+		"connector" : false,
+		"grammatical_number" : "singular"
+	},
 	"goodStatement_thirdPerson_past" : {
 		"good/bad" : "good" ,
 		"tense" : "past" ,
@@ -84,6 +114,17 @@
 	"goodStatement_thirdPerson_present" : {
 		"good/bad" : "good" ,
 		"tense" : "present" ,
+		"person" : "third" ,
+		"object" : "role" ,
+		"modified_object" : true ,
+		"verbtype" : "linking" ,
+		"name" : false,
+		"connector" : false,
+		"grammatical_number" : "singular"
+	},
+	"goodStatement_thirdPerson_future" : {
+		"good/bad" : "good" ,
+		"tense" : "future" ,
 		"person" : "third" ,
 		"object" : "role" ,
 		"modified_object" : true ,
