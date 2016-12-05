@@ -14,36 +14,45 @@ def main():
             #ensure that all sentence types are in bigram probabilities
             sentence_types = json.load(sentence_types_data)
             bigrams = json.load(bigram_data)
-            temp = cleanProbabilities(bigrams)
-            for sentence_type in sentence_types:
-                #add sentence_type with all conversions to bigrams if not present
-                if sentence_type not in bigrams:
-                    bigrams[sentence_type] = {}
-                    occupied_prob_pool = 0
-                    for key in new_sentence_conversion_exceptions:
-                        prob_pool += new_sentence_conversion_exceptions[key]
 
-                    prob_dispersion = (1 - occupied_prob_pool) / (len(sentence_types) - len(new_sentence_conversion_exceptions))
-
-                    for key in sentence_types:
-                        if key in new_sentence_conversion_exceptions:
-                            bigrams[sentence_type][key] = new_sentence_conversion_exceptions[key]
-                        else:
-                            bigrams[sentence_type][key] = prob_dispersion
-                else:
-                    #check that each existing sentence type has all possible conversions
-                    for key in sentence_types:
-                        if key not in bigrams[sentence_type]:
-                            if key in new_sentence_conversion_exceptions:
-                                bigrams[sentence_type][key] = new_sentence_conversion_exceptions[key]
-                            else:
-                                bigrams[sentence_type][key] = default_probability
-
-
-    bigrams = cleanProbabilities(bigrams)
+    bigrams = cleanProbabilities(checkForSentenceTypesInBigrams(sentence_types, bigrams))
+    printBigrams(bigrams)
 
     with open('sentenceBigrams.json', 'w') as revised_bigrams_file:
         json.dump(bigrams, revised_bigrams_file)
+
+def checkForSentenceTypesInBigrams(sentence_types, bigrams):
+    for sentence_type in sentence_types:
+        #add sentence_type with all conversions to bigrams if not present
+        if sentence_type not in bigrams:
+            bigrams[sentence_type] = {}
+            occupied_prob_pool = 0
+            for key in new_sentence_conversion_exceptions:
+                prob_pool += new_sentence_conversion_exceptions[key]
+
+            prob_dispersion = (1 - occupied_prob_pool) / (len(sentence_types) - len(new_sentence_conversion_exceptions))
+
+            for key in sentence_types:
+                if key in new_sentence_conversion_exceptions:
+                    bigrams[sentence_type][key] = new_sentence_conversion_exceptions[key]
+                else:
+                    bigrams[sentence_type][key] = prob_dispersion
+        else:
+            #check that each existing sentence type has all possible conversions
+            for key in sentence_types:
+                if key not in bigrams[sentence_type]:
+                    if key in new_sentence_conversion_exceptions:
+                        bigrams[sentence_type][key] = new_sentence_conversion_exceptions[key]
+                    else:
+                        bigrams[sentence_type][key] = default_probability
+
+    return bigrams
+
+def printBigrams(bigram_data):
+    print "\n\n\n*****BIGRAM DATA******\n"
+    for sentence_type in bigrams_data:
+        print "\t"
+
 
 def cleanProbabilities(bigram_data):
     for sentence_type in bigram_data:
