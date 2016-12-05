@@ -44,7 +44,8 @@ var constellations;
 //=========================
 function setup() {
   //generate constellations
-  createCanvas(1300, 800);
+  var canvas = createCanvas($(window).width(), $(window).height());
+  canvas.parent('canvas-background');
   //background(backgroundColor);
   constellations = new Array(numConstellations);
   backgroundColor = "#011433";
@@ -187,7 +188,6 @@ function workFromNode(constellation, node) {
       if (!closedLoop) {
         var newVector = createNewVector(constellation, node);
         if (newVector != emptyVector) {
-          console.log(newVector);
           var x = newVector[0] + node.xpos;
           var y = newVector[1] + node.ypos;
           var newStar = new Star(x, y, random(minStarSize, maxStarSize));
@@ -241,7 +241,6 @@ function createClosedLoop(complete, constellation, node){
               };
             };
             if (!intersect) {
-              console.log("EYO")
               constellation.closedLoops += 1;
               var newLine = new Line(node, constellation.constellationStars[k]);
               constellation.constellationLines.push(newLine);

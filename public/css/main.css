@@ -5,7 +5,7 @@ body {
 	transition: 4s;
 }
 
-canvas {
+#canvas-background {
 	position: absolute;
 	z-index: -1;
 }

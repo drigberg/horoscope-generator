@@ -15,7 +15,7 @@ float minStarSize = 1;
 float maxStarSize = 5;
 float minMagnitude = 40;
 float maxMagnitude = 100;
-float minAngle = PI/4;
+float minAngle = PI/2;
 int maxClosedLoopsPerConstellation = 1;
 int frameCounter = 0;
 
@@ -47,7 +47,7 @@ Constellation[] constellations;
 //=========================
 void setup() {
   //generate constellations
-  size(1300, 800, P2D);
+  size(1300, 800);
   //background(backgroundColor);
   constellations = new Constellation[numConstellations];
   for (int i = 0; i < numConstellations; i++) {
@@ -59,7 +59,6 @@ void draw() {
   //move all constellations
   frameCounter += 1;
   if (frameCounter % 1 == 0){
-    background(0, 75);
     for (int i = 0; i < constellations.length; i++) {
       boolean offscreen = true;
       for (int j = 0; j < constellations[i].constellationStars.size(); j++) {
