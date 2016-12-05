@@ -1,8 +1,13 @@
 body {
 	/*background-image: url("sky_faded.jpg");*/
-	background-color: #4da6ff;
+	background-color: #011433;
 	background-size: 1000px;
 	transition: 4s;
+}
+
+#canvas-background {
+	position: absolute;
+	z-index: -1;
 }
 
 #fbLogin {

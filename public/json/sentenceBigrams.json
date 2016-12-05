@@ -1,7 +1,6 @@
 {
 	"@START" : {
 		"signDeclaration_secondPerson" : 1,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0,
 		"badStatement_secondPerson_future" : 0,
 		"badStatement_thirdPerson_present" : 0,
@@ -21,7 +20,6 @@
 	},
 	"signDeclaration_secondPerson" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.2,
 		"badStatement_thirdPerson_present" : 0.1,
@@ -41,7 +39,6 @@
 	} ,
 	"signDeclaration_thirdPerson" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.2,
@@ -61,7 +58,6 @@
 	} ,
 	"badStatement_secondPerson_present" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.09,
 		"badStatement_thirdPerson_present" : 0.09,
@@ -81,7 +77,6 @@
 	} ,
 	"badStatement_secondPerson_future" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.04,
 		"badStatement_secondPerson_future" : 0.04,
 		"badStatement_thirdPerson_present" : 0.1,
@@ -101,7 +96,6 @@
 	} ,
 	"badStatement_thirdPerson_present" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.2,
 		"badStatement_secondPerson_future" : 0.04,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -121,7 +115,6 @@
 	},
 	"badStatement_thirdPerson_past" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.1,
@@ -141,7 +134,6 @@
 	},
 	"goodStatement_thirdPerson_present" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.2,
 		"badStatement_secondPerson_future" : 0.05,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -161,7 +153,6 @@
 	},
 	"goodStatement_thirdPerson_past" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.15,
 		"badStatement_secondPerson_future" : 0.05,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -181,7 +172,6 @@
 	},
 	"goodStatement_secondPerson_future" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.2,
 		"badStatement_secondPerson_future" : 0.5,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -201,27 +191,6 @@
 	},
 	"goodStatement_secondPerson_present" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
-		"badStatement_secondPerson_present" : 0.1,
-		"badStatement_secondPerson_future" : 0.1,
-		"badStatement_thirdPerson_present" : 0.04,
-		"badStatement_thirdPerson_past" : 0.04,
-		"goodStatement_thirdPerson_present" : 0.05,
-		"goodStatement_thirdPerson_past" : 0.05,
-		"goodStatement_secondPerson_future" : 0.05,
-		"goodStatement_secondPerson_present" : 0.05,
-		"neutralStatement_secondPerson_present" : 0.02,
-		"neutralStatement_secondPerson_past" : 0.02,
-		"neutralStatement_secondPerson_future" : 0.02,
-		"neutralStatement_thirdPerson_present" : 0.02,
-		"neutralStatement_thirdPerson_past" : 0.02,
-		"neutralStatement_thirdPerson_future" : 0.02,
-		"causation_connector" : 0.1,
-		"@END" : 0.3
-	},
-	"goodStatement_secondPerson_present" : {
-		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -241,7 +210,6 @@
 	},
 	"neutralStatement_secondPerson_past" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -261,7 +229,6 @@
 	},
 	"neutralStatement_secondPerson_present" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -281,7 +248,6 @@
 	},
 	"neutralStatement_secondPerson_future" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -301,7 +267,6 @@
 	},
 	"neutralStatement_thirdPerson_present" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -321,7 +286,6 @@
 	},
 	"neutralStatement_thirdPerson_past" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -341,7 +305,6 @@
 	},
 	"neutralStatement_thirdPerson_future" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.1,
 		"badStatement_thirdPerson_present" : 0.04,
@@ -361,7 +324,6 @@
 	},
 	"causation_connector" : {
 		"signDeclaration_secondPerson" : 0,
-		"signDeclaration_thirdPerson" : 0,
 		"badStatement_secondPerson_present" : 0.1,
 		"badStatement_secondPerson_future" : 0.2,
 		"badStatement_thirdPerson_present" : 0.14,

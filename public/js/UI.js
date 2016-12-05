@@ -2,7 +2,7 @@ var horoscope = {};
 var grammar = {};
 var calendar = {};
 var sentenceTypes = {};
-var sentenceBigramProbabilities = {};
+var sentenceBigrams = {};
 var signPaths = {};
 var loadingAPI = new HoroscopeAPI();
 var socket = io.connect();
@@ -17,7 +17,7 @@ $("#generate").click(function() {
     horoscope.calendar = loadingAPI.calendar;
     horoscope.grammar = loadingAPI.grammar;
     horoscope.sentenceTypes = loadingAPI.sentenceTypes;
-    horoscope.sentenceBigramProbabilities = loadingAPI.sentenceBigramProbabilities;
+    horoscope.sentenceBigrams = loadingAPI.sentenceBigrams;
     horoscope.signPaths = loadingAPI.signPaths;
     horoscope.userData.name = $("#userName").val();
     horoscope.userData.hometown = $("#hometown").val();
