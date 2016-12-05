@@ -44,7 +44,7 @@ var constellations;
 //=========================
 function setup() {
   //generate constellations
-  size(1300, 800, P2D);
+  createCanvas(1300, 800);
   //background(backgroundColor);
   constellations = new Array(numConstellations);
   for (var i = 0; i < numConstellations; i++) {
