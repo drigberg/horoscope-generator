@@ -28,8 +28,9 @@ def checkForNewSentenceTypesInBigrams(sentence_types, bigrams):
             bigrams[sentence_type] = {}
             occupied_prob_pool = 0
             for key in new_sentence_conversion_exceptions:
-                prob_pool += new_sentence_conversion_exceptions[key]
+                occupied_prob_pool += new_sentence_conversion_exceptions[key]
 
+            # Doesn't add to 1, but gets close--exact procedure is bulky and unnecessary here
             prob_dispersion = (1 - occupied_prob_pool) / (len(sentence_types) - len(new_sentence_conversion_exceptions))
 
             for key in sentence_types:

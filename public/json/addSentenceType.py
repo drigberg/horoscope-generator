@@ -18,7 +18,7 @@ def main():
                 sentence_types = json.load(sentence_types_data)
                 bigrams = json.load(bigrams_data)
                 title = raw_input("Sentence type name: ")
-                num_tags = input("Number of tags to add: ")
+                num_tags = int(raw_input("Number of tags to add: "))
                 tags = {}
                 for n in range(int(num_tags)):
                     print "\n******"
@@ -38,12 +38,12 @@ def main():
                     bigrams[sentence_type].pop(title, None)
                 print "%s removed from %s and %s \n" % (title, sentence_types_file, bigram_file)
 
-    print "New sentence type list: "
+    print "*********\nCleaning bigram probabilities and adding sentence types if applicable....\n"
+    bigrams = cleanBigrams.cleanProbabilities(cleanBigrams.checkForNewSentenceTypesInBigrams(sentence_types, bigrams))
+
+    print "\nNew sentence type list: "
     for key in sentence_types:
         print "\t %s" % key
-
-    print "*********\nCleaning bigrams...."
-    bigrams = cleanBigrams.cleanProbabilities(bigrams)
 
     # with open('sentence_types.json', 'w') as revised_sentence_types_file:
     #     json.dump(sentence_types, revised_sentence_types_file)
