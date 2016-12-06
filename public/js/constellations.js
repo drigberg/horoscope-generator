@@ -60,7 +60,7 @@ function setInitialValues(){
   maxStarSize = 5;
   minMagnitude = 15;
   maxClosedLoopsPerConstellation = 1;
-  zeroNodeProbAfterMinSizeReached = 0.5;
+  zeroNodeProbAfterMinSizeReached = 0.3
   initialZeroNodeProb = 0;
   initialOneNodeProb = 0.3;
   initialTwoNodeProb = 0.5;
