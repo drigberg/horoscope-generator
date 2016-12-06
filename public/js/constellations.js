@@ -23,7 +23,7 @@ var emptyVector;
 
 //interface
 var minMagnitudeSlider, maxMagnitudeSlider, minAngleSlider, maxConstellationSizeSlider;
-var spacing, sliderLeftAlign, textLeftAlign, interfaceRows, numElements, padding;
+var sliders_div;
 
 //------TO DO-------
 //MERGE AFTER SENTENCE EXPANSION (to get rid of matching commits) :P :P :P
@@ -36,15 +36,16 @@ var constellations;
 //Main functions
 //=========================
 function setup() {
-  makeCanvas();
+  //interface elements are created first so that canvas covers entire page
   createInterface();
+  makeCanvas();
 
   //generate constellations
   setInitialValues();
   resetDisplay();
 }
 function makeCanvas(){
-    var canvas = createCanvas($(window).width(), $(window).height());
+    var canvas = createCanvas(($(window).width()), $(window).height() + 50);
     canvas.parent('canvas-background');
     backgroundColor = "#011433";
 };
@@ -79,50 +80,44 @@ function createInterface(){
   sliderLeftAlign = 280;
   textLeftAlign = 30;
   padding = 20;
-  rows = [];
   numElements = 5;
 
-  for (var i = 1; i < numElements + 1; i++){
-    rows.push(height - i * spacing - padding)
-  }
+  sliders_div = createDiv("");
+  sliders_div.id("sliders-div");
+  sliders_div_ul = createElement("ul").id("sliders-div-list").parent("sliders-div").style("list-style", "none");
+  sliders_div_list = [];
+  for (var i = 0; i < 4; i++){
+    var id = "sliders-div-list-" + i;
+    sliders_div_list.push(createElement('li').id(id));
+    sliders_div_list[i].parent("sliders-div-list");
+    switch (i){
+      case 0:
+          maxConstellationSizeText = createElement("h5", "Max No. Stars Per Constellation: ").class("slider-text").parent(id)
+          maxConstellationSizeSlider = createSlider(5, 100, 8).id("slider").parent(id);
+          break;
+      case 1:
+          minMagnitudeText = createElement("h5", "Minimum Line Magnitude: ").class("slider-text").parent(id)
+          minMagnitudeSlider = createSlider(5, 50, 15).id("slider").parent(id);
+          break;
+      case 2:
+          maxMagnitudeText = createElement("h5", "Maximum Line Magnitude: ").class("slider-text").parent(id)
+          maxMagnitudeSlider = createSlider(60, 150, 100).id("slider").parent(id);
+          break;
+      case 3:
+          mindAngleText = createElement("h5", "Minimum Angle Size: ").class("slider-text").parent(id)
+          minAngleSlider = createSlider(0, 0.97 * PI, PI/3).id("slider").parent(id);
+          break;
+    }
+  };
 
-  maxConstellationSizeSlider = createSlider(5, 100, 8);
-  maxConstellationSizeSlider.position(sliderLeftAlign, rows[4])
-  minMagnitudeSlider = createSlider(5, 50, 15);
-  minMagnitudeSlider.position(sliderLeftAlign, rows[3]);
-  maxMagnitudeSlider = createSlider(60, 150, 100);
-  maxMagnitudeSlider.position(sliderLeftAlign, rows[2]);
-  minAngleSlider = createSlider(0, 0.97 * PI, PI/3);
-  minAngleSlider.position(sliderLeftAlign, rows[1]);
-
-
-  resetButton = createButton('Generate New Constellations');
-  resetButton.position(textLeftAlign, rows[0]);
+  resetButton = createButton('Generate New Constellations').class("btn btn-warning btn-md small-link").parent('sliders-div');
   resetButton.mousePressed(resetDisplay);
-
-  minMagnitudeSlider.style('width', '80px');
-  maxMagnitudeSlider.style('width', '80px');
-  minAngleSlider.style('width', '80px');
-  maxConstellationSizeSlider.style('width', '80px');
 };
 
 function resetDisplay(){
   for (var i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
   };
-};
-
-function drawText() {
-    fill('rgba(0, 0, 0, 0.3)');
-    noStroke();
-    rect(10, rows[rows.length - 1] - padding, 400, 300);
-    var textSliderAlign = 13;
-    fill(255, 255, 255);
-    textSize(15);
-    text("Maximum Stars Per Constellation", textLeftAlign, rows[4] + textSliderAlign);
-    text("Minimum Line Magnitude", textLeftAlign, rows[3] + textSliderAlign);
-    text("Maximum Line Magnitude", textLeftAlign, rows[2] + textSliderAlign);
-    text("Minimum Angle", textLeftAlign, rows[1] + textSliderAlign);
 };
 
 function draw() {
@@ -133,7 +128,6 @@ function draw() {
 
   //move all constellations
   background(backgroundColor);
-  drawText();
   for (var i = 0; i < constellations.length; i++) {
     var offscreen = true;
     for (var j = 0; j < constellations[i].constellationStars.length; j++) {

@@ -1,5 +1,4 @@
 body {
-	/*background-image: url("sky_faded.jpg");*/
 	background-color: #011433;
 	background-size: 1000px;
 	transition: 4s;
@@ -8,10 +7,44 @@ body {
 #canvas-background {
 	position: absolute;
 	z-index: -1;
+	height: 100%;
 }
 
 
 /*SLIDERS*/
+
+#sliders-div {
+	display: block;
+	float: right;
+	width: 400px;
+	background-color: rgba(0,0,0,0.2);
+	padding: 20px 10px 20px 10px;
+	box-shadow: 0 0 1em rgba(0,0,0,0.2);
+	margin: 15px;
+}
+
+#slider {
+	width: 80px;
+	float: right;
+	display: block;
+	margin: 5px 0;
+	vertical-align: center;
+}
+
+
+
+.small-link {
+	display: block;
+	margin: 10 auto 0 auto;
+}
+
+.slider-text {
+	color: white;
+	display: inline-block;
+	font-weight: 200;
+	margin: 0;
+}
+
 
 input[type=range]{
     -webkit-appearance: none;
