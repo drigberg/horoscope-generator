@@ -40,7 +40,6 @@ var Horoscope = function(args){
         //finds user's sign, initializes sentence
         //adds name to grammar
         this.date = moment().format("MMMM Do YYYY, h:mm a");
-        this.userData.sign = this.evaluateSign(this.userData.birthday);
         this.grammar["@NounSingular"]["@Sign"] = {
             "weight" : 50 ,
             "object" : "sign"
@@ -155,7 +154,7 @@ var Horoscope = function(args){
 
             if (this.structure[n + 1] == "causation_connector"){
                 this.sentence.cleanedContent += ","
-            } else {
+            } else if (this.structure[n] != "causation_connector"){
                 if (Math.random() < this.probabilityOfExclamation){
                     this.sentence.cleanedContent += "!"
                 } else {
@@ -186,6 +185,7 @@ var Horoscope = function(args){
     this.processHoroscopeForm = function(){
         var formValidation = this.validation.validateForm()
         if (formValidation){
+            this.userData.sign = this.evaluateSign(this.userData.birthday);
             this.addUserDataToGrammar();
             this.generateParagraph();
             this.signPath = this.signPaths[this.userData["sign"]]["path"]

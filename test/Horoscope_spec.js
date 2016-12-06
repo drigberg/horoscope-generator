@@ -71,27 +71,33 @@ describe("Sentences", function(){
         validSentence = new horoscope({
             sentenceContainsOnlyTerminals : function(sentence){
                 for (var n = 0; n < sentence.content.length; n++){
-                    if (sentence.cleanedContent.indexOf("@") > -1){
+                    if (sentence.content[n].indexOf("@") > -1){
                         return false;
                     }
                 }
                 return true;
             }
         });
+
         validSentence.calendar = calendar;
         validSentence.grammar = grammar;
         validSentence.sentenceTypes = sentenceTypes;
-        var sentence_types_list = [];
-        for (var i = 0; i < sentenceTypes.length; i++) {
-            sentence_types_list.push(sentenceTypes[i]);
-        };
+        validSentence.userData = helpers.validForm;
+        horoscope.userData.sign = horoscope.evaluateSign(this.userData.birthday);
+        validSentence.addUserDataToGrammar();
 
+        var sentence_types_list = [];
+        for (var i = 0; i < Object.keys(sentenceTypes).length; i++) {
+            sentence_types_list.push(Object.keys(sentenceTypes)[i]);
+        };
 
         var allValid = true;
         for (var n = 0; n < 10000; n++) {
             sentence_type = sentence_types_list[Math.floor(Math.random() * sentence_types_list.length)]
-            if (!(validSentence.sentenceContainsOnlyTerminals(validSentence.generateSentence(sentence_type)))){
+            newSentence = validSentence.generateSentence(sentence_type);
+            if (!(validSentence.sentenceContainsOnlyTerminals(newSentence))){
                 allValid = false;
+                break;
             };
         }
 
