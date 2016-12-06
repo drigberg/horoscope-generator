@@ -53,7 +53,7 @@ function makeCanvas(){
 function setInitialValues(){
   constellations = new Array(numConstellations);
   speed = 0.5;
-  numConstellations = 150;
+  numConstellations = numberOfConstellationsSlider.value();
   minimumConstellationSize = 4;
   maximumConstellationSize = maxConstellationSizeSlider.value();
   minStarSize = 1;
@@ -62,7 +62,7 @@ function setInitialValues(){
   maxMagnitude = maxMagnitudeSlider.value();
   minAngle = minAngleSlider.value();
   maxClosedLoopsPerConstellation = 1;
-  probabilityOfSingleStars = 0.85;
+  probabilityOfSingleStars = probSingleStarSlider.value();
   zeroNodeProbAfterMinSizeReached = 0.5;
   initialZeroNodeProb = 0;
   initialOneNodeProb = 0.3;
@@ -86,26 +86,34 @@ function createInterface(){
   sliders_div.id("sliders-div");
   sliders_div_ul = createElement("ul").id("sliders-div-list").parent("sliders-div").style("list-style", "none");
   sliders_div_list = [];
-  for (var i = 0; i < 4; i++){
+  for (var i = 0; i < 6; i++){
     var id = "sliders-div-list-" + i;
     sliders_div_list.push(createElement('li').id(id));
     sliders_div_list[i].parent("sliders-div-list");
     switch (i){
       case 0:
+          numberOfConstellationsText = createElement("h5", "Number of Constellations: ").class("slider-text").parent(id)
+          numberOfConstellationsSlider = createSlider(5, 300, 150, 5).id("slider").parent(id);
+          break;
+      case 1:
+          probSingleStarText = createElement("h5", "Ratio of Stars to Constellations: ").class("slider-text").parent(id)
+          probSingleStarSlider = createSlider(0, 1, 0.85, 0.01).id("slider").parent(id);
+          break;
+      case 2:
           maxConstellationSizeText = createElement("h5", "Max No. Stars Per Constellation: ").class("slider-text").parent(id)
           maxConstellationSizeSlider = createSlider(5, 100, 8).id("slider").parent(id);
           break;
-      case 1:
+      case 3:
           minMagnitudeText = createElement("h5", "Minimum Line Magnitude: ").class("slider-text").parent(id)
           minMagnitudeSlider = createSlider(5, 50, 15).id("slider").parent(id);
           break;
-      case 2:
+      case 4:
           maxMagnitudeText = createElement("h5", "Maximum Line Magnitude: ").class("slider-text").parent(id)
           maxMagnitudeSlider = createSlider(60, 150, 100).id("slider").parent(id);
           break;
-      case 3:
+      case 5:
           mindAngleText = createElement("h5", "Minimum Angle Size: ").class("slider-text").parent(id)
-          minAngleSlider = createSlider(0, 0.97 * PI, PI/3).id("slider").parent(id);
+          minAngleSlider = createSlider(0, 0.97 * PI, PI/3, PI / 9).id("slider").parent(id);
           break;
     }
   };
@@ -115,6 +123,8 @@ function createInterface(){
 };
 
 function resetDisplay(){
+  numConstellations = numberOfConstellationsSlider.value();
+  constellations = new Array(numConstellations);
   for (var i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
   };
@@ -125,6 +135,7 @@ function draw() {
   minMagnitude = minMagnitudeSlider.value();
   maxMagnitude = maxMagnitudeSlider.value();
   minAngle = minAngleSlider.value();
+  probabilityOfSingleStars = probSingleStarSlider.value();
 
   //move all constellations
   background(backgroundColor);
