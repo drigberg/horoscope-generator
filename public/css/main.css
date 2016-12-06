@@ -84,13 +84,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	text-shadow: 0 0 1px white;
 }
 
-#u_0_3 {
-	color: white;
-	font-weight: 200;
-	text-shadow: 0 0 1px white;
-}
-
-#u_0_4 {
+td div span {
 	color: white;
 	font-weight: 200;
 	text-shadow: 0 0 1px white;
