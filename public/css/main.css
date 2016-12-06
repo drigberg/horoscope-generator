@@ -78,11 +78,28 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	float: right;
 }
 
+#status {
+	color: white;
+	font-weight: 200;
+	text-shadow: 0 0 1px white;
+}
+
+#u_0_3 {
+	color: white;
+	font-weight: 200;
+	text-shadow: 0 0 1px white;
+}
+
+#u_0_4 {
+	color: white;
+	font-weight: 200;
+	text-shadow: 0 0 1px white;
+}
+
 #fbButtons {
 	margin: 10px auto;
 	height: 100px;
 	width: 800px;
-	color: white;
 	background-color: rgba(0,0,0,0.2);
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 }
@@ -217,12 +234,7 @@ h3 {
   text-shadow: 0 0 2px white;
 }
 
-#status {
-	color: white;
-	font-weight: 200;
-	text-shadow: 0 0 1px white;
 
-}
 
 p {
 	margin-top:30px
