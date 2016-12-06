@@ -4,6 +4,7 @@ var backgroundColor, speed, numConstellations;
 
 //---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
+var constellations;
 var minimumConstellationSize, maximumConstellationSize;
 var minStarSize, maxStarSize;
 var minMagnitude, maxMagnitude;
@@ -25,15 +26,8 @@ var emptyVector;
 var maxMagnitudeSlider, minAngleSlider, maxConstellationSizeSlider;
 var sliders_div;
 
-//------TO DO-------
-//MERGE AFTER SENTENCE EXPANSION (to get rid of matching commits) :P :P :P
-//Reference constellation colors; too many arguments being passed on
-//Figure out bug with closed loop density
-
-var constellations;
-
 //=========================
-//Main functions
+//Setup & draw functions
 //=========================
 function setup() {
   //interface elements are created first so that canvas covers entire page
@@ -67,7 +61,6 @@ function setInitialValues(){
   initialThreeNodeProb = 0.2;
   probabilityOfClosedLoops = 0.3;
   persistence = 50;
-  //vector helper
   emptyVector = [0,0];
 };
 
@@ -205,7 +198,7 @@ var Line = function (star1, star2){
 };
 
 //=========================
-//Functions
+//Generation functions
 //=========================
 
 function workFromNode(constellation, node) {
