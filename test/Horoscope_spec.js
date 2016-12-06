@@ -83,7 +83,7 @@ describe("Sentences", function(){
         validSentence.grammar = grammar;
         validSentence.sentenceTypes = sentenceTypes;
         validSentence.userData = helpers.validForm;
-        horoscope.userData.sign = horoscope.evaluateSign(this.userData.birthday);
+        validSentence.userData.sign = validSentence.evaluateSign(validSentence.userData.birthday);
         validSentence.addUserDataToGrammar();
 
         var sentence_types_list = [];
