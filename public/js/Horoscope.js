@@ -32,6 +32,8 @@ var Horoscope = function(args){
         cleanedContent : ""
     };
     this.structure = [];
+    this.currentStructureIndex = null;
+    this.probabilityOfExclamation = 0.3;
     this.paragraph = "";
     this.addUserDataToGrammar = function(){
         //imports form info to horoscope object
@@ -67,6 +69,7 @@ var Horoscope = function(args){
         }
         for (var n = 0; n < this.structure.length - 1; n ++) {
             currentSentenceType = this.structure[n];
+            this.currentStructureIndex = n;
             if (currentSentenceType in this.sentenceTypes) {
                 if (this.paragraph != "") {
                     this.paragraph += " "
@@ -128,6 +131,7 @@ var Horoscope = function(args){
         return this.sentence
     };
     this.cleanSentence = function(){
+        this.vowels = "aeiou";
         //generates single string for sentence from list; handles punctuation, a vs. an, etc.
         this.sentence.cleanedContent = "";
         if (this.sentence.content) {
@@ -135,17 +139,33 @@ var Horoscope = function(args){
                 if (i == 0){
                     this.sentence.cleanedContent = this.sentence.content[i];
                 } else {
-                    if (this.sentence.content[i] == "a" && "aeiou".indexOf(this.sentence.content[i+1][0].toLowerCase()) != -1){
+                    if (this.sentence.content[i] == "a" && this.vowels.indexOf(this.sentence.content[i+1][0].toLowerCase()) != -1){
                         this.sentence.content[i] = "an";
                     }
+
                     if (this.sentence.content[i] !== "," && this.sentence.content[i-1] !== ";"){
-                        this.sentence.cleanedContent += (" " + this.sentence.content[i]);
-                    } else {
-                         this.sentence.cleanedContent += this.sentence.content[i];
+                        this.sentence.cleanedContent += " ";
                     }
+
+                    this.sentence.cleanedContent += this.sentence.content[i];
                 }
             };
-            this.sentence.cleanedContent = this.sentence.cleanedContent.charAt(0).toUpperCase() + this.sentence.cleanedContent.slice(1) + "!";
+
+            var n = this.currentStructureIndex;
+
+            if (this.structure[n + 1] == "causation_connector"){
+                this.sentence.cleanedContent += ","
+            } else {
+                if (Math.random() < this.probabilityOfExclamation){
+                    this.sentence.cleanedContent += "!"
+                } else {
+                    this.sentence.cleanedContent += "."
+                };
+            }
+
+            if (this.structure[n - 1] != "causation_connector" && this.structure[n] != "causation_connector"){
+                this.sentence.cleanedContent = this.sentence.cleanedContent.charAt(0).toUpperCase() + this.sentence.cleanedContent.slice(1);
+            };
         };
         return this.sentence.cleanedContent
     };
