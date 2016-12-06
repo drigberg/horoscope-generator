@@ -216,6 +216,13 @@ h3 {
   text-shadow: 0 0 2px white;
 }
 
+#status {
+	color: white;
+	font-weight: 200;
+	text-shadow: 0 0 1px white;
+
+}
+
 p {
 	margin-top:30px
 }
