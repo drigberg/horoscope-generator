@@ -22,7 +22,7 @@ var persistence;
 var emptyVector;
 
 //interface
-var minMagnitudeSlider, maxMagnitudeSlider, minAngleSlider, maxConstellationSizeSlider;
+var maxMagnitudeSlider, minAngleSlider, maxConstellationSizeSlider;
 var sliders_div;
 
 //------TO DO-------
@@ -58,7 +58,7 @@ function setInitialValues(){
   maximumConstellationSize = maxConstellationSizeSlider.value();
   minStarSize = 1;
   maxStarSize = 5;
-  minMagnitude = minMagnitudeSlider.value();
+  minMagnitude = 15;
   maxMagnitude = maxMagnitudeSlider.value();
   minAngle = minAngleSlider.value();
   maxClosedLoopsPerConstellation = 1;
@@ -76,17 +76,11 @@ function setInitialValues(){
 };
 
 function createInterface(){
-  spacing = 20;
-  sliderLeftAlign = 280;
-  textLeftAlign = 30;
-  padding = 20;
-  numElements = 5;
-
   sliders_div = createDiv("");
   sliders_div.id("sliders-div");
   sliders_div_ul = createElement("ul").id("sliders-div-list").parent("sliders-div").style("list-style", "none");
   sliders_div_list = [];
-  for (var i = 0; i < 6; i++){
+  for (var i = 0; i < 5; i++){
     var id = "sliders-div-list-" + i;
     sliders_div_list.push(createElement('li').id(id));
     sliders_div_list[i].parent("sliders-div-list");
@@ -104,16 +98,12 @@ function createInterface(){
           maxConstellationSizeSlider = createSlider(5, 100, 8).id("slider").parent(id);
           break;
       case 3:
-          minMagnitudeText = createElement("h5", "Minimum Line Magnitude: ").class("slider-text").parent(id)
-          minMagnitudeSlider = createSlider(5, 50, 15).id("slider").parent(id);
-          break;
-      case 4:
           maxMagnitudeText = createElement("h5", "Maximum Line Magnitude: ").class("slider-text").parent(id)
           maxMagnitudeSlider = createSlider(60, 150, 100).id("slider").parent(id);
           break;
-      case 5:
+      case 4:
           mindAngleText = createElement("h5", "Minimum Angle Size: ").class("slider-text").parent(id)
-          minAngleSlider = createSlider(0, 0.97 * PI, PI/3, PI / 9).id("slider").parent(id);
+          minAngleSlider = createSlider(0, 0.97 * PI, PI/3, 0.01).id("slider").parent(id);
           break;
     }
   };
@@ -132,7 +122,6 @@ function resetDisplay(){
 
 function draw() {
   maximumConstellationSize = maxConstellationSizeSlider.value();
-  minMagnitude = minMagnitudeSlider.value();
   maxMagnitude = maxMagnitudeSlider.value();
   minAngle = minAngleSlider.value();
   probabilityOfSingleStars = probSingleStarSlider.value();
