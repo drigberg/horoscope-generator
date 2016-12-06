@@ -81,10 +81,16 @@ describe("Sentences", function(){
         validSentence.calendar = calendar;
         validSentence.grammar = grammar;
         validSentence.sentenceTypes = sentenceTypes;
+        var sentence_types_list = [];
+        for (var i = 0; i < sentenceTypes.length; i++) {
+            sentence_types_list.push(sentenceTypes[i]);
+        };
+
 
         var allValid = true;
         for (var n = 0; n < 10000; n++) {
-            if (!(validSentence.sentenceContainsOnlyTerminals(validSentence.generateSentence()))){
+            sentence_type = sentence_types_list[Math.floor(Math.random() * sentence_types_list.length)]
+            if (!(validSentence.sentenceContainsOnlyTerminals(validSentence.generateSentence(sentence_type)))){
                 allValid = false;
             };
         }
