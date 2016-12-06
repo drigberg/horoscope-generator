@@ -22,7 +22,7 @@ var persistence;
 var emptyVector;
 
 //interface
-var minMagnitudeSlider, maxMagnitudeSlider, minAngleSlider;
+var minMagnitudeSlider, maxMagnitudeSlider, minAngleSlider, maxConstellationSizeSlider;
 var spacing, sliderLeftAlign, textLeftAlign, interfaceRows, numElements, padding;
 
 //------TO DO-------
@@ -54,7 +54,7 @@ function setInitialValues(){
   speed = 0.5;
   numConstellations = 150;
   minimumConstellationSize = 4;
-  maximumConstellationSize = 8;
+  maximumConstellationSize = maxConstellationSizeSlider.value();
   minStarSize = 1;
   maxStarSize = 5;
   minMagnitude = minMagnitudeSlider.value();
@@ -67,8 +67,8 @@ function setInitialValues(){
   initialOneNodeProb = 0.3;
   initialTwoNodeProb = 0.5;
   initialThreeNodeProb = 0.2;
-  probabilityOfClosedLoops = 0.5;
-  persistence = 5;
+  probabilityOfClosedLoops = 0.3;
+  persistence = 50;
 
   //vector helper
   emptyVector = [0,0];
@@ -76,22 +76,25 @@ function setInitialValues(){
 
 function createInterface(){
   spacing = 20;
-  sliderLeftAlign = 200;
-  textLeftAlign = 20;
+  sliderLeftAlign = 280;
+  textLeftAlign = 30;
   padding = 20;
   rows = [];
-  numElements = 4;
+  numElements = 5;
 
   for (var i = 1; i < numElements + 1; i++){
     rows.push(height - i * spacing - padding)
   }
 
+  maxConstellationSizeSlider = createSlider(5, 100, 8);
+  maxConstellationSizeSlider.position(sliderLeftAlign, rows[4])
   minMagnitudeSlider = createSlider(5, 50, 15);
   minMagnitudeSlider.position(sliderLeftAlign, rows[3]);
   maxMagnitudeSlider = createSlider(60, 150, 100);
   maxMagnitudeSlider.position(sliderLeftAlign, rows[2]);
   minAngleSlider = createSlider(0, 0.97 * PI, PI/3);
   minAngleSlider.position(sliderLeftAlign, rows[1]);
+
 
   resetButton = createButton('Generate New Constellations');
   resetButton.position(textLeftAlign, rows[0]);
@@ -100,25 +103,30 @@ function createInterface(){
   minMagnitudeSlider.style('width', '80px');
   maxMagnitudeSlider.style('width', '80px');
   minAngleSlider.style('width', '80px');
-
-
+  maxConstellationSizeSlider.style('width', '80px');
 };
 
 function resetDisplay(){
   for (var i = 0; i < numConstellations; i++) {
     constellations[i] = new Constellation(-width, width, -height / 4, height);
   };
-}
+};
+
 function drawText() {
+    fill('rgba(0, 0, 0, 0.3)');
+    noStroke();
+    rect(10, rows[rows.length - 1] - padding, 400, 300);
     var textSliderAlign = 13;
     fill(255, 255, 255);
     textSize(15);
+    text("Maximum Stars Per Constellation", textLeftAlign, rows[4] + textSliderAlign);
     text("Minimum Line Magnitude", textLeftAlign, rows[3] + textSliderAlign);
     text("Maximum Line Magnitude", textLeftAlign, rows[2] + textSliderAlign);
     text("Minimum Angle", textLeftAlign, rows[1] + textSliderAlign);
 };
 
 function draw() {
+  maximumConstellationSize = maxConstellationSizeSlider.value();
   minMagnitude = minMagnitudeSlider.value();
   maxMagnitude = maxMagnitudeSlider.value();
   minAngle = minAngleSlider.value();
