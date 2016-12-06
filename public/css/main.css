@@ -1,7 +1,6 @@
 body {
 	background-color: #011433;
 	background-size: 1000px;
-	transition: 4s;
 }
 
 #canvas-background {
@@ -80,7 +79,11 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 #fbButtons {
-	margin: 10px 0;
+	margin: 10px auto;
+	height: 50px;
+	width: 800px;
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 }
 
 #error-message {
@@ -104,8 +107,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 	width: 90%;
 	margin: 15 auto 15px auto;
-	transition: all 0.1s;
-	-webkit-transition: all 0.1s;
 }
 
 #input {
@@ -115,8 +116,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 	width: 90%;
 	margin: 20px auto 20px auto;
-	transition: all 0.1s;
-	-webkit-transition: all 0.1s;
 }
 
 .form-control {
@@ -136,13 +135,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 ul {
 	list-style: none;
 }
-/*#leaderboard {
-	margin: 0 auto;
-	width: 70%;
-	background-color: white;
-	padding: 40px 10px 40px 10px;
-	box-shadow: 0 0 1em white;
-}*/
 
 #content-box {
 	width: 100%;
@@ -160,10 +152,7 @@ ul {
 	width: 70%;
 	color: white;
 	margin: 0 auto;
-	transition: all 0.1s;
-	-webkit-transition: all 0.1s;
 }
-
 
 .heading {
 	text-align: center;
@@ -227,102 +216,11 @@ h3 {
   text-shadow: 0 0 2px white;
 }
 
-#showMore {
-	display: block;
-	margin: 10px auto;
-}
-
-#popupWithBlur {
-	width:100%;
-	height:100%;
-	opacity:.85;
-	top:0;
-	left:0;
-	display:none;
-	position:fixed;
-	background-color:#313131;
-	overflow:auto;
-    transition: background 0.25s;
-    --webkit-transition: background 0.25s;
-    --moz-transition: background 0.25s;}
-
-#close {
-	position:absolute;
-	left: -10px;
-	cursor:pointer;
-	color: white;
-	display: block;
-	padding: 10px;
-	border-radius: 20px;
-	background-color: #d9534f;
-	opacity: 0.85;
-	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-#userInfo {
-	max-width:400px;
-	min-width:250px;
-	padding:0px 50px 50px 50px;
-    border-radius:10px;
-	border:2px solid gray;
-	background-color:#fff;
-	opacity: 1.0;
-}
-
 p {
 	margin-top:30px
 }
 
-h2 {
-	background-image: url("sky_faded.jpg");
-    border-radius:8px 8px 0 0;
-	background-size: cover;
-	padding:20px 35px;
-	color: white;
-	margin:0px -50px -10px -50px;
-	text-align:center;
-    text-shadow: 0 0 4px white;
-}
 
-#name {
-	background-image:url(../images/name.jpg);
-	background-repeat:no-repeat;
-	background-position:5px 7px;
-	margin: 0 auto;
-	display: block;
-}
-
-#email {
-	background-image:url(../images/email.png);
-	background-repeat:no-repeat;
-	background-position:5px 7px
-}
-
-textarea {
-	background-image:url(../images/msg.png);
-	background-repeat:no-repeat;
-	background-position:5px 7px;
-	width:82%;
-	height:95px;
-	padding:10px;
-	resize:none;
-	margin-top:30px;
-	border:1px solid #ccc;
-	padding-left:40px;
-	font-size:16px;
-	margin-bottom:30px
-}
-
-#submit {
-	display: block;
-	margin: 5px auto;
-	max-width: 80%;
-}
-
-#popupButton {
-	display: block;
-	margin: 0px auto 50px auto;
-}
 
 @media screen and (max-width: 657px) {
 
