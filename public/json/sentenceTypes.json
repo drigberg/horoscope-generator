@@ -177,5 +177,14 @@
 	},
 	"causation_connector" : {
 		"connector" : "causation"
+	},
+	"predictor_connector_singular" : {
+		"tense" : "present",
+		"connector" : "predictor",
+		"object" : "celestial"
+	},
+	"predictor_connector_plural" : {
+		"tense" : "present",
+		"connector" : "predictor"
 	}
 }
