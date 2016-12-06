@@ -6,6 +6,30 @@
 		}
 	},
   "@NounSingular": {
+		"ground" : {
+			"object" : "celestial",
+			"weight" : 4
+		},
+		"sky" : {
+			"object" : "celestial",
+			"weight" : 4
+		},
+		"sun" : {
+			"object" : "celestial",
+			"weight" : 4
+		},
+		"moon" : {
+			"object" : "celestial",
+			"weight" : 4
+		},
+		"ocean" : {
+			"object" : "celestial",
+			"weight" : 4
+		},
+		"wind" : {
+			"object" : "celestial",
+			"weight" : 4
+		},
 		"fighter pilot": {
 			"object": "role",
 			"weight": 4
@@ -308,13 +332,21 @@
 		}
 	},
 	"@NounPlural": {
-		"false": {
-			"good/bad": "bad",
-			"weight": 5
+		"clouds": {
+			"object": "celestial",
+			"weight": 2
 		},
-		"false": {
-			"good/bad": "good",
-			"weight": 3
+		"birds": {
+			"object": "celestial",
+			"weight": 2
+		},
+		"trees": {
+			"object": "celestial",
+			"weight": 2
+		},
+		"waves": {
+			"object": "celestial",
+			"weight": 2
 		},
 		"dancers": {
 			"object": "role",
@@ -463,6 +495,104 @@
 			"tense": "future",
 			"weight": 4,
 			"verbtype": "linking"
+		},
+		"tells": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"informs": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"is telling": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"is informing": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"is whispering to": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"is suggesting to": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"suggests to": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "singular"
+		},
+		"tell": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
+		},
+		"inform": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
+		},
+		"are telling": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
+		},
+		"are informing": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
+		},
+		"are whispering to": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
+		},
+		"are suggesting to": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
+		},
+		"suggest to": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "communication",
+			"grammatical_number": "plural"
 		},
 		"could be": {
 			"voice": "active",
@@ -940,6 +1070,20 @@
 		"@CausationConnector": {
 			"connector": "causation",
 			"weight": 4
+		},
+		"@PredictorConnector": {
+			"connector": "predictor",
+			"weight": 4
+		}
+	},
+	"@PredictorConnector": {
+		"The @NounPlural @Verb me that" : {
+			"weight" : 4,
+			"grammatical_number" : "plural"
+		},
+		"The @NounSingular @Verb me that" : {
+			"weight" : 4,
+			"grammatical_number" : "singular"
 		}
 	}
 }
