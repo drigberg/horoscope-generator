@@ -57,24 +57,24 @@ def main():
                                     else:
                                         part_of_speech = raw_input(word + ": part of speech? ")
                                     if part_of_speech == "@Verb":
-                            			tags["weight"] = raw_input("weight: ")
+                            			tags["weight"] = int(raw_input("weight: "))
                             			tags["tense"] = raw_input("tense (present, past, future): ")
                             			tags["voice"] = raw_input("voice (active, passive): ")
                             			tags["person"] = raw_input("person (second, third): ")
                             			tags["verbtype"] = raw_input("verbtype (linking, transitive): ")
                                     elif part_of_speech == "@NounSingular":
-                                        tags["weight"] = raw_input("weight: ")
+                                        tags["weight"] = int(raw_input("weight: "))
                                         tags["object"] = raw_input("object (thing, role): ")
                                         plural_version = raw_input("plural? ([plural] or n) ")
                                     elif part_of_speech == "@NounPlural":
-                                        tags["weight"] = raw_input("weight: ")
+                                        tags["weight"] = int(raw_input("weight: "))
                                         tags["object"] = "thing"
                                         singular_version = raw_input("plural? ")
                                     elif part_of_speech == "@ProperNoun":
-                            			tags["weight"] = raw_input("weight: ")
+                            			tags["weight"] = int(raw_input("weight: "))
                             			tags["object"] = "thing"
                                     elif part_of_speech == "@Adjective":
-                            			tags["weight"] = raw_input("weight: ")
+                            			tags["weight"] = int(raw_input("weight: "))
                             			tags["good/bad"] = raw_input("good/bad: ")
 
                                     bail = raw_input("Make any mistakes on that one? (y/n) ")
