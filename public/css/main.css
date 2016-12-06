@@ -80,8 +80,9 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 #fbButtons {
 	margin: 10px auto;
-	height: 50px;
+	height: 100px;
 	width: 800px;
+	color: white;
 	background-color: rgba(0,0,0,0.2);
 	box-shadow: 0 0 1em rgba(0,0,0,0.2);
 }
