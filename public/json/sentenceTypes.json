@@ -128,7 +128,7 @@
 		"person" : "third" ,
 		"object" : "role" ,
 		"modified_object" : true ,
-		"verbtype" : "linking" ,
+		"verbtype" : "linking",
 		"name" : false,
 		"connector" : false,
 		"grammatical_number" : "singular"
@@ -137,6 +137,7 @@
 		"tense" : "present" ,
 		"person" : "second",
 		"object" : "role" ,
+		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
@@ -144,6 +145,7 @@
 		"tense" : "past" ,
 		"person" : "second",
 		"object" : "role" ,
+		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
@@ -151,6 +153,7 @@
 		"tense" : "future" ,
 		"person" : "second",
 		"object" : "role" ,
+		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
@@ -158,6 +161,7 @@
 		"tense" : "present" ,
 		"person" : "third",
 		"object" : "role" ,
+		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
@@ -165,6 +169,7 @@
 		"tense" : "past" ,
 		"person" : "third",
 		"object" : "role" ,
+		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
@@ -172,19 +177,27 @@
 		"tense" : "future" ,
 		"person" : "third",
 		"object" : "role" ,
+		"verbtype" : "linking",
 		"connector" : false,
 		"grammatical_number" : "singular"
 	},
 	"causation_connector" : {
 		"connector" : "causation"
 	},
-	"predictor_connector_singular" : {
+	"neutral_connector" : {
+		"connector" : "neutral"
+	},
+	"predictor_singular" : {
 		"tense" : "present",
 		"connector" : "predictor",
-		"object" : "celestial"
+		"grammatical_number" : "singular",
+		"object" : "celestial",
+		"verbtype": "communication"
 	},
-	"predictor_connector_plural" : {
+	"predictor_plural" : {
 		"tense" : "present",
-		"connector" : "predictor"
+		"grammatical_number" : "plural",
+		"connector" : "predictor",
+		"verbtype": "communication"
 	}
 }

@@ -151,10 +151,16 @@ var Horoscope = function(args){
             };
 
             var n = this.currentStructureIndex;
+            var isConnector = this.structure[n].indexOf("connector") > -1;
+            var isPredictor = this.structure[n].indexOf("predictor") > -1;
+            var followsConnector = this.structure[n - 1].indexOf("connector") > -1;
+            var followsPredictor = this.structure[n - 1].indexOf("predictor") > -1;
+            var isFollowedByConnector = this.structure[n + 1].indexOf("connector") > -1;
 
-            if (this.structure[n + 1] == "causation_connector"){
+            //punctuate
+            if (isFollowedByConnector){
                 this.sentence.cleanedContent += ","
-            } else if (this.structure[n] != "causation_connector"){
+            } else if (!isConnector && !isPredictor){
                 if (Math.random() < this.probabilityOfExclamation){
                     this.sentence.cleanedContent += "!"
                 } else {
@@ -162,7 +168,8 @@ var Horoscope = function(args){
                 };
             }
 
-            if (this.structure[n - 1] != "causation_connector" && this.structure[n] != "causation_connector"){
+            //capitalize, if not in the middle of a compound sentence
+            if (!followsConnector && !followsPredictor && !isConnector){
                 this.sentence.cleanedContent = this.sentence.cleanedContent.charAt(0).toUpperCase() + this.sentence.cleanedContent.slice(1);
             };
         };

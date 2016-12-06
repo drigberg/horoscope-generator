@@ -299,6 +299,11 @@
 			"weight": 4
 		}
 	},
+	"@NeutralConnector": {
+		"and": {
+			"weight": 4
+		}
+	},
 	"@PrepositionalPhrase": {
 		"@Preposition @Object": {
 			"weight": 4
@@ -1074,14 +1079,18 @@
 		"@PredictorConnector": {
 			"connector": "predictor",
 			"weight": 4
+		},
+		"@NeutralConnector": {
+			"connector": "neutral",
+			"weight": 4
 		}
 	},
 	"@PredictorConnector": {
-		"The @NounPlural @Verb me that" : {
+		"the @NounPlural @Verb me that" : {
 			"weight" : 4,
 			"grammatical_number" : "plural"
 		},
-		"The @NounSingular @Verb me that" : {
+		"the @NounSingular @Verb me that" : {
 			"weight" : 4,
 			"grammatical_number" : "singular"
 		}
