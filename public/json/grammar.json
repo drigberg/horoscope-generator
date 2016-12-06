@@ -1,206 +1,945 @@
 {
-	"@ROOT" : {
-		"@Subject @VerbPhrase"  : {
+	"@ProperNoun": {
+		"God": {
+			"object": "thing",
 			"weight": 4
 		}
-	} ,
-	"@VerbPhrase" : {
-		"@Verb @Object" : {
+	},
+  "@NounSingular": {
+		"fighter pilot": {
+			"object": "role",
+			"weight": "4"
+		},
+		"archeologist": {
+			"object": "role",
+			"weight": "2"
+		},
+		"actuary": {
+			"object": "role",
+			"weight": "4"
+		},
+		"marine engineer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"astronomer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"dancer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"toolmaker": {
+			"object": "role",
+			"weight": "2"
+		},
+		"dietician": {
+			"object": "role",
+			"weight": "2"
+		},
+		"bricklayer": {
+			"object": "role",
+			"weight": "5"
+		},
+		"hotel manager": {
+			"object": "role",
+			"weight": "2"
+		},
+		"bus driver": {
+			"object": "role",
+			"weight": "4"
+		},
+		"air traffic controller": {
+			"object": "role",
+			"weight": "1"
+		},
+		"debt collector": {
+			"object": "role",
+			"weight": "2"
+		},
+		"photographer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"paralegal": {
+			"object": "role",
+			"weight": "2"
+		},
+		"auctioneer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"lab technician": {
+			"object": "role",
+			"weight": "2"
+		},
+		"boat captain": {
+			"object": "role",
+			"weight": "4"
+		},
+		"art critic and historian": {
+			"object": "role",
+			"weight": "1"
+		},
+		"masseuse": {
+			"object": "role",
+			"weight": "2"
+		},
+		"air traffic safety technician": {
+			"object": "role",
+			"weight": "2"
+		},
+		"fashion designer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"administrative worker": {
+			"object": "role",
+			"weight": "4"
+		},
+		"moose": {
+			"object": "thing",
 			"weight": 4
 		},
-		"@Adverb @Verb @Object" : {
+		"frisbee": {
+			"object": "thing",
+			"weight": "4"
+		},
+		"laundry worker": {
+			"object": "role",
+			"weight": "2"
+		},
+		"sports person": {
+			"object": "role",
+			"weight": 4
+		},
+		"manager": {
+			"object": "role",
+			"weight": 4
+		},
+		"data scientist": {
+			"object": "role",
+			"weight": "2"
+		},
+		"aerial rigger": {
+			"object": "role",
+			"weight": "3"
+		},
+		"hunter": {
+			"object": "role",
+			"weight": "4"
+		},
+		"animator": {
+			"object": "role",
+			"weight": "2"
+		},
+		"dentist": {
+			"object": "role",
+			"weight": "2"
+		},
+		"athlete": {
+			"object": "role",
+			"weight": "2"
+		},
+		"judge": {
+			"object": "role",
+			"weight": "2"
+		},
+		"jeweller": {
+			"object": "role",
+			"weight": "2"
+		},
+		"painter": {
+			"object": "role",
+			"weight": "2"
+		},
+		"agronomist": {
+			"object": "role",
+			"weight": "2"
+		},
+		"bat": {
+			"object": "thing",
+			"weight": "4"
+		},
+		"film director": {
+			"object": "role",
+			"weight": "2"
+		},
+		"astrologer": {
+			"object": "role",
+			"weight": "2"
+		},
+		"mathematician": {
+			"object": "role",
+			"weight": "2"
+		},
+		"baker": {
+			"object": "role",
+			"weight": "4"
+		},
+		"pollster": {
+			"object": "role",
+			"weight": "2"
+		},
+		"advertising manager": {
+			"object": "role",
+			"weight": "1"
+		},
+		"thinker": {
+			"object": "role",
+			"weight": 4
+		},
+		"person": {
+			"object": "role",
+			"weight": 4
+		},
+		"architect": {
+			"object": "role",
+			"weight": "2"
+		},
+		"blacksmith": {
+			"object": "role",
+			"weight": "2"
+		},
+		"weaver": {
+			"object": "role",
+			"weight": "3"
+		},
+		"disc jockey": {
+			"object": "role",
+			"weight": "2"
+		},
+		"refrigeration engineer": {
+			"object": "role",
+			"weight": "3"
+		},
+		"anthropologist": {
+			"object": "role",
+			"weight": "2"
+		}
+	},
+	"@Article": {
+		"a": {
+			"weight": 4
+		}
+	},
+	"@Adverb": {
+		"possibly": {
+			"weight": 4
+		},
+    "probably": {
+      "weight": 4
+    },
+    "definitely": {
+      "weight": 4
+    },
+    "positively": {
+      "weight": 4
+    }
+	},
+	"@Object": {
+		"@ProperNoun": {
+			"object": "name",
+			"weight": 7
+		},
+		"@Article @NounSingular": {
+			"modified_object": false,
+			"grammatical_number": "singular",
+			"weight": 7
+		},
+		"@Article @Adjective @NounSingular": {
+			"modified_object": true,
+			"grammatical_number": "singular",
+			"weight": 2
+		},
+		"@Adjective @NounPlural": {
+			"modified_object": true,
+			"grammatical_number": "plural",
+			"weight": 2
+		},
+		"@NounPlural": {
+			"modified_object": false,
+			"grammatical_number": "plural",
+			"weight": 7
+		}
+	},
+	"@CausationConnector": {
+		"and so": {
+			"weight": 4
+		},
+		"therefore,": {
+			"weight": 4
+		},
+		"so I'd bet that": {
+			"weight": 4
+		}
+	},
+	"@PrepositionalPhrase": {
+		"@Preposition @Object": {
+			"weight": 4
+		}
+	},
+	"@Subject": {
+		"your father": {
+			"person": "third",
+			"name": false,
+			"weight": 4
+		},
+		"your barber": {
+			"person": "third",
+			"name": false,
+			"weight": 4
+		},
+		"your best friend": {
+			"person": "third",
+			"name": false,
+			"weight": 4
+		},
+		"your mother": {
+			"person": "third",
+			"name": false,
+			"weight": 4
+		},
+		"you": {
+			"person": "second",
+			"name": false,
+			"weight": 4
+		}
+	},
+	"@NounPlural": {
+		"false": {
+			"good/bad": "bad",
+			"weight": "5"
+		},
+		"false": {
+			"good/bad": "good",
+			"weight": "3"
+		},
+		"dancers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"jewellers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"debt collectors": {
+			"object": "role",
+			"weight": "2"
+		},
+		"mathematicians": {
+			"object": "role",
+			"weight": "2"
+		},
+		"lab technicians": {
+			"object": "role",
+			"weight": "2"
+		},
+		"administrative workers": {
+			"object": "role",
+			"weight": "4"
+		},
+		"fighter pilots": {
+			"object": "role",
+			"weight": 4
+		},
+		"aerial riggers": {
+			"object": "role",
+			"weight": "3"
+		},
+		"art critics and historians": {
+			"object": "role",
+			"weight": "1"
+		},
+		"hotel managers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"judges": {
+			"object": "role",
+			"weight": "2"
+		},
+		"dieticians": {
+			"object": "role",
+			"weight": "2"
+		},
+		"actuaries": {
+			"object": "role",
+			"weight": "4"
+		},
+		"blacksmiths": {
+			"object": "role",
+			"weight": "2"
+		},
+		"disc jockeys": {
+			"object": "role",
+			"weight": "2"
+		},
+		"painters": {
+			"object": "role",
+			"weight": "2"
+		},
+		"astronomers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"air traffic controllers": {
+			"object": "role",
+			"weight": "1"
+		},
+		"data scientists": {
+			"object": "role",
+			"weight": "2"
+		},
+		"astrologers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"marine engineers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"dentists": {
+			"object": "role",
+			"weight": "2"
+		},
+		"film directors": {
+			"object": "role",
+			"weight": "2"
+		},
+		"air traffic safety technicians": {
+			"object": "role",
+			"weight": "2"
+		},
+		"anthroplogists": {
+			"object": "role",
+			"weight": "2"
+		},
+		"photographers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"architects": {
+			"object": "role",
+			"weight": "2"
+		},
+		"paralegals": {
+			"object": "role",
+			"weight": "2"
+		},
+		"auctioneers": {
+			"object": "role",
+			"weight": "2"
+		},
+		"archaeologists": {
+			"object": "role",
+			"weight": "2"
+		},
+		"advertising managers": {
+			"object": "role",
+			"weight": "1"
+		},
+		"animators": {
+			"object": "role",
+			"weight": "2"
+		},
+		"athletes": {
+			"object": "role",
+			"weight": "2"
+		},
+		"agronomists": {
+			"object": "role",
+			"weight": "2"
+		},
+		"masseuses": {
+			"object": "role",
+			"weight": "2"
+		}
+	},
+	"@Verb": {
+		"will be": {
+			"voice": "active",
+			"tense": "future",
+			"weight": 4,
+			"verbtype": "linking"
+		},
+		"could be": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 2,
+			"verbtype": "linking"
+		},
+		"might be": {
+			"voice": "active",
+			"tense": "present",
+			"weight": 2,
+			"verbtype": "linking"
+		},
+		"was": {
+			"person": "third",
+			"voice": "active",
+			"tense": "past",
+			"weight": 4,
+			"verbtype": "linking"
+		},
+		"is": {
+			"person": "third",
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "linking"
+		},
+		"are": {
+			"person": "second",
+			"voice": "active",
+			"tense": "present",
+			"weight": 4,
+			"verbtype": "linking"
+		},
+		"were": {
+			"person": "second",
+			"voice": "active",
+			"tense": "past",
+			"weight": 4,
+			"verbtype": "linking"
+		},
+		"could have been": {
+			"voice": "active",
+			"tense": "past",
+			"weight": 2,
+			"verbtype": "linking"
+		}
+	},
+	"@VerbPhrase": {
+		"@Verb @Object": {
+			"weight": 4
+		},
+		"@Adverb @Verb @Object": {
 			"weight": 1
 		}
-	} ,
-	"@Subject" : {
-		"you" : {
-			"weight": 4,
-			"person": "second" ,
-			"name" : false
-		} ,
-		"your mother" : {
-			"weight": 4,
-			"person": "third" ,
-			"name" : false
+	},
+	"@Adjective": {
+		"satisfied": {
+			"good/bad": "good",
+			"weight": "2"
 		},
-		"your father" : {
-			"weight": 4,
-			"person": "third" ,
-			"name" : false
+		"lavish": {
+			"good/bad": "good",
+			"weight": "2"
 		},
-		"your best friend" : {
-			"weight": 4,
-			"person": "third" ,
-			"name" : false
+		"defiant": {
+			"good/bad": "bad",
+			"weight": "2"
 		},
-		"your barber" : {
-			"weight": 4,
-			"person": "third" ,
-			"name" : false
+		"self-reliant": {
+			"good/bad": "good",
+			"weight": "2"
 		},
-		"your father's brother's uncle's nephew's former roommate" : {
-			"weight": 1,
-			"person": "third" ,
-			"name" : false
+		"self-assured": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"generous": {
+			"good/bad": "good",
+			"weight": "5"
+		},
+		"venerated": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"stormy": {
+			"good/bad": "bad",
+			"weight": "4"
+		},
+		"agile": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"adventurous": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"thunderous": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"admirable": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"lucky": {
+			"good/bad": "good",
+			"weight": "6"
+		},
+		"sarcastic": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"grubby": {
+			"good/bad": "bad",
+			"weight": "4"
+		},
+		"shameful": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"smug": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"handy": {
+			"good/bad": "good",
+			"weight": "6"
+		},
+		"advanced": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"lame": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"shadowy": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"large": {
+			"good/bad": "neutral",
+			"weight": "2"
+		},
+		"oddball": {
+			"good/bad": "bad",
+			"weight": "6"
+		},
+		"shabby": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"fair": {
+			"good/bad": "good",
+			"weight": "3"
+		},
+		"fabulous": {
+			"good/bad": "good",
+			"weight": "3"
+		},
+		"gross": {
+			"good/bad": "bad",
+			"weight": "5"
+		},
+		"dense": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"showy": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"hilarious": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"acidic": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"adorable": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"lazy": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"feisty": {
+			"good/bad": "good",
+			"weight": "4"
+		},
+		"weary": {
+			"good/bad": "bad",
+			"weight": "5"
+		},
+		"pleasant": {
+			"good/bad": "good",
+			"weight": "4"
+		},
+		"adept": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"complicated": {
+			"good/bad": "bad",
+			"weight": "4"
+		},
+		"second-hand": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"precious": {
+			"good/bad": "good",
+			"weight": "6"
+		},
+		"exciting": {
+			"good/bad": "good",
+			"weight": "6"
+		},
+		"irritating": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"scary": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"terrible": {
+			"good/bad": "bad",
+			"weight": 4
+		},
+		"happy-go-lucky": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"adored": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"accomplished": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"scornful": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"weird": {
+			"good/bad": "good",
+			"weight": "6"
+		},
+		"youthful": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"subpar": {
+			"good/bad": "bad",
+			"weight": 4
+		},
+		"lawful": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"leading": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"euphoric": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"wonderful": {
+			"good/bad": "good",
+			"weight": 4
+		},
+		"agreeable": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"questionable": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"affectionate": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"overjoyed": {
+			"good/bad": "good",
+			"weight": "5"
+		},
+		"acceptable": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"quirky": {
+			"good/bad": "good",
+			"weight": "4"
+		},
+		"comfortable": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"flamboyant": {
+			"good/bad": "good",
+			"weight": "4"
+		},
+		"wise": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"abandoned": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"silly": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"wild": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"powerless": {
+			"good/bad": "bad",
+			"weight": "6"
+		},
+		"vengeful": {
+			"good/bad": "bad",
+			"weight": "5"
+		},
+		"admired": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"shoddy": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"sinful": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"sad": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"sardonic": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"salty": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"acclaimed": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"absolute": {
+			"good/bad": "neutral",
+			"weight": "2"
+		},
+		"selfish": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"abysmal": {
+			"good/bad": "bad",
+			"weight": 4
+		},
+		"incredible": {
+			"good/bad": "good",
+			"weight": 4
+		},
+		"able": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"scholarly": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"amazing": {
+			"good/bad": "good",
+			"weight": 4
+		},
+		"aching": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"esteemed": {
+			"good/bad": "good",
+			"weight": "6"
+		},
+		"optimal": {
+			"good/bad": "good",
+			"weight": "3"
+		},
+		"tart": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"lanky": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"drab": {
+			"good/bad": "bad",
+			"weight": "6"
+		},
+		"alienated": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"shady": {
+			"good/bad": "bad",
+			"weight": "2"
+		},
+		"failing": {
+			"good/bad": "bad",
+			"weight": "3"
+		},
+		"astonishing": {
+			"good/bad": "good",
+			"weight": "2"
+		},
+		"academic": {
+			"good/bad": "neutral",
+			"weight": "2"
+		},
+		"severe": {
+			"good/bad": "bad",
+			"weight": "2"
 		}
 	},
-	"@Object" : {
-		"@ProperNoun" : {
-			"weight": 7,
-			"object" : "name"
+	"@Preposition": {
+		"with": {
+			"weight": 4
 		},
-		"@Article @NounSingular" : {
-			"weight": 7 ,
-			"modified_object" : false
-		},
-		"@Article @Adjective @NounSingular" : {
-			"weight" : 2 ,
-			"modified_object" : true
-		},
-		"@NounPlural" : {
-			"weight": 3 ,
-			"modified_object" : false
-		} ,
-		"@Adjective @NounPlural" : {
-			"weight": 3 ,
-			"modified_object" : true
-		}
-	} ,
-	"@Verb" : {
-		"are" : {
-			"weight": 4,
-			"tense" : "present",
-			"voice" : "active",
-			"person" : "second",
-			"verbtype" : "linking"
-		} ,
-		"might be" : {
-			"weight": 2,
-			"tense" : "present",
-			"voice" : "active",
-			"verbtype" : "linking"
-		} ,
-		"could be" : {
-			"weight": 2,
-			"tense" : "present",
-			"voice" : "active",
-			"verbtype" : "linking"
-		} ,
-		"could have been" : {
-			"weight": 2,
-			"tense" : "past",
-			"voice" : "active",
-			"verbtype" : "linking"
-		} ,
-		"were" : {
-			"weight": 4,
-			"tense" : "past",
-			"voice" : "active",
-			"person" : "second",
-			"verbtype" : "linking"
-		} ,
-		"was" : {
-			"weight": 4,
-			"tense" : "past",
-			"voice" : "active",
-			"person" : "third",
-			"verbtype" : "linking"
-		} ,
-		"is" : {
-			"weight": 4,
-			"tense" : "present",
-			"voice" : "active",
-			"person" : "third",
-			"verbtype" : "linking"
-		} ,
-		"will be" : {
-			"weight": 4,
-			"tense" : "future",
-			"voice" : "active",
-			"person" : "second",
-			"verbtype" : "linking"
-		}
-	} ,
-	"@Noun" : {
-		"moose" : {
-			"weight": 4,
-			"object" : "thing"
-		} ,
-		"thinker" : {
-			"weight" : 4,
-			"object" : "role"
-		},
-		"sports person" : {
-			"weight" : 4,
-			"object" : "role"
-		},
-		"person" : {
-			"weight" : 4,
-			"object" : "role"
-		},
-		"manager" : {
-			"weight" : 4,
-			"object" : "role"
-		}
-	} ,
-	"@ProperNoun" : {
-		"God" : {
-			"weight": 4,
-			"object" : "thing"
-		}
-	} ,
-	"@Article" : {
-		"a" : {
+		"in": {
 			"weight": 4
 		}
-	} ,
-	"@Adverb" : {
-		"possibly" : {
-			"weight": 4
-		}
-	} ,
-	"@Adjective" : {
-		"wonderful" : {
-			"weight" : 4,
-			"good/bad" : "good"
-		} ,
-		"amazing" : {
-			"weight" : 4,
-			"good/bad" : "good"
-		},
-		"incredible" : {
-			"weight" : 4,
-			"good/bad" : "good"
-		},
-		"abysmal" : {
-			"weight" : 4,
-			"good/bad" : "bad"
-		},
-		"terrible" : {
-			"weight" : 4,
-			"good/bad" : "bad"
-		},
-		"subpar" : {
-			"weight" : 4,
-			"good/bad" : "bad"
-		}
-	} ,
-	"@PrepositionalPhrase" : {
-		"@Preposition @Object" : {
-			"weight" : 4
-		}
-	} ,
-	"@Preposition" : {
-		"in" : {"weight": 4},
-		"with" : {"weight": 4}
 	},
-	"@Conjunction" : {
-	  "and" : {"weight": 4},
-	  "or" : {"weight": 4},
-	  "for" : {"weight": 4},
-	  "nor" : {"weight": 4},
-	  "but" : {"weight": 4},
-	  "yet" : {"weight": 4},
-	  "so" : {"weight": 4}
+	"@Conjunction": {
+		"and": {
+			"weight": 4
+		},
+		"for": {
+			"weight": 4
+		},
+		"but": {
+			"weight": 4
+		},
+		"yet": {
+			"weight": 4
+		},
+		"so": {
+			"weight": 4
+		},
+		"or": {
+			"weight": 4
+		},
+		"nor": {
+			"weight": 4
+		}
+	},
+	"@ROOT": {
+		"@Subject @VerbPhrase": {
+			"connector": false,
+			"weight": 4
+		},
+		"@CausationConnector": {
+			"connector": "causation",
+			"weight": 4
+		}
 	}
 }
