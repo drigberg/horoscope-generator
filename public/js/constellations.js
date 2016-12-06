@@ -42,8 +42,10 @@ function setup() {
 
   //generate constellations
   setInitialValues();
+  setSliderDependentVariables();
   resetDisplay();
 }
+
 function makeCanvas(){
     var canvas = createCanvas(($(window).width()), $(window).height() + 50);
     canvas.parent('canvas-background');
@@ -53,16 +55,11 @@ function makeCanvas(){
 function setInitialValues(){
   constellations = new Array(numConstellations);
   speed = 0.5;
-  numConstellations = numberOfConstellationsSlider.value();
   minimumConstellationSize = 4;
-  maximumConstellationSize = maxConstellationSizeSlider.value();
   minStarSize = 1;
   maxStarSize = 5;
   minMagnitude = 15;
-  maxMagnitude = maxMagnitudeSlider.value();
-  minAngle = minAngleSlider.value();
   maxClosedLoopsPerConstellation = 1;
-  probabilityOfSingleStars = probSingleStarSlider.value();
   zeroNodeProbAfterMinSizeReached = 0.5;
   initialZeroNodeProb = 0;
   initialOneNodeProb = 0.3;
@@ -70,10 +67,17 @@ function setInitialValues(){
   initialThreeNodeProb = 0.2;
   probabilityOfClosedLoops = 0.3;
   persistence = 50;
-
   //vector helper
   emptyVector = [0,0];
 };
+
+function setSliderDependentVariables(){
+  numConstellations = numberOfConstellationsSlider.value();
+  maximumConstellationSize = maxConstellationSizeSlider.value();
+  maxMagnitude = maxMagnitudeSlider.value();
+  minAngle = minAngleSlider.value();
+  probabilityOfSingleStars = probSingleStarSlider.value();
+}
 
 function createInterface(){
   sliders_div = createDiv("");
@@ -121,21 +125,18 @@ function resetDisplay(){
 };
 
 function draw() {
-  maximumConstellationSize = maxConstellationSizeSlider.value();
-  maxMagnitude = maxMagnitudeSlider.value();
-  minAngle = minAngleSlider.value();
-  probabilityOfSingleStars = probSingleStarSlider.value();
+  setSliderDependentVariables();
 
   //move all constellations
   background(backgroundColor);
   for (var i = 0; i < constellations.length; i++) {
     var offscreen = true;
-    for (var j = 0; j < constellations[i].constellationStars.length; j++) {
+    for (var j = 0; j < constellations[i].stars.length; j++) {
       noStroke();
       fill(constellations[i].r, constellations[i].g, constellations[i].b);
-      constellations[i].constellationStars[j].update();
+      constellations[i].stars[j].update();
       //check if entire constellation is offscreen
-      if (constellations[i].constellationStars[j].xpos < width && constellations[i].constellationStars[j].ypos < height) {
+      if (constellations[i].stars[j].x < width && constellations[i].stars[j].y < height) {
         offscreen = false;
       };
     };
@@ -143,9 +144,9 @@ function draw() {
     if (offscreen) {
       constellations[i] = new Constellation(-width * 1.5, -width * 0.5, -height/4, height * 3 / 4);
     };
-    for (var j = 0; j < constellations[i].constellationLines.length; j++) {
+    for (var j = 0; j < constellations[i].lines.length; j++) {
       stroke(constellations[i].r, constellations[i].g, constellations[i].b);
-      constellations[i].constellationLines[j].update();
+      constellations[i].lines[j].update();
     };
   };
 };
@@ -157,8 +158,8 @@ function draw() {
 var Constellation = function(minx, maxx, miny, maxy){
   //collection of stars and lines which connect them, or single star
   var that = this;
-  this.constellationStars = [];
-  this.constellationLines = [];
+  this.stars = [];
+  this.lines = [];
   this.closedLoops = 0;
   this.r = 255;
   this.g = 255;
@@ -172,10 +173,10 @@ var Constellation = function(minx, maxx, miny, maxy){
     3 : initialThreeNodeProb
   };
   this.init = function(){
-      that.constellationStars.push(new Star(that.startX, that.startY, random(minStarSize, maxStarSize)));
+      that.stars.push(new Star(that.startX, that.startY, random(minStarSize, maxStarSize)));
       that.singleStar = random(0, 1);
       if (that.singleStar > probabilityOfSingleStars) {
-          workFromNode(that, that.constellationStars[0]);
+          workFromNode(that, that.stars[0]);
       };
   };
   this.init();
@@ -184,13 +185,13 @@ var Constellation = function(minx, maxx, miny, maxy){
 var Star = function(x, y, s){
   //set of coordinates, radius, and color
   var that = this;
-  this.xpos = x;
-  this.ypos = y;
+  this.x = x;
+  this.y = y;
   this.size = s;
   this.update = function(){
-    that.xpos += speed;
-    that.ypos += speed / 4;
-    ellipse(this.xpos, this.ypos, that.size, that.size);
+    that.x += speed;
+    that.y += speed / 4;
+    ellipse(this.x, this.y, that.size, that.size);
   };
 };
 
@@ -199,7 +200,7 @@ var Line = function (star1, star2){
   this.star1 = star1;
   this.star2 = star2;
   this.update = function() {
-    line(this.star1.xpos, this.star1.ypos, this.star2.xpos, this.star2.ypos);
+    line(this.star1.x, this.star1.y, this.star2.x, this.star2.y);
   };
 };
 
@@ -210,7 +211,7 @@ var Line = function (star1, star2){
 function workFromNode(constellation, node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
   var newNodes = 0;
-  if (constellation.constellationStars.length >= minimumConstellationSize && constellation.zeroNodeProb == 0) {
+  if (constellation.stars.length >= minimumConstellationSize && constellation.nodeProbabilities[0] == 0) {
     constellation.nodeProbabilities[0] = zeroNodeProbAfterMinSizeReached;
     constellation.nodeProbabilities[1] -= zeroNodeProbAfterMinSizeReached / 3;
     constellation.nodeProbabilities[2] -= zeroNodeProbAfterMinSizeReached / 3;
@@ -229,7 +230,7 @@ function workFromNode(constellation, node) {
 
   for (var j = 0; j < newNodes; j++) {
     var closedLoop = false;
-    if (constellation.constellationStars.length < maximumConstellationSize) {
+    if (constellation.stars.length < maximumConstellationSize) {
       //create closed loop if chance dictates and if possible
       closedLoop = createClosedLoop(closedLoop, constellation, node);
 
@@ -238,12 +239,12 @@ function workFromNode(constellation, node) {
       if (!closedLoop) {
         var newVector = createNewVector(constellation, node);
         if (newVector != emptyVector) {
-          var x = newVector[0] + node.xpos;
-          var y = newVector[1] + node.ypos;
+          var x = newVector[0] + node.x;
+          var y = newVector[1] + node.y;
           var newStar = new Star(x, y, random(minStarSize, maxStarSize));
           var newLine = new Line(node, newStar);
-          constellation.constellationStars.push(newStar);
-          constellation.constellationLines.push(newLine);
+          constellation.stars.push(newStar);
+          constellation.lines.push(newLine);
           workFromNode(constellation, newStar);
         };
       };
@@ -253,15 +254,15 @@ function workFromNode(constellation, node) {
 
 function createClosedLoop(complete, constellation, node){
   //connect to old node if chance dictates and if possible, but do not retrace an existing line
-  if (constellation.constellationStars.length >= 3 && constellation.closedLoops < maxClosedLoopsPerConstellation && random(0, 1) < probabilityOfClosedLoops) {
-        for (var k = 0; k < constellation.constellationStars.length; k++) {
-          if (node == constellation.constellationStars[k]){
+  if (constellation.stars.length >= 3 && constellation.closedLoops < maxClosedLoopsPerConstellation && random(0, 1) < probabilityOfClosedLoops) {
+        for (var k = 0; k < constellation.stars.length; k++) {
+          if (node == constellation.stars[k]){
             continue;
           };
           var connected = false;
-          for (var m = 0; m < constellation.constellationLines.length; m++) {
-            var oldStarInLine = constellation.constellationLines[m].star1 == constellation.constellationStars[k] || constellation.constellationLines[m].star2 == constellation.constellationStars[k];
-            var nodeInLine = constellation.constellationLines[m].star1 == node && constellation.constellationLines[m].star2 == node;
+          for (var m = 0; m < constellation.lines.length; m++) {
+            var oldStarInLine = constellation.lines[m].star1 == constellation.stars[k] || constellation.lines[m].star2 == constellation.stars[k];
+            var nodeInLine = constellation.lines[m].star1 == node && constellation.lines[m].star2 == node;
             if (oldStarInLine && nodeInLine) {
               connected = true;
               break;
@@ -269,22 +270,22 @@ function createClosedLoop(complete, constellation, node){
           };
 
           if (!connected) {
-            var vector = [constellation.constellationStars[k].xpos - node.xpos, constellation.constellationStars[k].ypos - node.ypos];
+            var vector = [constellation.stars[k].x - node.x, constellation.stars[k].y - node.y];
             //vector = checkForAngleConflicts(constellation, node, vector);
             //check for intersection with lines in this constellation
             var intersect = false;
-            for (var h = 0; h < constellation.constellationLines.length; h++) {
+            for (var h = 0; h < constellation.lines.length; h++) {
               if (!intersect) {
-                var existingLine = constellation.constellationLines[h];
+                var existingLine = constellation.lines[h];
                 intersect = intersection(node, vector, existingLine);
               };
             };
             //check for intersection with lines in all other constellations
             for (var i = 0; i < constellations.length; i++) {
               if (constellations[i] != null) {
-                for (var l = 0; l < constellations[i].constellationLines.length; l++) {
+                for (var l = 0; l < constellations[i].lines.length; l++) {
                   if (!intersect) {
-                    var existingLine = constellations[i].constellationLines[l];
+                    var existingLine = constellations[i].lines[l];
                     intersect = intersection(node, vector, existingLine);
                   };
                 };
@@ -292,9 +293,9 @@ function createClosedLoop(complete, constellation, node){
             };
             if (!intersect) {
               constellation.closedLoops += 1;
-              var newLine = new Line(node, constellation.constellationStars[k]);
-              constellation.constellationLines.push(newLine);
-              workFromNode(constellation, constellation.constellationStars[k]);
+              var newLine = new Line(node, constellation.stars[k]);
+              constellation.lines.push(newLine);
+              workFromNode(constellation, constellation.stars[k]);
               complete = true;
             };
           };
@@ -306,14 +307,14 @@ function createClosedLoop(complete, constellation, node){
 function intersection(star1, vector1, existingLine) {
   //find povar of intersection of lines; return true if overlap
   var line1_slope, line2_slope, line1_b, line2_b, int_x, line1_x1, line1_x2, line1_y1, line1_y2, line2_x1, line2_x2, line2_y1, line2_y2;
-  line1_x1 = star1.xpos;
-  line1_x2 = star1.xpos + vector1[0];
-  line1_y1 = star1.ypos;
-  line1_y2 = star1.ypos + vector1[1];
-  line2_x1 = existingLine.star1.xpos;
-  line2_x2 = existingLine.star2.xpos;
-  line2_y1 = existingLine.star1.ypos;
-  line2_y2 = existingLine.star2.ypos;
+  line1_x1 = star1.x;
+  line1_x2 = star1.x + vector1[0];
+  line1_y1 = star1.y;
+  line1_y2 = star1.y + vector1[1];
+  line2_x1 = existingLine.star1.x;
+  line2_x2 = existingLine.star2.x;
+  line2_y1 = existingLine.star1.y;
+  line2_y2 = existingLine.star2.y;
 
   if (max(line1_x1, line1_x2) < min(line2_x1, line2_x2) || max(line1_y1, line1_y2) < min(line2_y1, line2_y2)) {
     return false;
@@ -356,18 +357,18 @@ function createNewVector(constellation, node) {
     vector = checkForAngleConflicts(constellation, node, vector);
     if (vector != emptyVector) {
       //check for intersection with lines in this constellation
-      for (var h = 0; h < constellation.constellationLines.length; h++) {
+      for (var h = 0; h < constellation.lines.length; h++) {
         if (!intersect) {
-          var existingLine = constellation.constellationLines[h];
+          var existingLine = constellation.lines[h];
           intersect = intersection(node, vector, existingLine);
         };
       };
       //check for intersection with lines in all other constellations
       for (var i = 0; i < constellations.length; i++) {
         if (constellations[i] != null) {
-          for (var j = 0; j < constellations[i].constellationLines.length; j++) {
+          for (var j = 0; j < constellations[i].lines.length; j++) {
             if (!intersect) {
-              var existingLine = constellations[i].constellationLines[j];
+              var existingLine = constellations[i].lines[j];
               intersect = intersection(node, vector, existingLine);
             };
           };
@@ -383,12 +384,12 @@ function createNewVector(constellation, node) {
 
 function checkForAngleConflicts(constellation, node, vector) {
   var newUnitVector = findUnitVector(0, 0, vector[0], vector[1]);
-  for (var i = 0; i < constellation.constellationLines.length; i++) {
-    var existingLine = constellation.constellationLines[i];
-    var star1x = existingLine.star1.xpos;
-    var star1y = existingLine.star2.ypos;
-    var star2x = existingLine.star2.xpos;
-    var star2y = existingLine.star2.ypos;
+  for (var i = 0; i < constellation.lines.length; i++) {
+    var existingLine = constellation.lines[i];
+    var star1x = existingLine.star1.x;
+    var star1y = existingLine.star2.y;
+    var star2x = existingLine.star2.x;
+    var star2y = existingLine.star2.y;
     var existingVector = [];
 
     if (existingLine.star1 == node) {
