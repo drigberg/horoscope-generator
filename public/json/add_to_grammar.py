@@ -1,11 +1,12 @@
 import math
 import sys
 import json
+import random
 
 
 def main():
-    with open('new_grammar.json') as grammar_data:
-        with open('adjectives.txt') as dictionary_data:
+    with open('grammar.json') as grammar_data:
+        with open('occupations.txt') as dictionary_data:
             with open ('ignore.json') as ignore_data:
                 ignore = json.load(ignore_data)
                 grammar = json.load(grammar_data)
@@ -16,8 +17,11 @@ def main():
                 if default not in ["@Verb", "@Adverb", "@NounSingular", "@NounPlural", "@ProperNoun", "@Adjective"]:
                     default = False
 
+                dictionary_array = []
                 for word in dictionary_data:
-                    word = word.strip()
+                    dictionary_array.append(word.strip())
+                while breaker != "y":
+                    word = dictionary_array[int(math.floor(random.random()*len(dictionary_array)))]
                     if len(word) > 1 and breaker != "y" and word not in ignore:
                         skip = False
                         if position_in_alphabet != "no":
@@ -33,13 +37,13 @@ def main():
                                 singular_version = True
                                 if counter % 5 == 0 :
                                     if counter != 0:
-                                        breaker = raw_input("break after this one? (y/n) ")
+                                        breaker = raw_input("\n***** Break after this one? (y/n) ")
                                     if not default:
-                                        print "Reminder! Parts of speech are @Verb, @Adverb, @NounSingular, @NounPlural, @ProperNoun, @Adjective!"
+                                        print "\n***** Reminder! Parts of speech are @Verb, @Adverb, @NounSingular, @NounPlural, @ProperNoun, @Adjective!"
                                 counter += 1
 
                                 tags = {"weight" : 4}
-                                include = raw_input("%s : do you want it? (y/n/alter) " % word)
+                                include = raw_input("\n%s : do you want it? (y/n/alter) " % word)
                                 if include.lower() == "alter":
                                     word = raw_input("Replacement word? ")
                                     ignore.append(word)
@@ -86,11 +90,14 @@ def main():
                                             if singular_version not in grammar["@NounPlural"]:
                                                 grammar["@NounPlural"][plural_version] = tags
 
-    with open('new_grammar.json', 'w') as new_grammar_file:
+    print "Writing to files...\n"
+    with open('grammar.json', 'w') as new_grammar_file:
         json.dump(grammar, new_grammar_file)
 
     with open('ignore.json', 'w') as ignore_file:
         json.dump(ignore, ignore_file)
+
+    print "...Complete!"
 
 if __name__ == '__main__':
     main()

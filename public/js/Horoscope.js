@@ -209,7 +209,7 @@ var HoroscopeAPI = function(){
     },
     this.loadGrammar = function(){
         $.ajax({
-            url: "/json/new_grammar.json",
+            url: "/json/grammar.json",
             dataType: "json",
             success: function(data) {
                 that.grammar = data;
