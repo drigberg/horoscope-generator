@@ -179,9 +179,9 @@ ul {
 	display: inline-block;
 }
 
-ul li:nth-child(n+11) {
+/*ul li:nth-child(n+11) {
     display:none;
-}
+}*/
 
 .list-item-date {
 	margin: 0;
