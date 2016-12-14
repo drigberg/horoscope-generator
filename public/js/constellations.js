@@ -1,7 +1,6 @@
 //----------global defaults
 //---display
 var backgroundColor, speed, numConstellations;
-
 //---constellation parameters
 //minimum constellation size is subject to conflicts with trapped constellations by angle or overlap
 var constellations;
@@ -200,7 +199,6 @@ var Line = function (star1, star2){
 //=========================
 //Generation functions
 //=========================
-
 function workFromNode(constellation, node) {
   //recursively evaluates whether to grow from node, how many new vectors to draw, and where to place them
   var newNodes = 0;
@@ -298,7 +296,7 @@ function createClosedLoop(complete, constellation, node){
 };
 
 function intersection(star1, vector1, existingLine) {
-  //find povar of intersection of lines; return true if overlap
+  //find point of intersection of lines; return true if overlap
   var line1_slope, line2_slope, line1_b, line2_b, int_x, line1_x1, line1_x2, line1_y1, line1_y2, line2_x1, line2_x2, line2_y1, line2_y2;
   line1_x1 = star1.x;
   line1_x2 = star1.x + vector1[0];
@@ -318,7 +316,7 @@ function intersection(star1, vector1, existingLine) {
   line1_b = line1_y1 - line1_slope * line1_x1;
   line2_b = line2_y1 - line2_slope * line2_x1;
 
-  //rule out parallel lines, afunction dividing by zero later
+  //rule out parallel lines, avoid dividing by zero later
   if (line1_slope == line2_slope) {
     return false;
   };
@@ -411,7 +409,7 @@ function checkForAngleConflicts(constellation, node, vector) {
 function findUnitVector(x1, y1, x2, y2) {
   //calculates normal vector between stars (in order), converts to unit vector
   var normalVector = [x2 - x1, y2 - y1];
-  var d = sqrt((normalVector[0]) ** 2 + (normalVector[1]) ** 2);
+  var d = sqrt((Math.exp(normalVector[0]), 2) + (Math.exp(normalVector[1]), 2));
   var unitVector = [normalVector[0] / d, normalVector[1] / d];
   return unitVector;
 };
