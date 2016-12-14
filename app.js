@@ -52,7 +52,7 @@ app.get("/horoscopes", function (req, res){
         } else {
             allHoroscopes.reverse();
             firstTenHoroscopes = allHoroscopes.slice(0,10)
-            res.render("horoscopes/index", {firstTenHoroscopes:firstTenHoroscopes});
+            res.render("horoscopes/index", {firstTenHoroscopes:allHoroscopes});
         };
     });
 });
