@@ -409,7 +409,7 @@ function checkForAngleConflicts(constellation, node, vector) {
 function findUnitVector(x1, y1, x2, y2) {
   //calculates normal vector between stars (in order), converts to unit vector
   var normalVector = [x2 - x1, y2 - y1];
-  var d = sqrt((Math.exp(normalVector[0], 2)) + (Math.exp(normalVector[1], 2)));
+  var d = sqrt((Math.pow(normalVector[0], 2)) + (Math.pow(normalVector[1], 2)));
   var unitVector = [normalVector[0] / d, normalVector[1] / d];
   return unitVector;
 };
