@@ -25,10 +25,8 @@ app.set("view engine", "ejs");
 //IO
 const io = socketIO(server);
 io.on('connection', function (socket) {
-    console.log("socket is connected!");
     socket.on('new_horoscope', function (data) {
         // we tell the client to execute 'new message'
-        console.log("received at server!")
         socket.broadcast.emit('new_horoscope', {horoscope: data});
     });
 });
@@ -99,7 +97,3 @@ app.get("/horoscopes/:id", function(req, res){
 app.get("*", function (req, res){
     res.redirect("/");
 });
-
-// app.listen(port, function(err){
-//     console.log("Horoscope Generator server is running on port " + port);
-// });
